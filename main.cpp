@@ -2,11 +2,12 @@
 using namespace std;
 #include "punto3d.hpp"
 #include "direccion.hpp"
+#include "coordenadas.hpp"
+#include "matriz.hpp"
 #include <math.h>
-// g++ main.cpp punto3d.cpp direccion.cpp -o programa
+// g++ main.cpp punto3d.cpp direccion.cpp coordenadas.cpp matriz.cpp -o programa
 
-
-int main() {
+void probar() {
     // Crear dos puntos
     Punto3D p1(3.0, 4.0, 2.0);
     Punto3D p2(1.0, 2.0, -1.0);
@@ -68,6 +69,91 @@ int main() {
     //cout << "d7 (d5 . d6): " << d7 << endl;
     //cout << "d8 (d5 x d6): " << d8 << endl;
     cout << "d9 (normalized): " << d9 << endl;
+}
+
+void probar_coordenadas() {
+    Coordenadas c1(1,1,1,1);
+    Coordenadas c2 = c1.translate(2.0, 2.0, 2.0);
+    Coordenadas c3 = c1.scale(2.0, 2.0, 2.0);
+    Coordenadas c4 = c1.rotate_x_axis((90*3.14159274101257324219)/180);
+    Coordenadas c5 = c1.rotate_y_axis(90);
+    Coordenadas c6 = c1.rotate_z_axis(90);
+    cout << c1 << endl << c2 << endl << c3 << endl << c4 << endl << c5 << endl << c6 << endl;
+    Coordenadas c7(1,1,1,0);
+    Coordenadas c8 = c7.translate(2.0, 2.0, 2.0);
+    Coordenadas c9 = c7.scale(2.0, 2.0, 2.0);
+    Coordenadas c10 = c7.rotate_x_axis((90*3.14159274101257324219)/180);
+    Coordenadas c11 = c7.rotate_y_axis(90);
+    Coordenadas c12 = c7.rotate_z_axis(90);
+    cout << c7 << endl << c8 << endl << c9 << endl << c10 << endl << c11 << endl << c12 << endl;
+}
+
+
+void testMatrices(){
+
+    //Determinante
+    float matriz_det[4][4] = {{1, 2, 3, 4}, {3, 2, 6, 1}, {0, 1, 1, 0}, {1, 3, 0, 0}};
+    Matriz m(matriz_det);
+    float resultado_det = 48;
+    if(m.det() == resultado_det){
+        cout << "El determinante es correcto" << endl;
+    }
+    else{
+        cout << "El determinante es INCORRECTO" << endl;
+    }
+
+    //Suma y resta
+    float matriz_suma_1[4][4] = {{1, 1, 1, 1}, {1, 1, 1, 1}, {2, 2, 2, 2}, {1, 1, 1, 1}};
+    float matriz_suma_2[4][4] = {{3, 3, 3, 3}, {1, 1, 1, 1}, {2, 2, 2, 2}, {1, 1, 1, 1}};
+    float matriz_suma_res[4][4] = {{4, 4, 4, 4}, {2, 2, 2, 2}, {4, 4, 4, 4}, {2, 2, 2, 2}};
+    float matriz_resta_res[4][4] = {{-1, -1, -1, -1}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+
+    Matriz m_suma_1(matriz_suma_1);
+    Matriz m_suma_2(matriz_suma_2);
+    Matriz m_resta_res(matriz_resta_res);
+    Matriz m_suma_res(matriz_suma_res);
+    Matriz m_suma_obt = m_suma_1 + m_suma_2;
+    Matriz m_resta_obt = m_suma_2 - m_suma_1;
+    cout << "La matriz obtenida es: " << m_suma_obt << endl;
+    cout << "El resultado correcto es: " << m_suma_res << endl;
+    if(m_suma_res == m_suma_obt){
+        cout << "El resultado de la suma es correcto" << endl;
+    }
+    else{
+        cout << "El resultado de la suma es INCORRECTO" << endl;   
+    }
+
+    if(m_resta_res == m_resta_obt){
+        cout << "El resultado de la resta es correcto" << endl;
+    }
+    else{
+        cout << "El resultado de la resta es INCORRECTO" << endl;   
+    }
+
+    //Producto por escalar
+    float matriz_prodEsc_res[4][4] = {{2, 2, 2, 2}, {2, 2, 2, 2}, {4, 4, 4, 4}, {2, 2, 2, 2}};
+    Matriz m_prodEsc_res(matriz_prodEsc_res);
+    Matriz m_prodEsc_obt = m_suma_1*2;
+
+    float matriz_inv[4][4] = {{1, 1, 0, 0}, {0, -1, -2, 0}, {0, 0, 1, -1}, {0, 0, 0, 1}};
+    float matriz_inv_res[4][4] = {{1, 1, 2, 2}, {0, -1, -2, -2}, {0, 0, 1, 1}, {0, 0, 0, 1}};
+
+    Matriz m_inv(matriz_inv);
+    Matriz m_inv_res(matriz_inv_res);
+    Matriz m_inv_obt(m_inv.inversa());
+    
+    if(m_inv_res == m_inv_obt){
+        cout << "El resultado de la inversa es correcto" << endl;
+    }
+    else{
+        cout << "El resultado de la inversa es INCORRECTO" << endl;   
+    }
+}
+
+
+int main() {
+    
+    probar_coordenadas();
 
     return 0;
 }
