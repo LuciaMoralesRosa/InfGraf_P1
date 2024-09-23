@@ -77,6 +77,12 @@ bool Direccion::is_perpendicular(const Direccion& dir) const {
     return vector_product(dir) == 0;
 }
 
+float Direccion::obtenerAngulo(const Direccion& dir) const {
+    Direccion actual = Direccion(x, y, z);
+    float coseno = (actual.dot_product(dir)) / (actual.modulus() * dir.modulus());
+    return acosf(coseno) * 180/M_PI;
+}
+
 // Print
 ostream& operator<<(ostream& os, const Direccion& d) {
     os << "-->(" << d.x << ", " << d.y << ", " << d.z << ")";

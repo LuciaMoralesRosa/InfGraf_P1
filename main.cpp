@@ -1,11 +1,14 @@
 #include <iostream>
 using namespace std;
+
 #include "punto3d.hpp"
 #include "direccion.hpp"
 #include "coordenadas.hpp"
 #include "matriz.hpp"
+#include "esfera.hpp"
 #include <math.h>
-// g++ main.cpp punto3d.cpp direccion.cpp coordenadas.cpp matriz.cpp -o programa
+
+// g++ main.cpp esfera.cpp punto3d.cpp direccion.cpp coordenadas.cpp matriz.cpp -o programa
 
 void probar() {
     // Crear dos puntos
@@ -75,19 +78,20 @@ void probar_coordenadas() {
     Coordenadas c1(1,1,1,1);
     Coordenadas c2 = c1.translate(2.0, 2.0, 2.0);
     Coordenadas c3 = c1.scale(2.0, 2.0, 2.0);
-    Coordenadas c4 = c1.rotate_x_axis((90*3.14159274101257324219)/180);
+    Coordenadas c4 = c1.rotate_x_axis((90*M_PI)/180); 
     Coordenadas c5 = c1.rotate_y_axis(90);
     Coordenadas c6 = c1.rotate_z_axis(90);
-    cout << c1 << endl << c2 << endl << c3 << endl << c4 << endl << c5 << endl << c6 << endl;
+    cout << "C1:" << endl << c1 << endl << "C2:" << endl << c2 << endl << "C3:" << endl << c3 << endl << "C4:" << endl <<
+    c4 << endl << "C5:" << endl << c5 << endl << "C6:" << endl << c6 << endl;
     Coordenadas c7(1,1,1,0);
     Coordenadas c8 = c7.translate(2.0, 2.0, 2.0);
     Coordenadas c9 = c7.scale(2.0, 2.0, 2.0);
     Coordenadas c10 = c7.rotate_x_axis((90*3.14159274101257324219)/180);
     Coordenadas c11 = c7.rotate_y_axis(90);
     Coordenadas c12 = c7.rotate_z_axis(90);
-    cout << c7 << endl << c8 << endl << c9 << endl << c10 << endl << c11 << endl << c12 << endl;
+    cout << "C7:" << endl << c7 << endl << "C8:" << endl << c8 << endl << "C9:" << endl << c9 << endl << "C10:" << endl <<
+    c10 << endl << "C11:" << endl << c11 << endl << "C12:" << endl << c12 << endl;
 }
-
 
 void testMatrices(){
 
@@ -134,6 +138,13 @@ void testMatrices(){
     float matriz_prodEsc_res[4][4] = {{2, 2, 2, 2}, {2, 2, 2, 2}, {4, 4, 4, 4}, {2, 2, 2, 2}};
     Matriz m_prodEsc_res(matriz_prodEsc_res);
     Matriz m_prodEsc_obt = m_suma_1*2;
+    if(m_prodEsc_res == m_prodEsc_obt){
+        cout << "El resultado del producto escalar es correcto" << endl;
+    }
+    else{
+        cout << "El resultado del producto escalar es INCORRECTO" << endl;   
+    }
+
 
     float matriz_inv[4][4] = {{1, 1, 0, 0}, {0, -1, -2, 0}, {0, 0, 1, -1}, {0, 0, 0, 1}};
     float matriz_inv_res[4][4] = {{1, 1, 2, 2}, {0, -1, -2, -2}, {0, 0, 1, 1}, {0, 0, 0, 1}};
@@ -148,12 +159,86 @@ void testMatrices(){
     else{
         cout << "El resultado de la inversa es INCORRECTO" << endl;   
     }
+
 }
 
 
+/*******************************************************************************
+ * Planetas
+ ******************************************************************************/
+
+/**
+ * Creacion de una ciudad en un planeta
+ */
+Punto3D crearCiudad(Punto3D centro, float r, float az, float al){
+    Esfera planeta = Esfera(centro, r);
+    return planeta.anyadirPunto(az, al);
+}
+
+Direccion calcularNormal(Punto3D ciudad, Punto3D centro){
+    Direccion normal = ciudad - centro;
+    cout << "Planeta: " << endl << "Centro: " << centro << endl << 
+    "Ciudad: " << ciudad << endl << "Normal: " << normal << endl << endl;
+    return normal;
+}
+
+void viajesEspaciales(){
+
+    // Variables
+    float x1, y1, z1;
+    float x2, y2, z2;
+    float radio1, radio2;
+    float azimut1, azimut2;
+    float altitud1, altitud2;
+
+    cout << "Introduzca las coordenadas del centro del planeta 1: " << endl;
+    cin >> x1 >> y1 >> z1;
+
+    cout << "Introduzca el radio planeta 1: " << endl;
+    cin >> radio1;
+
+    cout << "Introduzca el azimut y altitud del planeta 1: " << endl;
+    cin >> azimut1 >> altitud1;
+    
+    cout << "Introduzca las coordenadas del centro del planeta 2: " << endl;
+    cin >> x2 >> y2 >> z2;
+
+    cout << "Introduzca el radio planeta 2: " << endl;
+    cin >> radio2;
+
+    cout << "Introduzca el azimut y altitud del planeta 2: " << endl;
+    cin >> azimut2 >> altitud2;
+    
+
+    // Crear primer planeta y su ciudad
+    Punto3D centro1 = Punto3D(x1, y1, z1);
+    Punto3D ciudad1 = crearCiudad(centro1, radio1, azimut1, altitud1);
+    Direccion normal1 = calcularNormal(ciudad1, centro1);
+
+    // Crear segundo planeta
+    Punto3D centro2 = Punto3D(x2, y2, z2);
+    Punto3D ciudad2 = crearCiudad(centro2, radio2, azimut2, altitud2);
+    Direccion normal2 = calcularNormal(ciudad2, centro2);
+
+    // Unir ciudades -> crear trayectoria
+    Direccion trayectoria1 = ciudad2 - ciudad1;
+    Direccion trayectoria2 = ciudad1 - ciudad2;
+
+    cout << endl << endl;
+    float angulo1 = trayectoria1.obtenerAngulo(normal1);
+    float angulo2 = trayectoria2.obtenerAngulo(normal2);
+    
+    if(abs(angulo1) <= 90 && abs(angulo2) <= 90){
+        cout << "Es posible realizar el lanzamiento" << endl;
+    }
+    else {
+        cout << "No es posible realizar el lanzamiento" << endl;
+    }
+}
+
 int main() {
     
-    probar_coordenadas();
+    viajesEspaciales();
 
     return 0;
 }

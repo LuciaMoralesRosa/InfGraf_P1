@@ -25,25 +25,25 @@ Coordenadas Coordenadas::scale(const float x_displacement, const float y_displac
 Coordenadas Coordenadas::rotate_x_axis(const double angle) const {
     float m[4][4] = { 
         {1, 0, 0, 0},
-        {0, cos(angle), -sin(angle), 0},
-        {0, sin(angle), cos(angle), 0},
+        {0, (float)cos(angle), -(float)sin(angle), 0},
+        {0, (float)sin(angle), (float)cos(angle), 0},
         {0, 0, 0, 1} };
     return Coordenadas(multiply(m));
 }
 
 Coordenadas Coordenadas::rotate_y_axis(const double angle) const {
     float m[4][4] = { 
-        {cos(angle), 0, sin(angle), 0},
+        {(float)cos(angle), 0, (float)sin(angle), 0},
         {0, 1, 0, 0},
-        {-sin(angle), 0, cos(angle), 0},
+        {-(float)sin(angle), 0, (float)cos(angle), 0},
         {0, 0, 0, 1} };
     return Coordenadas(multiply(m));
 }
 
 Coordenadas Coordenadas::rotate_z_axis(const double angle) const {
     float m[4][4] = { 
-        {cos(angle), -sin(angle), 0, 0},
-        {sin(angle), cos(angle), 0, 0},
+        {(float)cos(angle), -(float)sin(angle), 0, 0},
+        {(float)sin(angle), (float)cos(angle), 0, 0},
         {0, 0, 1, 0},
         {0, 0, 0, 1} };
     return Coordenadas(multiply(m));

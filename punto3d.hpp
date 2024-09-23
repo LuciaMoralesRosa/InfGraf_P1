@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <math.h>
+#include "direccion.hpp"
 using namespace std;
 
 class Punto3D {
@@ -13,10 +14,15 @@ class Punto3D {
     // Constructor
     Punto3D(float x_val = 0, float y_val = 0, float z_val = 0);
 
+
+    float getx();
+    float gety();
+    float getz();
+    
     // Operadores
     Punto3D operator+(const Punto3D& otro) const;
 
-    Punto3D operator-(const Punto3D& otro) const;
+    Direccion operator-(const Punto3D& otro) const;
 
     Punto3D operator*(const float scalar) const;
 

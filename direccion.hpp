@@ -48,6 +48,8 @@ class Direccion {
 
     bool is_normalized() const;
 
+    float obtenerAngulo(const Direccion& dir) const;
+
     // Print
     friend ostream& operator<<(ostream& os, const Direccion& d);
         
