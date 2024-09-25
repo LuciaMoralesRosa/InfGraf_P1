@@ -3,7 +3,6 @@ using namespace std;
 
 #include "punto3d.hpp"
 #include "direccion.hpp"
-#include "coordenadas.hpp"
 #include "matriz.hpp"
 #include "esfera.hpp"
 #include <math.h>
@@ -224,7 +223,6 @@ void viajesEspaciales(){
     Direccion trayectoria1 = ciudad2 - ciudad1;
     Direccion trayectoria2 = ciudad1 - ciudad2;
 
-    cout << endl << endl;
     float angulo1 = trayectoria1.obtenerAngulo(normal1);
     float angulo2 = trayectoria2.obtenerAngulo(normal2);
     

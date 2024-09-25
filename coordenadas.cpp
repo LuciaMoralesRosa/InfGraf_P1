@@ -13,37 +13,40 @@ Coordenadas Coordenadas::translate(const float x_displacement, const float y_dis
     return Coordenadas(multiply(m));
 }
 
-Coordenadas Coordenadas::scale(const float x_displacement, const float y_displacement, const float z_displacement) const {
+Coordenadas Coordenadas::scale(const float x_factor, const float y_factor, const float z_factor) const {
     float m[4][4] = { 
-        {x_displacement, 0, 0, 0},
-        {0, y_displacement, 0, 0},
-        {0, 0, z_displacement, 0},
+        {x_factor, 0, 0, 0},
+        {0, y_factor, 0, 0},
+        {0, 0, z_factor, 0},
         {0, 0, 0, 1} };
     return Coordenadas(multiply(m));
 }
 
 Coordenadas Coordenadas::rotate_x_axis(const double angle) const {
+    float radians = gradesToRadians(angle);
     float m[4][4] = { 
         {1, 0, 0, 0},
-        {0, (float)cos(angle), -(float)sin(angle), 0},
-        {0, (float)sin(angle), (float)cos(angle), 0},
+        {0, (float)cos(radians), -(float)sin(radians), 0},
+        {0, (float)sin(radians), (float)cos(radians), 0},
         {0, 0, 0, 1} };
     return Coordenadas(multiply(m));
 }
 
 Coordenadas Coordenadas::rotate_y_axis(const double angle) const {
+    float radians = gradesToRadians(angle);
     float m[4][4] = { 
-        {(float)cos(angle), 0, (float)sin(angle), 0},
+        {(float)cos(radians), 0, (float)sin(radians), 0},
         {0, 1, 0, 0},
-        {-(float)sin(angle), 0, (float)cos(angle), 0},
+        {-(float)sin(radians), 0, (float)cos(radians), 0},
         {0, 0, 0, 1} };
     return Coordenadas(multiply(m));
 }
 
 Coordenadas Coordenadas::rotate_z_axis(const double angle) const {
+    float radians = gradesToRadians(angle);
     float m[4][4] = { 
-        {(float)cos(angle), -(float)sin(angle), 0, 0},
-        {(float)sin(angle), (float)cos(angle), 0, 0},
+        {(float)cos(radians), -(float)sin(radians), 0, 0},
+        {(float)sin(radians), (float)cos(radians), 0, 0},
         {0, 0, 1, 0},
         {0, 0, 0, 1} };
     return Coordenadas(multiply(m));
@@ -54,7 +57,7 @@ Coordenadas Coordenadas::change_basis(const Coordenadas& o, const Coordenadas& u
         {u.x, v.x, w.x, o.x},
         {u.y, v.y, w.y, o.y},
         {u.z, v.z, w.z, o.z},
-        {u.is_point, v.is_point, w.is_point, o.is_point} };
+        {u.is_point, v.is_point, w.is_point, o.is_point}};
     return Coordenadas(multiply(m));
 }
 

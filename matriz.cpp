@@ -223,11 +223,14 @@ bool Matriz::operator==(const Matriz& m) const{
     return resultado;
 }
 
-
 Matriz Matriz::inversa() const {
     Matriz traspuesta = adjunta().traspuesta();
     return traspuesta/det();
 }
+
+Coordenadas Matriz::producto4x1(Coordenadas coord) const{
+    return coord;
+} 
 
 // Print
 ostream& operator<<(ostream& os, const Matriz& m) {
