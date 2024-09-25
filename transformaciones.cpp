@@ -49,7 +49,8 @@ Matriz4x4 matrizCambioBase(const Coordenada& o, const Coordenada& u, const Coord
     float m[4][4] = {{u.getx(), v.getx(), w.getx(), o.getx()},
                      {u.gety(), v.gety(), w.gety(), o.gety()},
                      {u.getz(), v.getz(), w.getz(), o.getz()},
-                     {u.getispoint(), v.getispoint(), w.getispoint(), o.getispoint()}};    
+                     //{u.getispoint(), v.getispoint(), w.getispoint(), o.getispoint()}}; 
+                     {0,0,0, o.getispoint()}};   
     return Matriz4x4(m);
 }
 

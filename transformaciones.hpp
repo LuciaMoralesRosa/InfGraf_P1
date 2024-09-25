@@ -39,7 +39,7 @@ Coordenada scale(Coordenada c, const float x, const float y, const float z);
 * 
 * @param c Coordenada a la que se aplica la trasnformacion
 * @param angulo Valor del angulo de rotacion
-* @return Coordenada rotada
+* @return Coordenada rotada "angulo"s grados a la derecha sobre el eje x
 */
 Coordenada rotate_x(Coordenada c, const float angulo);
 
@@ -48,7 +48,7 @@ Coordenada rotate_x(Coordenada c, const float angulo);
 * 
 * @param c Coordenada a la que se aplica la trasnformacion
 * @param angulo Valor del angulo de rotacion
-* @return Coordenada rotada
+* @return Coordenada rotada "angulo"s grados a la derecha sobre el eje y
 */
 Coordenada rotate_y(Coordenada c, const float angulo);
 
@@ -57,7 +57,7 @@ Coordenada rotate_y(Coordenada c, const float angulo);
 * 
 * @param c Coordenada a la que se aplica la trasnformacion
 * @param angulo Valor del angulo de rotacion
-* @return Coordenada rotada
+* @return Coordenada rotada "angulo"s grados a la derecha sobre el eje z
 */
 Coordenada rotate_z(Coordenada c, const float angulo);
 
