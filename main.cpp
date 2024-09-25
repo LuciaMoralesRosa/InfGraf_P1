@@ -3,11 +3,13 @@ using namespace std;
 
 #include "punto3d.hpp"
 #include "direccion.hpp"
-#include "matriz.hpp"
+#include "matriz4x4.hpp"
 #include "esfera.hpp"
+//#include "ppmimage.hpp"
 #include <math.h>
 
-// g++ main.cpp esfera.cpp punto3d.cpp direccion.cpp coordenadas.cpp matriz.cpp -o programa
+// g++ main.cpp ppmimage.cpp angulos.cpp esfera.cpp punto3d.cpp direccion.cpp coordenadas.cpp matriz.cpp -o programamake
+
 
 void probar() {
     // Crear dos puntos
@@ -73,6 +75,7 @@ void probar() {
     cout << "d9 (normalized): " << d9 << endl;
 }
 
+/*
 void probar_coordenadas() {
     Coordenadas c1(1,1,1,1);
     Coordenadas c2 = c1.translate(2.0, 2.0, 2.0);
@@ -91,12 +94,13 @@ void probar_coordenadas() {
     cout << "C7:" << endl << c7 << endl << "C8:" << endl << c8 << endl << "C9:" << endl << c9 << endl << "C10:" << endl <<
     c10 << endl << "C11:" << endl << c11 << endl << "C12:" << endl << c12 << endl;
 }
+*/
 
 void testMatrices(){
 
     //Determinante
     float matriz_det[4][4] = {{1, 2, 3, 4}, {3, 2, 6, 1}, {0, 1, 1, 0}, {1, 3, 0, 0}};
-    Matriz m(matriz_det);
+    Matriz4x4 m(matriz_det);
     float resultado_det = 48;
     if(m.det() == resultado_det){
         cout << "El determinante es correcto" << endl;
@@ -111,12 +115,12 @@ void testMatrices(){
     float matriz_suma_res[4][4] = {{4, 4, 4, 4}, {2, 2, 2, 2}, {4, 4, 4, 4}, {2, 2, 2, 2}};
     float matriz_resta_res[4][4] = {{-1, -1, -1, -1}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
 
-    Matriz m_suma_1(matriz_suma_1);
-    Matriz m_suma_2(matriz_suma_2);
-    Matriz m_resta_res(matriz_resta_res);
-    Matriz m_suma_res(matriz_suma_res);
-    Matriz m_suma_obt = m_suma_1 + m_suma_2;
-    Matriz m_resta_obt = m_suma_2 - m_suma_1;
+    Matriz4x4 m_suma_1(matriz_suma_1);
+    Matriz4x4 m_suma_2(matriz_suma_2);
+    Matriz4x4 m_resta_res(matriz_resta_res);
+    Matriz4x4 m_suma_res(matriz_suma_res);
+    Matriz4x4 m_suma_obt = m_suma_1 + m_suma_2;
+    Matriz4x4 m_resta_obt = m_suma_2 - m_suma_1;
     cout << "La matriz obtenida es: " << m_suma_obt << endl;
     cout << "El resultado correcto es: " << m_suma_res << endl;
     if(m_suma_res == m_suma_obt){
@@ -135,8 +139,8 @@ void testMatrices(){
 
     //Producto por escalar
     float matriz_prodEsc_res[4][4] = {{2, 2, 2, 2}, {2, 2, 2, 2}, {4, 4, 4, 4}, {2, 2, 2, 2}};
-    Matriz m_prodEsc_res(matriz_prodEsc_res);
-    Matriz m_prodEsc_obt = m_suma_1*2;
+    Matriz4x4 m_prodEsc_res(matriz_prodEsc_res);
+    Matriz4x4 m_prodEsc_obt = m_suma_1*2;
     if(m_prodEsc_res == m_prodEsc_obt){
         cout << "El resultado del producto escalar es correcto" << endl;
     }
@@ -148,9 +152,9 @@ void testMatrices(){
     float matriz_inv[4][4] = {{1, 1, 0, 0}, {0, -1, -2, 0}, {0, 0, 1, -1}, {0, 0, 0, 1}};
     float matriz_inv_res[4][4] = {{1, 1, 2, 2}, {0, -1, -2, -2}, {0, 0, 1, 1}, {0, 0, 0, 1}};
 
-    Matriz m_inv(matriz_inv);
-    Matriz m_inv_res(matriz_inv_res);
-    Matriz m_inv_obt(m_inv.inversa());
+    Matriz4x4 m_inv(matriz_inv);
+    Matriz4x4 m_inv_res(matriz_inv_res);
+    Matriz4x4 m_inv_obt(m_inv.inversa());
     
     if(m_inv_res == m_inv_obt){
         cout << "El resultado de la inversa es correcto" << endl;
@@ -236,7 +240,7 @@ void viajesEspaciales(){
 
 int main() {
     
-    viajesEspaciales();
+    //viajesEspaciales();
 
     return 0;
 }
