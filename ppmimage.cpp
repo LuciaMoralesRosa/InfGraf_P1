@@ -1,23 +1,21 @@
 #include "ppmimage.hpp"
 
 // Constructor que lee la imagen PPM
-PPMImage::PPMImage(const string& filename) {
-    ifstream file(filename);
+PPMImage::PPMImage(const string& ficheroPPM) {
+    ifstream file(ficheroPPM);
     if (!file.is_open()) {
-        cerr << "No se pudo abrir el archivo: " << filename << endl;
+        cerr << "No se pudo abrir el archivo: " << ficheroPPM << endl;
         exit(1);
     }
 
-    string format;
     string line;
 
-    if (getline(file, line)) {
-        format = line;  // Almacena el formato en la variable
-    }
-
-    if (format != "P3") {
-        cerr << "Formato de archivo no soportado: " << format << endl;
-        exit(1);
+    // La primera linea del fichero contiene el formato
+    if (getline(file, formato)) {
+        if (formato != "P3") {
+            cerr << "Formato de archivo no soportado: " << formato << endl;
+            exit(1);
+        }
     }
 
     // Lee la segunda línea que contiene el "#MAX=436"
@@ -35,24 +33,30 @@ PPMImage::PPMImage(const string& filename) {
                 break;
             }
         }
+        else{
+            comentario = line;
+        }
     }
 
-    // Lee la última línea que contiene el valor
+    // Lee la última línea que contiene el valor maximo de color
     if (getline(file, line)) {
         maxColorValue = stoi(line);  // Convierte la última línea en entero
     }
 
     // Reservar espacio para los píxeles
-    pixels.resize(height, vector<Pixel>(width));
+    imagen.resize(height, vector<PixelRGB>(width));
 
     double ratio = (double)customMaxValue / maxColorValue;
 
     // Leer los píxeles (r, g, b)
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
-            int r, g, b;
+            string r, g, b;
             file >> r >> g >> b;
-            pixels[i][j] = {r*ratio, g*ratio, b*ratio};
+            //imagen[i][j] = {r*ratio, g*ratio, b*ratio};
+            imagen[i][j] = PixelRGB(stof(r)*maxColorValue/customMaxValue,
+                                     stof(g)*maxColorValue/customMaxValue,
+                                     stof(b)*maxColorValue/customMaxValue);
         }
     }
 
@@ -63,16 +67,16 @@ void PPMImage::print() const {
     cout << "PPM Image: " << width << "x" << height << ", Max Color: " << maxColorValue << endl;
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
-            cout << "(" << pixels[i][j].r << ", " << pixels[i][j].g << ", " << pixels[i][j].b << ") ";
+            cout << "(" << imagen[i][j].getRed() << ", " << imagen[i][j].getGreen() << ", " << imagen[i][j].getBlue() << ") ";
         }
         cout << endl;
     }
 }
 
-void PPMImage::writeToFile(const string& filename) const {
-    ofstream file(filename);
+void PPMImage::writeToFile(const string& ficheroPPM) const {
+    ofstream file(ficheroPPM);
     if (!file.is_open()) {
-        cerr << "No se pudo crear el archivo: " << filename << endl;
+        cerr << "No se pudo crear el archivo: " << ficheroPPM << endl;
         exit(1);
     }
 
@@ -81,9 +85,14 @@ void PPMImage::writeToFile(const string& filename) const {
 
     // MAX
     //file << "#MAX=18.35" << endl; // CAMBIAR
+    file << "#MAX="+to_string((int)customMaxValue) << endl;
+
+    if(comentario != ""){
+        file << comentario << endl;
+    }
 
     // Dimensiones
-    file << width << " " << height << endl;
+    file << to_string(width) << " " << to_string(height) << endl;
     // Valor máximo de color
     file << maxColorValue << endl;
 

@@ -1,2 +1,2 @@
 # InfGraf_P1
-Primera practica de la asignatura Informatica Grafica
+Practicas de la asignatura Informatica Grafica 2024
