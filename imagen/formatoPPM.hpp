@@ -59,9 +59,10 @@ class FormatoPPM{
         FormatoPPM(string f, float mv, string c, int w, int h, float res,
             vector<vector<PixelRGB>> img);
 
-        FormatoPPM lecturaFichero(const string& ficheroPPM);
+        void lecturaFichero(const string& ficheroPPM);
         void escrituraFichero(const string& ficheroPPM);
-        void FormatoPPM::escrituraFichero_255(const string& ficheroPPM);
+        void escrituraFichero_255(const string& ficheroPPM);
+        void print();
 
 
         // Getters

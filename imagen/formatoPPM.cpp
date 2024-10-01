@@ -1,12 +1,14 @@
 #include "formatoPPM.hpp"
 
+FormatoPPM::FormatoPPM(){}
+
 FormatoPPM::FormatoPPM(string f, float mv, string c, int w, int h, float res,
             vector<vector<PixelRGB>> img) : 
             formato(f), maxValor(mv), comentario(c),
             width(w), height(h), resolucionColor(res),
             pixelsImagen(img){}
 
-FormatoPPM FormatoPPM::lecturaFichero(const string& ficheroPPM){
+void FormatoPPM::lecturaFichero(const string& ficheroPPM){
     ifstream fichero(ficheroPPM);
     string lineaAux;
 
@@ -29,6 +31,9 @@ FormatoPPM FormatoPPM::lecturaFichero(const string& ficheroPPM){
 
         if (lineaAux.find("#MAX=") != std::string::npos) {
             // Obtener la posición de "#MAX=" y extraer el valor numérico después de "MAX="
+            //string aux = lineaAux.substr(5);
+            //maxValor = (float) stoi(aux);
+            
             try {
                 maxValor = stof(lineaAux.substr(5)); // Convertir a float
             } catch (const invalid_argument &e) {
@@ -36,11 +41,9 @@ FormatoPPM FormatoPPM::lecturaFichero(const string& ficheroPPM){
             } catch (const out_of_range &e) {
                 cerr << "Error: El valor después de #MAX= está fuera del rango permitido.\n";
             }
-
             // Leer la siguiente línea
             if (!getline(fichero, lineaAux)) {
                 cerr << "Error: No se pudo leer la siguiente línea después de #MAX=\n";
-                return;
             }
         }
 
@@ -48,23 +51,16 @@ FormatoPPM FormatoPPM::lecturaFichero(const string& ficheroPPM){
         if (lineaAux.find("#") == 0) {
             // Extraer el comentario después del "#"
             comentario = lineaAux.substr(1); // Extraer todo lo que sigue al "#"
-
             // Leer la siguiente línea
             if (!getline(fichero, lineaAux)) {
                 cerr << "Error: No se pudo leer la siguiente línea después del comentario\n";
-                return;
             }
         }
 
     }
 
-    while (getline(fichero, lineaAux)) {
-        istringstream iss(lineaAux);
-        // Lee los valores de ancho y alto
-        if (iss >> width >> height) {
-            break;
-        }
-    }   
+    stringstream ss(lineaAux);
+    ss >> width >> height;
 
     // Lee la última línea que contiene el valor maximo de color
     if (getline(fichero, lineaAux)) {
@@ -74,14 +70,13 @@ FormatoPPM FormatoPPM::lecturaFichero(const string& ficheroPPM){
     // Reservar espacio para los píxeles
     pixelsImagen.resize(height, vector<PixelRGB>(width));
     
-    // Leer los píxeles (r, g, b)
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            string r, g, b;
+    string r, g, b;
+    for(int i = 0; i < height; i++){
+        for(int j = 0; j < width; j++){
             fichero >> r >> g >> b;
-            pixelsImagen[i][j] = PixelRGB(stof(r)*maxValor/resolucionColor,
-                                          stof(g)*maxValor/resolucionColor,
-                                          stof(b)*maxValor/resolucionColor);
+            pixelsImagen[i][j] = PixelRGB(stof(r) * maxValor / resolucionColor,
+                                          stof(g) * maxValor / resolucionColor,
+                                          stof(b) * maxValor / resolucionColor);
         }
     }
 
@@ -98,21 +93,20 @@ void FormatoPPM::escrituraFichero(const string& ficheroPPM){
         fichero << "#" + comentario << endl;
     }
     fichero << to_string(width) + " " + to_string(height) << endl;
-    fichero << resolucionColor << endl;
+    fichero << fixed << setprecision(0) << resolucionColor << endl;
 
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             PixelRGB pixel = pixelsImagen[i][j];
-            fichero << fixed << setprecision(0) << pixel.getRed()*(resolucionColor/maxValor)
-                                                << pixel.getGreen()*(resolucionColor/maxValor)
-                                                << pixel.getBlue()*(resolucionColor/maxValor);
+            fichero << fixed << setprecision(0) << pixel.getRed()*(resolucionColor/maxValor) << " "
+                                                << pixel.getGreen()*(resolucionColor/maxValor) << " "
+                                                << pixel.getBlue()*(resolucionColor/maxValor) << "     ";
         }
         fichero << endl;
     }
     fichero << endl;
     fichero.close();
 }
-
 
 void FormatoPPM::escrituraFichero_255(const string& ficheroPPM){
     ofstream fichero;
@@ -132,9 +126,9 @@ void FormatoPPM::escrituraFichero_255(const string& ficheroPPM){
         for (int j = 0; j < width; ++j) {
             PixelRGB pixel = pixelsImagen[i][j];
             fichero << fixed << setprecision(0) 
-                    << pixel.getRed() * (resolucion/maxValor) << " "
-                    << pixel.getGreen() * (resolucion/maxValor) << " "
-                    << pixel.getBlue() * (resolucion/maxValor) << "     ";
+                    << (pixel.getRed() * 255 /maxValor) << " "
+                    << (pixel.getGreen() * 255 / maxValor) << " "
+                    << (pixel.getBlue() * 255 / maxValor) << "     ";
         }
         fichero << endl;
     }
@@ -142,6 +136,26 @@ void FormatoPPM::escrituraFichero_255(const string& ficheroPPM){
     fichero.close();
 }
 
+void FormatoPPM::print(){
+    cout << formato << endl;
+    cout << "#MAX="+to_string(maxValor) << endl;
+    if(comentario != ""){
+        cout << "#" + comentario << endl;
+    }
+    cout << to_string(width) + " " + to_string(height) << endl;
+    cout << fixed << setprecision(0) <<  resolucionColor << endl;
+
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            PixelRGB pixel = pixelsImagen[i][j];
+            cout << fixed << setprecision(0) << pixel.getRed()*(resolucionColor/maxValor) << " "
+                                                << pixel.getGreen()*(resolucionColor/maxValor) << " "
+                                                << pixel.getBlue()*(resolucionColor/maxValor);
+        cout << "\t";
+        }
+        cout << endl;
+    }
+}
 
 string FormatoPPM::getFormato() const {
     return formato;
