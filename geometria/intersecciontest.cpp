@@ -9,11 +9,22 @@ using namespace std;
 // g++ intersecciontest.cpp rayo.cpp esfera.cpp punto3d.cpp direccion.cpp -o interseccion
 
 int main() {
-    Punto3D P0(0,0,0);  // Origen del rayo
-    Direccion d(1,1,1);   // Dirección del rayo (normalizada)
+    
+    float x1, y1, z1;
+    cout << "Introduzca las coordenadas del origen del rayo: " << endl;
+    cin >> x1 >> y1 >> z1;
+    Punto3D P0(x1,y1,z1);  // Origen del rayo
+    cout << "Introduzca la dirección del rayo: " << endl;
+    cin >> x1 >> y1 >> z1;
+    Direccion d(x1,y1,z1);   // Dirección del rayo
     Rayo rayo(P0, d);
-    Punto3D C(5,5,5);   // Centro de la esfera
-    double r = 2.0;          // Radio de la esfera
+
+    cout << "Introduzca las coordenadas del centro de la esfera: " << endl;
+    cin >> x1 >> y1 >> z1;
+    Punto3D C(x1,y1,z1);   // Centro de la esfera
+    cout << "Introduzca el radio la esfera: " << endl;
+    double r = 0;          // Radio de la esfera
+    cin >> r;
     Esfera esfera(C, r);
 
     vector<float> intersecciones = esfera.interseccionRayo(rayo);
