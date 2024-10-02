@@ -8,17 +8,15 @@ using namespace std;
 
 class Coordenada {
     private:
-    float x, y, z, is_point; //Array de coordenadas
+    float origen, direccion;
     
     public:
 
         /**
          * @brief Constructor de Coordenada con las componentes individuales
          * 
-         * @param x_val Valor de la coordenada x
-         * @param y_val Valor de la coordenada y
-         * @param z_val Valor de la coordenada z
-         * @param is_point_val Indica si es un punto (>0) o una direccion (0)
+         * @param origen_val Punto del origen de la camara
+         * @param direccion_val Valor de la coordenada y
          */
         Coordenada(float x_val = 0, float y_val = 0, float z_val = 0, float is_point_val = 0);
 

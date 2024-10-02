@@ -3,7 +3,9 @@
 
 #include <iostream>
 #include <math.h>
+#include <vector>
 #include "punto3d.hpp"
+#include "rayo.hpp"
 using namespace std;
 
 /**
@@ -39,6 +41,17 @@ class Esfera {
          * @details Los valores se deben introducir en GRADOS, no en radianes.
          */
         Punto3D anyadirPunto(float azimut, float altitud);
+
+        /**
+         * @brief Devuelve > 1 si el punto esta dentro de la esfera
+         * 
+         * @param punto Punto del que determinar si se encuentra dentro o fuera de la esfera
+         * @return ---
+         * 
+         */
+        /*float dentroDeEsfera(Punto3D punto);*/
+
+        vector<Punto3D> interseccionRayo(Rayo rayo);
 };
 
 

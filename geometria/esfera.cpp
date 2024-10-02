@@ -9,4 +9,33 @@ Punto3D Esfera::anyadirPunto(float azimut, float altitud){
     return  ciudad;
 }
 
+vector<Punto3D> Esfera::interseccionRayo(Rayo rayo) {
+    Punto3D ORayo = rayo.getOrigen();
+    Direccion dir = rayo.getDireccion().normalize();
+
+    Punto3D OEsfera = c;
+    float radio = r;
+    
+
+    Direccion L = ORayo - OEsfera; //vector desde el centro de la esfera al punto de origen del rayo.
+    //t2(d⋅d) + 2t(d⋅L) + (L⋅L−r2)=0
+
+    float A = dir.dot_product(dir);         // A = d · d
+    float B = 2 * (dir.dot_product(L));     // B = 2 * (d · L)
+    float C = L.dot_product(L) - (r * r);   // C = L · L - r^2
+
+    float discriminante = B * B - 4 * A * C;
+
+    if (discriminante < 0) {
+        // No hay intersección
+        return {};
+    } else {
+        // Hay una o dos intersecciones
+        double sqrtDiscriminante = sqrt(discriminante);
+        double t1 = (-B - sqrtDiscriminante) / (2 * A);
+        double t2 = (-B + sqrtDiscriminante) / (2 * A);
+        if (t1 == t2) return {t1}; // Una interseccion
+        else return {t1, t2}; // Dos intersecciones
+    }
+}
 
