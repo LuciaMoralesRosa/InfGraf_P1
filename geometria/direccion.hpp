@@ -38,6 +38,10 @@ class Direccion {
         bool operator>=(const Direccion& otro) const;
         bool operator<=(const Direccion& otro) const;
 
+        float getx();
+        float gety();
+        float getz();
+        
         //Metodos de operacion
 
         /**

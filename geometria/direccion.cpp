@@ -20,6 +20,19 @@ Direccion Direccion::operator/(const int scalar) const {
     return Direccion(x/scalar, y/scalar, z/scalar);
 }
 
+
+float Direccion::getx(){
+    return x;
+}
+
+float Direccion::gety(){
+    return y;
+}
+
+float Direccion::getz(){
+    return z;
+}
+
 float Direccion::dot_product(const Direccion& dir) const {
     return x*dir.x + y*dir.y + z*dir.z;
 }
