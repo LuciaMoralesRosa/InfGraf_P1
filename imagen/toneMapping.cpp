@@ -1,6 +1,7 @@
 #include "toneMapping.hpp"
 
 FormatoPPM ToneMapping::corte(FormatoPPM imagen, float corte){
+    imagen.setResolucionColor(corte);
     for(int i = 0; i < imagen.getHeight(); i++){
         for(int j = 0; j < imagen.getWidth(); j++){
             PixelRGB pixelAux = imagen.pixelsImagen[i][j];
@@ -112,88 +113,58 @@ PixelRGB ToneMapping::linealCorte(FormatoPPM imagen, PixelRGB pixel, float corte
 
 
 FormatoPPM ToneMapping::gamma(FormatoPPM img, float gamma){
-    FormatoPPM imagen(1, img.getWidth(), img.getHeight(), 
-                      img.getResolucionColor(), img.getComentario());
-
-    float maxVal = img.getMaxValor();
+    float max = img.getMaxValor();
     float maxNuevo = 0.0;
 
     for(int i = 0; i < img.getHeight(); i++){
         for(int j = 0; j < img.getWidth(); j++){
             PixelRGB rgbAux = img.pixelsImagen[i][j];
+            rgbAux.setRed(pow(rgbAux.getRed(), 1/gamma));
+            rgbAux.setGreen(pow(rgbAux.getGreen(), 1/gamma));
+            rgbAux.setBlue(pow(rgbAux.getBlue(), 1/gamma));
 
-            if(rgbAux.getRed() > maxVal){
-                rgbAux.setRed(maxVal);
-            }
-            else{
-                rgbAux.setRed(pow(rgbAux.getRed(), 1/gamma)/pow(maxVal, 1/gamma));
-            }
-
-            if(rgbAux.getGreen() > maxVal){
-                rgbAux.setGreen(maxVal);
-            }
-            else{
-                rgbAux.setGreen(pow(rgbAux.getGreen(), 1/gamma)/pow(maxVal, 1/gamma));
-            }
-
-            if(rgbAux.getBlue() > maxVal){
-                rgbAux.setBlue(maxVal);
-            }
-            else{
-                rgbAux.setBlue(pow(rgbAux.getBlue(), 1/gamma)/pow(maxVal, 1/gamma));
-            }
-
-            imagen.pixelsImagen[i][j] = rgbAux;
-            maxNuevo = maximo(maxNuevo, rgbAux.getRed()*255, 
-                                        rgbAux.getGreen()*255, 
-                                        rgbAux.getBlue()*255);
+            img.pixelsImagen[i][j] = rgbAux;
+            maxNuevo = maximo(maxNuevo, rgbAux.getRed(), 
+                                        rgbAux.getGreen(), 
+                                        rgbAux.getBlue());
         }
     } 
 
-    imagen.setMaxValor(maxNuevo);
-    return imagen;
+    img.setMaxValor(maxNuevo);
+    return img;
 }
 
-FormatoPPM ToneMapping::gammaCorte(FormatoPPM img, float gamma, float corte){
-    FormatoPPM imagen(1, img.getWidth(), img.getHeight(), 
-                      img.getResolucionColor(), img.getComentario());
-
-    float maxVal = img.getMaxValor();
-    for(int i = 0; i < img.getHeight(); i++){
-        for(int j = 0; j < img.getWidth(); j++){
-            PixelRGB rgbAux = img.pixelsImagen[i][j];
-            
-            if(rgbAux.getRed() > corte){
-                rgbAux.setRed(1);
+FormatoPPM ToneMapping::gammaCorte(FormatoPPM imagen, float gamma, float corte){
+    float max = imagen.getMaxValor();
+    float maxNuevo = 0.0;
+    for(int i = 0; i < imagen.getHeight(); i++){
+        for(int j = 0; j < imagen.getWidth(); j++){
+            PixelRGB pixelAux = imagen.pixelsImagen[i][j];
+            if(pixelAux.getRed() > corte){
+                pixelAux.setRed(corte);
             }
             else{
-                rgbAux.setRed(pow(rgbAux.getRed(), 1/gamma)/pow(maxVal, 1/gamma));
+                pixelAux.setRed(pow(pixelAux.getRed(), 1/gamma));
             }
-
-            if(rgbAux.getGreen() > corte){
-                rgbAux.setGreen(1);
-            }
-            else{
-                rgbAux.setGreen(pow(rgbAux.getGreen(), 1/gamma)/pow(maxVal, 1/gamma));
-            }
-
-            if(rgbAux.getBlue() > corte){
-                rgbAux.setBlue(1);
+            if(pixelAux.getGreen() > corte){
+                pixelAux.setGreen(corte);
             }
             else{
-                rgbAux.setBlue(pow(rgbAux.getBlue(), 1/gamma)/pow(maxVal, 1/gamma));
+                pixelAux.setGreen(pow(pixelAux.getGreen(), 1/gamma));
             }
-
-            imagen.pixelsImagen[i][j] = rgbAux;
+            if(pixelAux.getBlue() > corte){
+                pixelAux.setBlue(corte);
+            }
+            else{
+                pixelAux.setBlue(pow(pixelAux.getBlue(), 1/gamma));
+            }
+            imagen.pixelsImagen[i][j] = pixelAux;
         }
     }
-
     return imagen;
 }
 
 FormatoPPM ToneMapping::reinhard(FormatoPPM img){
-    FormatoPPM imagen(1, img.getWidth(), img.getHeight(), 
-                      img.getResolucionColor(), img.getComentario());
     
     for(int i = 0; i < img.getHeight(); i++){
         for(int j = 0; j < img.getWidth(); j++){
@@ -202,10 +173,10 @@ FormatoPPM ToneMapping::reinhard(FormatoPPM img){
             rgbAux.setGreen(rgbAux.getGreen() / (1 + rgbAux.getGreen()));
             rgbAux.setBlue(rgbAux.getBlue() / (1 + rgbAux.getBlue()));
 
-            imagen.pixelsImagen[i][j] = rgbAux;
+            img.pixelsImagen[i][j] = rgbAux;
         }
     }
-    return imagen;
+    return img;
 }
 
 FormatoPPM ToneMapping::reinhardCorte(FormatoPPM img, float corte){
