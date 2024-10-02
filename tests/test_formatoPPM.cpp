@@ -18,10 +18,8 @@ int main(){
     formato.lecturaFichero(ficheroEntrada);
 
     cout << "Imprimiendo fichero..." << endl;
-    //formato.print();
+    formato.print();
 
     cout << "Escribiendo fichero..." << endl;
-    //formato.escrituraFichero(ficheroSalida);
-
-    formato.escrituraFichero_255(ficheroSalida);
+    formato.escrituraFichero(ficheroSalida);
 }

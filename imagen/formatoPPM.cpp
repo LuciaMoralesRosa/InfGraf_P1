@@ -108,7 +108,7 @@ void FormatoPPM::escrituraFichero(const string& ficheroPPM){
     fichero.close();
 }
 
-void FormatoPPM::escrituraFichero_255(const string& ficheroPPM){
+/*void FormatoPPM::escrituraFichero_255(const string& ficheroPPM){
     ofstream fichero;
     fichero.open(ficheroPPM);
 
@@ -135,6 +135,7 @@ void FormatoPPM::escrituraFichero_255(const string& ficheroPPM){
     fichero << endl;
     fichero.close();
 }
+*/
 
 void FormatoPPM::print(){
     cout << formato << endl;
