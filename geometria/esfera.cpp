@@ -28,14 +28,14 @@ vector<Punto3D> Esfera::interseccionRayo(Rayo rayo) {
 
     if (discriminante < 0) {
         // No hay intersección
-        return {};
+        return vector<Punto3D>();
     } else {
         // Hay una o dos intersecciones
         double sqrtDiscriminante = sqrt(discriminante);
         double t1 = (-B - sqrtDiscriminante) / (2 * A);
         double t2 = (-B + sqrtDiscriminante) / (2 * A);
-        if (t1 == t2) return {t1}; // Una interseccion
-        else return {t1, t2}; // Dos intersecciones
+        if (t1 == t2) return vector<Punto3D>(t1); // Una interseccion
+        else return vector<Punto3D>(t1,t2); // Dos intersecciones
     }
 }
 

@@ -1,5 +1,5 @@
-#ifndef CAMARA_HPP
-#define CAMARA_HPP
+#ifndef RAYO_HPP
+#define RAYO_HPP
 
 #include <iostream>
 #include <math.h>
