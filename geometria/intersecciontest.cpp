@@ -16,10 +16,10 @@ int main() {
     double r = 2.0;          // Radio de la esfera
     Esfera esfera(C, r);
 
-    vector<Punto3D> intersecciones = esfera.interseccionRayo(rayo);
+    vector<float> intersecciones = esfera.interseccionRayo(rayo);
 
     for (int i = intersecciones.size(); i > 0; i--) {
-        cout << intersecciones[i-1];
+        cout << intersecciones[i-1] << endl;
     }
 
     /*if (intersecta) {

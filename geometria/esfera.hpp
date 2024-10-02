@@ -51,7 +51,7 @@ class Esfera {
          */
         /*float dentroDeEsfera(Punto3D punto);*/
 
-        vector<Punto3D> interseccionRayo(Rayo rayo);
+        vector<float> interseccionRayo(Rayo rayo);
 };
 
 
