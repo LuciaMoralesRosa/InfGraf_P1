@@ -9,7 +9,7 @@ Punto3D Esfera::anyadirPunto(float azimut, float altitud){
     return  ciudad;
 }
 
-vector<float> Esfera::interseccionRayo(Rayo rayo) {
+vector<float> Esfera::interseccionRayo(Rayo rayo) const {
     Punto3D ORayo = rayo.getOrigen();
     Direccion dir = rayo.getDireccion().normalize();
 

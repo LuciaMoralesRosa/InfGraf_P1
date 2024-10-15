@@ -1,9 +1,13 @@
 #ifndef ESFERA_HPP
 #define ESFERA_HPP
 
+#define _USE_MATH_DEFINES
+
 #include <iostream>
 #include <math.h>
 #include <vector>
+
+#include "primitiva.hpp"
 #include "punto3d.hpp"
 #include "rayo.hpp"
 using namespace std;
@@ -11,7 +15,7 @@ using namespace std;
 /**
  * Implementacion de la clase Esfera
  */
-class Esfera {
+class Esfera : public Primitiva {
     private:
         // Punto central de la esfera
         Punto3D c;
@@ -43,15 +47,18 @@ class Esfera {
         Punto3D anyadirPunto(float azimut, float altitud);
 
         /**
-         * @brief Devuelve > 1 si el punto esta dentro de la esfera
-         * 
-         * @param punto Punto del que determinar si se encuentra dentro o fuera de la esfera
-         * @return ---
-         * 
+         * @brief Calcula la intersección de un rayo con la esfera.
+         *
+         * Este método determina los puntos de intersección entre un rayo 
+         * y la esfera utilizando la ecuación cuadrática. Devuelve un 
+         * vector con las distancias a los puntos de intersección, que 
+         * pueden ser uno o dos.
+         *
+         * @param rayo El rayo que se utilizará para calcular la intersección.
+         * @return Un vector de flotantes que representa las distancias a los puntos 
+         *         de intersección. Puede contener cero, uno o dos valores.
          */
-        /*float dentroDeEsfera(Punto3D punto);*/
-
-        vector<float> interseccionRayo(Rayo rayo);
+        vector<float> interseccionRayo(Rayo rayo) const override;
 };
 
 
