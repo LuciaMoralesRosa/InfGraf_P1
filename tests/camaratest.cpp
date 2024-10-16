@@ -13,8 +13,8 @@ int main() {
     Direccion up(0, 1, 0);
     Direccion forward(0, 0, 3);
     int tamanyo[2];
-    tamanyo[0] = 256;
-    tamanyo[1] = 256; 
+    tamanyo[0] = 8;
+    tamanyo[1] = 8; 
     Camara camara(origen, up, left, forward,tamanyo);
 
     cout << camara << endl;
