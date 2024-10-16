@@ -26,19 +26,21 @@ Interseccion Esfera::interseccionRayo(Rayo rayo) const {
 
     float discriminante = B * B - 4 * A * C;
 
-    vector<float> resultado;
+    Interseccion resultado;
 
     if (discriminante < 0) {
         // No hay intersección
+        resultado.intersecta = false;
         return resultado;
     } else {
         // Hay una o dos intersecciones
         float sqrtDiscriminante = sqrt(discriminante);
         float t1 = (-B - sqrtDiscriminante) / (2 * A);
         float t2 = (-B + sqrtDiscriminante) / (2 * A);
-        resultado.push_back(t1); // Una interseccion
+        resultado.intersecta = true;
+        resultado.distancia.push_back(t1); // Una interseccion
         if (t1 != t2){
-            resultado.push_back(t2); // Dos intersecciones
+            resultado.distancia.push_back(t2); // Dos intersecciones
         }
         return resultado;
     }
