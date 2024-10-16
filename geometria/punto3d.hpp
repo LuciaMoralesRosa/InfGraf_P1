@@ -22,6 +22,8 @@ class Punto3D {
          */
         Punto3D(float x_val = 0, float y_val = 0, float z_val = 0);
 
+        Punto3D(Punto3D origen, Direccion direccion, float distancia);
+
         // Operadores
         Punto3D operator+(const Punto3D& otro) const;
         Direccion operator-(const Punto3D& otro) const;

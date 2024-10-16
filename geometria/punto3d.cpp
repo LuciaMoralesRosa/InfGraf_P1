@@ -3,6 +3,15 @@
 // Constructor
 Punto3D::Punto3D(float x_val, float y_val, float z_val) : x(x_val), y(y_val), z(z_val) {}
 
+Punto3D::Punto3D(Punto3D origen, Direccion direccion, float distancia){
+    Direccion normalizada = direccion.normalize();
+    Direccion nuevaDir = normalizada*distancia;
+    x = origen.getx() + nuevaDir.getx();
+    y = origen.gety() + nuevaDir.gety();
+    z = origen.getz() + nuevaDir.getz();
+}
+
+
 float Punto3D::getx() {
     return x;
 }

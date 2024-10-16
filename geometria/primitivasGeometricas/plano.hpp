@@ -41,7 +41,7 @@ class Plano : public Primitiva {
          * @return La distancia desde el origen del rayo hasta la intersección con 
          *         el plano. Si no hay intersección, se devuelve un vector vacio.
          */
-        vector<float> interseccionRayo(Rayo rayo) const override;
+        Interseccion interseccionRayo(Rayo rayo) const override;
 
 };
 

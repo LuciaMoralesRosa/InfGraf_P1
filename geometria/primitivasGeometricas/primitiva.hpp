@@ -1,7 +1,10 @@
-#ifndef PRIMITIVA_HPP
-#define PRIMITIVA_HPP
+#pragma once 
+
+//#ifndef PRIMITIVA_HPP
+//#define PRIMITIVA_HPP
 
 #include "../punto3d.hpp"
+#include "..\..\rayTracing\interseccion.hpp"
 
 
 class Primitiva{
@@ -20,8 +23,8 @@ class Primitiva{
          *         de la implementación específica y pueden incluir múltiples 
          *         puntos de intersección o estar vacío si no hay intersección.
          */
-        virtual vector<float> interseccionRayo(Rayo rayo) const = 0;
+        virtual Interseccion interseccionRayo(Rayo rayo) const = 0;
 
 };
 
-#endif
+//#endif

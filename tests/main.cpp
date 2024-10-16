@@ -8,7 +8,7 @@ using namespace std;
 //#include "ppmimage.hpp"
 #include <math.h>
 
-// g++ main.cpp ppmimage.cpp angulos.cpp esfera.cpp punto3d.cpp direccion.cpp coordenadas.cpp matriz.cpp -o programamake
+// g++ main.cpp ppmimage.cpp angulos.cpp esfera.cpp punto3d.cpp direccion.cpp coordenadas.cpp matriz.cpp -o programa
 
 
 void probar() {
