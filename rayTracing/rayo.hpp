@@ -11,6 +11,7 @@ class Rayo {
     private:
     Punto3D origen;
     Direccion direccion;
+    Direccion inverso;
     
     public:
 
@@ -39,6 +40,8 @@ class Rayo {
 
         Punto3D getOrigen() const;
         Direccion getDireccion() const;
+        Direccion getInverso() const;
+
             
 };
 

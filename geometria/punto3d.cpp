@@ -11,6 +11,10 @@ Punto3D::Punto3D(Punto3D origen, Direccion direccion, float distancia){
     z = origen.getz() + nuevaDir.getz();
 }
 
+Punto3D Punto3D::restarPuntos(const Punto3D& otro) const{
+    Punto3D nuevoPunto(x - otro.x, y - otro.y, z - otro.z);
+    return nuevoPunto;
+}
 
 float Punto3D::getx() {
     return x;

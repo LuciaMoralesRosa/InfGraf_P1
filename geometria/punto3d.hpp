@@ -24,6 +24,7 @@ class Punto3D {
 
         Punto3D(Punto3D origen, Direccion direccion, float distancia);
 
+        Punto3D restarPuntos(const Punto3D& otro) const;
         // Operadores
         Punto3D operator+(const Punto3D& otro) const;
         Direccion operator-(const Punto3D& otro) const;
