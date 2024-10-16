@@ -113,6 +113,39 @@ float RGB::getB(){
     return b;
 }
 
+RGB RGB::clamping(float valor) {
+    int nuevaR, nuevaG, nuevaB;
+    if(r > valor){
+        nuevaR = valor;
+    }
+    else{
+        nuevaR = r;
+    }
+    if(g > valor){
+        nuevaG = valor;
+    }
+    else{
+        nuevaG = r;
+    }
+    if(b > valor){
+        nuevaB = valor;
+    }
+    else{
+        nuevaB = r;
+    }
+    return RGB(nuevaR, nuevaG, nuevaB);
+}
+
+RGB RGB::equalization(float valorMax, float resolucion){
+    return RGB(r * resolucion / valorMax, g * resolucion / valorMax, b * resolucion / valorMax);
+}
+
+RGB RGB::equalizationClamping(float valorMax, float resolucion, float valor){
+    RGB equalizado = clamping(valorMax, resolucion);
+    return equalizado.clamping(valor);
+}
+
+
 
 ostream& operator<<(ostream& os, const RGB& color) {
     os << "RGB(" << color.r << ", " << color.g << ", " << color.b << ")";
