@@ -42,7 +42,7 @@ Punto3D Camara::generarPuntos() {
     for (int i = tamanyo[0]; i > 0; i--) {
         for (int j = tamanyo[1]; j > 0; j--) {
             //     Esquina abjder + despl arriba j pixeles - tam pixel      + despl izq i pixeles - tam pixel
-            // nota: - tam pixel para centrar punto a mitad del pixel
+            // nota: - tam pixel para centrar punto a mitad del pixel, cambiar cuando se envien multiples rayos
             Punto3D p(  x_esquina + (tam_pixel_u_x*j*2) - (tam_pixel_u_x/2) + (tam_pixel_l_x*i*2) - (tam_pixel_l_x/2), 
                         y_esquina + (tam_pixel_u_y*j*2) - (tam_pixel_u_y/2) + (tam_pixel_l_y*i*2) - (tam_pixel_l_y/2), 
                         z_esquina + (tam_pixel_u_z*j*2) - (tam_pixel_u_z/2) + (tam_pixel_l_z*i*2) - (tam_pixel_l_z/2));
