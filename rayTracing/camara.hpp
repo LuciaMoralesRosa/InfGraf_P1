@@ -3,29 +3,30 @@
 
 #include <iostream>
 #include <math.h>
+#include "../geometria/direccion.hpp"
+#include "../geometria/punto3d.hpp"
 using namespace std;
 
 class Camara {
     private:
-    float x, y, z, is_point; //Array de coordenadas
+    Direccion u, l, f;
+    Punto3D origen;
+    int tamanyo[2]; // Tamaño en píxeles del plano de visualización
     
     public:
 
         /**
          * @brief Constructor de Coordenada con las componentes individuales
          * 
-         * @param u_val Valor de la coordenada x
-         * @param l_val Valor de la coordenada y
-         * @param f_val Valor de la coordenada z
-         * @param is_point_val Indica si es un punto (>0) o una direccion (0)
+         * @param origen_val Punto de origen de la cámara
+         * @param u_val Dirección up
+         * @param l_val Dirección left
+         * @param f_val Dirección forward
+         * @param tam_val Tamaño en píxeles del plano
          */
-        Camara(float x_val = 0, float y_val = 0, float z_val = 0, float is_point_val = 0);
+        Camara(Punto3D origen_val, Direccion u_val, Direccion l_val, Direccion f_val, int tam_val[2]);
 
-
-        /*float getx() const;
-        float gety() const;
-        float getz() const;
-        float getispoint() const;
+        Punto3D generarPuntos();
 
         /**
          * @brief Sobrecarga del operador de inserción << para imprimir un objeto de tipo Matriz.
@@ -39,7 +40,7 @@ class Camara {
          * @param d Referencia constante al objeto Matriz cuyos valores se desean imprimir.
          * @return ostream& El flujo de salida modificado con los valores de la Dirección.
          */
-        /*friend ostream& operator<<(ostream& os, const Camara& c);*/
+        friend ostream& operator<<(ostream& os, const Camara& c);
             
 };
 

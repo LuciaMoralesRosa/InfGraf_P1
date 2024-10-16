@@ -1,5 +1,7 @@
 #include "esfera.hpp"
 
+// NOTA: FALTA SACAR LA NORMAL
+
 Esfera::Esfera(Punto3D _c, float _r) : c(_c), r(_r){ }
 
 Punto3D Esfera::anyadirPunto(float azimut, float altitud){
