@@ -106,7 +106,10 @@ void ImagenPPM::imagenDesdeFichero(string ficheroPPM){
     for(int i = 0; i < altura; i++){
         for(int j = 0; j < base; j++){
             fichero >> r >> g >> b;
-            arrayPixeles[k] = new RGB(stof(r), stof(g), stof(b));
+            // Los pixeles tendran valor [0, MAX]
+            arrayPixeles[k] = new RGB(stof(r) * valorMax / resolucion,
+                                      stof(g) * valorMax / resolucion,
+                                      stof(b) * valorMax / resolucion);
             k++;
         }
     }
@@ -222,9 +225,9 @@ void ImagenPPM::escrituraFichero(string ficheroPPM){
         for (int j = 0; j < base; ++j) {
             RGB* pixel = dynamic_cast<RGB*>(arrayPixeles[k]); 
             k++;
-            fichero << fixed << setprecision(0) << pixel->getR() << " "
-                                                << pixel->getG() << " "
-                                                << pixel->getB() << "     ";
+            fichero << fixed << setprecision(0) << pixel->getR() * resolucion / valorMax << " "
+                                                << pixel->getG() * resolucion / valorMax << " "
+                                                << pixel->getB() * resolucion / valorMax << "     ";
         }
         fichero << endl;
     }
@@ -239,10 +242,13 @@ ImagenPPM ImagenPPM::clamping(float valor){
     try {
         switch (espacioColor){
         case formatoRGB: //RGB
+            // Para cada pixel, hago un corte con el valor parametro y reajusto el nuevo maximo de la imagen
             for(auto pixel : arrayPixeles){
                 RGB* aux = dynamic_cast<RGB*>(pixel); 
                 RGB nuevoPixel = aux->clamping(valor);
                 pixel = new RGB(nuevoPixel.getR(), nuevoPixel.getG(), nuevoPixel.getB());
+                valorMax = valor; //El valor maximo ahora se ha truncado al valor dado
+                resolucion = valor * 255; // Se actualiza la resolucion de la imagen
                 delete aux;
             }
             break;
@@ -254,6 +260,61 @@ ImagenPPM ImagenPPM::clamping(float valor){
     catch(const ValorNoValido& e) {
         std::cerr << e.what() << '\n';
     }
-    
+}
 
+ImagenPPM ImagenPPM::equalization(){
+    float maxCalculado = 0.0;
+    try {
+        switch (espacioColor){
+        case formatoRGB: //RGB
+            // Para cada pixel, hago un corte con el valor parametro y reajusto el nuevo maximo de la imagen
+            for(auto pixel : arrayPixeles){
+                RGB* aux = dynamic_cast<RGB*>(pixel); 
+                RGB nuevoPixel = aux->equalization(valorMax, resolucion);
+                pixel = new RGB(nuevoPixel.getR(), nuevoPixel.getG(), nuevoPixel.getB());
+                maxCalculado = max(maxCalculado, max(nuevoPixel.getR(), max(nuevoPixel.getG(),nuevoPixel.getB())));
+                delete aux;
+            }
+            valorMax = maxCalculado;
+            resolucion = maxCalculado;
+            break;
+        
+        default:
+            break;
+        }
+    }
+    catch(const ValorNoValido& e) {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+ImagenPPM ImagenPPM::equalizationClamping(float valor){
+    float maxCalculado = 0.0;
+    try {
+        switch (espacioColor){
+        case formatoRGB: //RGB
+            // Para cada pixel, hago un corte con el valor parametro y reajusto el nuevo maximo de la imagen
+            for(auto pixel : arrayPixeles){
+                RGB* aux = dynamic_cast<RGB*>(pixel); 
+                RGB nuevoPixel = aux->equalizationClamping(valorMax, resolucion, valor);
+                pixel = new RGB(nuevoPixel.getR(), nuevoPixel.getG(), nuevoPixel.getB());
+                maxCalculado = max(maxCalculado, max(nuevoPixel.getR(), max(nuevoPixel.getG(),nuevoPixel.getB())));
+                delete aux;
+            }
+            if (maxCalculado > valor){
+                valorMax = valor;
+            }
+            else {
+                valorMax = maxCalculado;
+                resolucion = maxCalculado;
+            }
+            break;
+        
+        default:
+            break;
+        }
+    }
+    catch(const ValorNoValido& e) {
+        std::cerr << e.what() << '\n';
+    }
 }

@@ -31,8 +31,12 @@ public:
     float getB();
 
     // tonemapping
+    RGB clamping(float valor = 1);
+    RGB equalization(float valorMax, float resolucion);
+    RGB equalizationClamping(float valorMax, float resolucion, float valor = 1);
 
     friend ostream& operator<<(ostream& os, const RGB& color);
+
 };
 
 #endif // RGB_HPP
