@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <math.h>
+#include <vector>
 #include "../geometria/direccion.hpp"
 #include "../geometria/punto3d.hpp"
 using namespace std;
@@ -26,7 +27,7 @@ class Camara {
          */
         Camara(Punto3D origen_val, Direccion u_val, Direccion l_val, Direccion f_val, int tam_val[2]);
 
-        Punto3D generarPuntos();
+        vector<Punto3D> generarPuntos();
 
         /**
          * @brief Sobrecarga del operador de inserción << para imprimir un objeto de tipo Matriz.

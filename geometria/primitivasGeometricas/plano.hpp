@@ -21,11 +21,11 @@ class Plano : public Primitiva {
          * dirección que actúa como la normal del plano. El punto especifica una 
          * posición en el plano, mientras que la dirección define su orientación.
          *
-         * @param p Un punto en el plano.
-         * @param n La dirección que representa la normal del plano. Se asume que la 
+         * @param _p Un punto en el plano.
+         * @param _n La dirección que representa la normal del plano. Se asume que la 
          *          dirección está normalizada o se normalizará internamente.
          */
-        Plano(Punto3D p, Direccion n);
+        Plano(Punto3D _p, Direccion _n, Color _color);
 
         /**
          * @brief Calcula la intersección de un rayo con un plano.

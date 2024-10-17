@@ -32,8 +32,9 @@ class Esfera : public Primitiva {
          * 
          * @param _c Punto que indica el centro de la esfera
          * @param _r Valor que indica el radio de la esfera
+         * @param _color Color de la esfera
          */
-        Esfera(Punto3D _c, float _r);
+        Esfera(Punto3D _c, float _r, Color _color);
 
         /**
          * @brief Añade un punto en la superficie de una esfera

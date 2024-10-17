@@ -1,9 +1,9 @@
 #include "plano.hpp"
 
 
-Plano::Plano(Punto3D p, Direccion n){
-    punto = p;
-    normal = n.normalize();
+Plano::Plano(Punto3D _p, Direccion _n, Color _color) : Primitiva(_color) {
+    punto = _p;
+    normal = _n.normalize();
 }
 
 Interseccion Plano::interseccionRayo(Rayo rayo) const {

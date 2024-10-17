@@ -4,12 +4,19 @@
 //#define PRIMITIVA_HPP
 
 #include "../punto3d.hpp"
+#include "../color.hpp"
 #include "..\..\rayTracing\interseccion.hpp"
 
 
 class Primitiva{
 
+    private:
+        Color color;
+
     public:
+
+        Primitiva(Color color_val) : color(color_val) {};
+
         /**
          * @brief Calcula la intersección de un rayo con la primitiva.
          *

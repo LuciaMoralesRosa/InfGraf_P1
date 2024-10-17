@@ -2,7 +2,7 @@
 
 // NOTA: FALTA SACAR LA NORMAL
 
-Esfera::Esfera(Punto3D _c, float _r) : c(_c), r(_r){ }
+Esfera::Esfera(Punto3D _c, float _r, Color _color) : c(_c), r(_r), Primitiva(_color) { }
 
 Punto3D Esfera::anyadirPunto(float azimut, float altitud){
     ciudad = Punto3D(c.getx() + r * (float)sin(azimut * M_PI/180.0f),
