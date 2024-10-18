@@ -8,8 +8,8 @@
 #include <vector>
 
 #include "primitiva.hpp"
-#include "punto3d.hpp"
-#include "rayo.hpp"
+#include "../punto3d.hpp"
+#include "../../rayTracing/rayo.hpp"
 using namespace std;
 
 /**

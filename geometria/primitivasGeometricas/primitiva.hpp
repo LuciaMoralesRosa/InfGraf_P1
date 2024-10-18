@@ -4,7 +4,7 @@
 //#define PRIMITIVA_HPP
 
 #include "../punto3d.hpp"
-#include "../color.hpp"
+#include "../../rayTracing/color.hpp"
 #include "..\..\rayTracing\interseccion.hpp"
 
 

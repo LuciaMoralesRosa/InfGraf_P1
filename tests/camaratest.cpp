@@ -6,7 +6,7 @@ using namespace std;
 #include "../geometria/primitivasGeometricas/plano.hpp"
 #include <math.h>
 
-// g++ tests/camaratest.cpp rayTracing/camara.cpp geometria/punto3d.cpp geometria/direccion.cpp
+// g++ tests/camaratest.cpp rayTracing/camara.cpp rayTracing/color.cpp rayTracing/pixel.cpp geometria/punto3d.cpp geometria/direccion.cpp
 
 int main() {
 
@@ -25,7 +25,10 @@ int main() {
     Camara camara(Punto3D(0, 0, -3.5), Direccion(0, 1, 0), Direccion(-1, 0, 0), Direccion(0, 0, 3), tamanyo);
 
     cout << camara << endl;
-    camara.generarPuntos();
+    vector<Pixel> pixs = camara.generarPuntos();
+    for(int i = 0; i < pixs.size(); i++) {
+        std::cout << pixs[i] << endl;
+    }
 
     return 0;
 }

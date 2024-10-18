@@ -9,11 +9,11 @@ Camara::Camara(Punto3D origen_val, Direccion u_val, Direccion l_val, Direccion f
     tamanyo[1] = tam_val[1];
 }
 
-vector<Punto3D> Camara::generarPuntos() {
+vector<Pixel> Camara::generarPuntos() {
     // Tengo que añadir operaciones entre punto y dirección o utilizar coordenadas homogeneas
     // Si no esto queda larguisimo
     // Recorre de arriba a la izquierda a abajo a la derecha
-    vector<Punto3D> puntos;
+    vector<Pixel> pixeles;
 
     // Coordenadas de la esquina de arriba a la izquierda
     float x_esquina = origen.getx() + f.getx() + u.getx() + l.getx();
@@ -37,10 +37,14 @@ vector<Punto3D> Camara::generarPuntos() {
             Punto3D p(  x_esquina - (tam_pixel_u_x*j*2) + (tam_pixel_u_x) - (tam_pixel_l_x*i*2) + (tam_pixel_l_x), 
                         y_esquina - (tam_pixel_u_y*j*2) + (tam_pixel_u_y) - (tam_pixel_l_y*i*2) + (tam_pixel_l_y), 
                         z_esquina - (tam_pixel_u_z*j*2) + (tam_pixel_u_z) - (tam_pixel_l_z*i*2) + (tam_pixel_l_z));
+            Punto3D p2(  x_esquina - (tam_pixel_u_x*j*2) + (tam_pixel_u_x*2) - (tam_pixel_l_x*i*2) + (tam_pixel_l_x*2), 
+                        y_esquina - (tam_pixel_u_y*j*2) + (tam_pixel_u_y*2) - (tam_pixel_l_y*i*2) + (tam_pixel_l_y*2), 
+                        z_esquina - (tam_pixel_u_z*j*2) + (tam_pixel_u_z*2) - (tam_pixel_l_z*i*2) + (tam_pixel_l_z*2));
             //cout << ": " << p << endl;
-            puntos.push_back(p);
+            pixeles.push_back(Pixel(p,p2));
         }
     }
+    return pixeles;
 }
 
 // Print
