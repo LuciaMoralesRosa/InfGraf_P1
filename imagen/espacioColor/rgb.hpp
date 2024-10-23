@@ -13,6 +13,9 @@
 
 using namespace std;
 
+class HSL;  
+class HSV;  
+
 class RGB : public EspacioColor {
 private:
     float r, g, b; // Componentes del color RGB
@@ -20,16 +23,16 @@ private:
 public:
     RGB();
     RGB(float red, float green, float blue);
-    RGB(HSV* color);
-    RGB(HSL* color);
+    RGB(const HSV& color);
+    RGB(const HSL& color);
 
     void mostrarColor() const override;
 
     RGB normalizar(float maximoImagen = 255);
 
-    float getR();
-    float getG();
-    float getB();
+    float getR() const ;
+    float getG() const ;
+    float getB() const ;
 
     // tonemapping
     RGB clamping(float valor = 1);
