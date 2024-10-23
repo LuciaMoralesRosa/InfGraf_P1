@@ -6,6 +6,13 @@ Plano::Plano(Punto3D _p, Direccion _n, RGB _color) : Primitiva(_color) {
     normal = _n.normalize();
 }
 
+Plano::Plano(Direccion n, float distancia, RGB color) : Primitiva(color){
+    normal = n;
+    Punto3D p(n.getx() * distancia, n.gety() * distancia, n.getz() * distancia);
+    punto = p;
+}
+
+
 Interseccion Plano::interseccionRayo(Rayo rayo) const {
     Interseccion resultado;
     resultado.intersecta = false;
