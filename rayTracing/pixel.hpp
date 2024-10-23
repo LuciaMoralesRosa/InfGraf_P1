@@ -35,7 +35,8 @@ class Pixel {
         Pixel(Punto3D _up_left, Punto3D _down_right);
 
         Rayo generarRayoMitad(Punto3D porigen);
-        RGB getColor();
+        RGB getColor() const;
+        void setColor(RGB newcolor);
 
 
         /**

@@ -11,11 +11,11 @@ using namespace std;
 
 int main() {
 
-    //Plano planoizq(Punto3D(1, 0, 0), Direccion(1, 0, 0), RGB(1,0,0));
-    //Plano planoder(Punto3D(-1, 0, 0), Direccion(-1, 0, 0), RGB(0,1,0));
-    //Plano planosuelo(Punto3D(0, 1, 0), Direccion(0, 1, 0), RGB(1,1,1));
-    //Plano planotecho(Punto3D(0, -1, 0), Direccion(0, -1, 0), RGB(1,1,1));
-    //Plano planoatras(Punto3D(0, 0, -1), Direccion(0, 0, -1), RGB(1,1,1));
+    Plano planoizq(Punto3D(1, 0, 0), 1, RGB(1,0,0));
+    Plano planoder(Punto3D(-1, 0, 0), 1, RGB(0,1,0));
+    Plano planosuelo(Punto3D(0, 1, 0), 1, RGB(1,1,1));
+    Plano planotecho(Punto3D(0, -1, 0), 1, RGB(1,1,1));
+    Plano planoatras(Punto3D(0, 0, -1), 1, RGB(1,1,1));
 
     Esfera esfera1(Punto3D(-0.5, -0.7, 0.25), 0.3, RGB(1,0.5,0.5));
     Esfera esfera2(Punto3D(0.5, -0.7, -0.25), 0.3, RGB(0.5,0.5,1));
@@ -28,15 +28,20 @@ int main() {
     Escena escena;
     escena.anyadirPrimitiva(&esfera1);
     escena.anyadirPrimitiva(&esfera2);
+    /*escena.anyadirPrimitiva(&planoizq);
+    escena.anyadirPrimitiva(&planoder);
+    escena.anyadirPrimitiva(&planosuelo);
+    escena.anyadirPrimitiva(&planotecho);
+    escena.anyadirPrimitiva(&planoatras);*/
 
     //cout << camara << endl;
     vector<Pixel> pixs = camara.generarPixeles();
-    for(auto pix : pixs) {
+    for(auto &pix : pixs) {
         escena.intersectarPixel(pix);
     }
-    /*for(int i = 0; i < pixs.size(); i++) {
+    for(int i = 0; i < pixs.size(); i++) {
         std::cout << pixs[i] << endl;
-    }*/
+    }
 
     return 0;
 }

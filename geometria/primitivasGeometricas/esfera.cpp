@@ -48,3 +48,9 @@ Interseccion Esfera::interseccionRayo(Rayo rayo) const {
     }
 }
 
+// Print
+ostream& operator<<(ostream& os, const Esfera& esfera) {
+    os << "Esfera";
+    return os;
+}
+

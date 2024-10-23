@@ -18,6 +18,10 @@ class Primitiva{
 
         Primitiva(RGB color_val) : color(color_val) {};
 
+        RGB getColor() {
+            return color;
+        };
+
         /**
          * @brief Calcula la intersección de un rayo con la primitiva.
          *

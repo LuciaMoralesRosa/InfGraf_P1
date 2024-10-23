@@ -12,12 +12,16 @@ Rayo Pixel::generarRayoMitad(Punto3D porigen) {
 }
 
 
-RGB Pixel::getColor(){
+RGB Pixel::getColor() const{
     return color;
+}
+
+void Pixel::setColor(RGB newcolor){
+    color = newcolor;
 }
 
 // Print
 ostream& operator<<(ostream& os, const Pixel& p) {
-    os << p.color;
+    os << p.getColor();
     return os;
 }

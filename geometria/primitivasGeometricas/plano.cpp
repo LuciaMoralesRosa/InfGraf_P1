@@ -33,3 +33,10 @@ Interseccion Plano::interseccionRayo(Rayo rayo) const {
 
     return resultado;
 }
+
+
+// Print
+ostream& operator<<(ostream& os, const Plano& plano) {
+    os << "Plano";
+    return os;
+}

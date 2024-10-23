@@ -10,7 +10,10 @@ void Escena::anyadirPrimitiva(Primitiva* primitiva) {
 void Escena::intersectarPixel(Pixel& pixel) {
     for (const auto& pri : primitivas) {
         Interseccion inter = pri->interseccionRayo(pixel.rayos.back());
-        cout << inter.intersecta << endl;
+        if (inter.intersecta) {
+            pixel.setColor(pri->getColor());
+            cout << "intersectado" << pixel.getColor() << endl;
+        }
     }
 }
 

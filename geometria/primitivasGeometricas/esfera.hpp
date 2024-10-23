@@ -61,6 +61,20 @@ class Esfera : public Primitiva {
          *         de intersección. Puede contener cero, uno o dos valores.
          */
         Interseccion interseccionRayo(Rayo rayo) const override;
+
+        /**
+         * @brief Sobrecarga del operador de inserción << para imprimir un objeto de tipo Matriz.
+         * 
+         * Esta función permite imprimir los valores de un objeto Matriz utilizando un flujo de salida estándar 
+         * (por ejemplo, cout). La función toma una referencia al flujo de salida y una referencia constante 
+         * a un objeto Matriz, y devuelve el mismo flujo de salida después de imprimir los valores de los miembros 
+         * del objeto Matriz.
+         * 
+         * @param os Flujo de salida en el que se imprimirán los valores de Matriz.
+         * @param esfera Referencia constante al objeto Esfera cuyos valores se desean imprimir.
+         * @return ostream& El flujo de salida modificado con los valores de la Dirección.
+         */
+        friend ostream& operator<<(ostream& os, const Esfera& esfera);
 };
 
 
