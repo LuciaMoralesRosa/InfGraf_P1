@@ -3,9 +3,9 @@
 
 #include <vector>
 #include "primitiva.hpp"
-#include "punto3d.hpp"
-#include "direccion.hpp"
-#include "rayo.hpp"
+#include "../punto3d.hpp"
+#include "../direccion.hpp"
+#include "../../rayTracing/rayo.hpp"
 
 class Plano : public Primitiva {
     private:

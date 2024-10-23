@@ -1,5 +1,6 @@
-#ifndef RGB_HPP
-#define RGB_HPP
+#pragma once
+//#ifndef RGB_HPP
+//#define RGB_HPP
 
 #include <iostream>
 #include <memory.h>
@@ -39,4 +40,4 @@ public:
 
 };
 
-#endif // RGB_HPP
+//#endif // RGB_HPP

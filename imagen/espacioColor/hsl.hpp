@@ -1,5 +1,6 @@
-#ifndef HSL_HPP
-#define HSL_HPP
+#pragma once
+//#ifndef HSL_HPP
+//#define HSL_HPP
 
 #include <iostream>
 
@@ -28,4 +29,4 @@ public:
     friend ostream& operator<<(ostream& os, const HSL& color);
 };
 
-#endif // HSL_HPP
+//#endif // HSL_HPP

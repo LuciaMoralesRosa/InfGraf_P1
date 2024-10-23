@@ -6,6 +6,7 @@
 #include "../punto3d.hpp"
 #include "../../imagen/espacioColor/rgb.hpp"
 #include "..\..\rayTracing\interseccion.hpp"
+#include "../../rayTracing/rayo.hpp"
 
 
 class Primitiva{

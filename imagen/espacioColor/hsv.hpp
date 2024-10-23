@@ -1,5 +1,6 @@
-#ifndef HSV_HPP
-#define HSV_HPP
+#pragma once
+//#ifndef HSV_HPP
+//#define HSV_HPP
 
 #include <iostream>
 
@@ -29,4 +30,4 @@ public:
 
 };
 
-#endif // HSV_HPP
+//#endif // HSV_HPP

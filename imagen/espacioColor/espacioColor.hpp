@@ -1,7 +1,7 @@
 #ifndef ESPACIOCOLOR_HPP
 #define ESPACIOCOLOR_HPP
 
-#include "hsl.hpp"
+#pragma message("Incluyendo espacioColor.hpp")
 
 class EspacioColor {
 public:

@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include <math.h>
-#include "punto3d.hpp"
-#include "direccion.hpp"
+#include "../geometria/punto3d.hpp"
+#include "../geometria/direccion.hpp"
 using namespace std;
 
 class Rayo {
