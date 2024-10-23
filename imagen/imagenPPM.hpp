@@ -9,9 +9,8 @@
 #include <cstring>
 #include <iomanip>
 
-#include "tipoEspacioColor.hpp"
-#include "valorNoValido.hpp"
-#include "rgb.hpp"
+#include "espacioColor/tipoEspacioColor.hpp"
+#include "espacioColor/rgb.hpp"
 
 using namespace std;
 
@@ -38,10 +37,9 @@ public:
         resolucion(0), espacioColor(formatoRGB), arrayPixeles() {}
         
     ImagenPPM(ImagenPPM imagen, tipoEspacioColor tipoEspacio);
-    ImagenPPM(string fichero, tipoEspacioColor espacio = formatoRGB) :
-        espacioColor(espacio) {} //Si no es RGB, hay que normalizar primero
+    ImagenPPM(string fichero, tipoEspacioColor espacio = formatoRGB); //Si no es RGB, hay que normalizar primero
 
-    ImagenPPM(string f, float vmax, string c = "", int b, int a, float res, tipoEspacioColor espacio = formatoRGB, vector<RGB> pixeles);
+    ImagenPPM(string f, float vmax, string c, int b, int a, float res, tipoEspacioColor espacio, vector<RGB> pixeles);
     
     // Conversiones de espacio de color
     void convertirHSL();

@@ -119,7 +119,7 @@ float RGB::getB() const {
 }
 
 RGB RGB::clamping(float valor) {
-    int nuevaR, nuevaG, nuevaB;
+    float nuevaR, nuevaG, nuevaB;
     if(r > valor){
         nuevaR = valor;
     }
@@ -130,13 +130,13 @@ RGB RGB::clamping(float valor) {
         nuevaG = valor;
     }
     else{
-        nuevaG = r;
+        nuevaG = g;
     }
     if(b > valor){
         nuevaB = valor;
     }
     else{
-        nuevaB = r;
+        nuevaB = b;
     }
     return RGB(nuevaR, nuevaG, nuevaB);
 }
