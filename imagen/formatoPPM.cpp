@@ -93,7 +93,7 @@ void FormatoPPM::escrituraFichero(const string& ficheroPPM){
         fichero << "#" + comentario << endl;
     }
     fichero << to_string(width) + " " + to_string(height) << endl;
-    fichero << fixed << setprecision(0) << resolucionColor << endl;
+    fichero << fixed << setprecision(0) << 255 << endl;
 
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {

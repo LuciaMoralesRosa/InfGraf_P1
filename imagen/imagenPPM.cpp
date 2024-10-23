@@ -18,7 +18,8 @@ ImagenPPM::ImagenPPM(string fichero, tipoEspacioColor tipoEspacio){
     }
 }
 
-ImagenPPM::ImagenPPM(ImagenPPM imagen, tipoEspacioColor tipoEspacio){
+ImagenPPM::ImagenPPM(ImagenPPM imagen, tipoEspacioColor tipoEspacio):
+        espacioColor(tipoEspacio) {
     formato = imagen.formato;
     comentario = imagen.comentario;
     altura = imagen.altura;
@@ -43,7 +44,7 @@ ImagenPPM::ImagenPPM(ImagenPPM imagen, tipoEspacioColor tipoEspacio){
     }
 }
 
-ImagenPPM::ImagenPPM(string f, float vmax, string c = "", int b, int a, float res, tipoEspacioColor espacio = formatoRGB, vector<RGB> pixeles){
+ImagenPPM::ImagenPPM(string f, float vmax, string c, int b, int a, float res, tipoEspacioColor espacio, vector<RGB> pixeles){
     formato = f;
     valorMax = vmax;
     comentario = c;
@@ -252,82 +253,70 @@ void ImagenPPM::escrituraFichero(string ficheroPPM){
 
 // tonemapping
 ImagenPPM ImagenPPM::clamping(float valor){
-    try {
-        switch (espacioColor){
-        case formatoRGB: //RGB
-            // Para cada pixel, hago un corte con el valor parametro y reajusto el nuevo maximo de la imagen
-            for(auto pixel : arrayPixeles){
-                RGB* aux = dynamic_cast<RGB*>(pixel); 
-                RGB nuevoPixel = aux->clamping(valor);
-                pixel = new RGB(nuevoPixel.getR(), nuevoPixel.getG(), nuevoPixel.getB());
-                valorMax = valor; //El valor maximo ahora se ha truncado al valor dado
-                resolucion = valor * 255; // Se actualiza la resolucion de la imagen
-                delete aux;
-            }
-            break;
-        
-        default:
-            break;
+    vector<EspacioColor*> nuevoArrayPixeles;
+    switch (espacioColor){
+    case formatoRGB: //RGB
+        // Para cada pixel, hago un corte con el valor parametro y reajusto el nuevo maximo de la imagen
+        for(auto pixel : arrayPixeles){
+            RGB* aux = dynamic_cast<RGB*>(pixel); 
+            RGB nuevoPixel = aux->clamping(valor);
+            EspacioColor* p = new RGB(nuevoPixel.getR(), nuevoPixel.getG(), nuevoPixel.getB());
+            nuevoArrayPixeles.push_back(p);
+            delete aux;
         }
-    }
-    catch(const ValorNoValido& e) {
-        std::cerr << e.what() << '\n';
+        arrayPixeles = nuevoArrayPixeles;
+        valorMax = valor; //El valor maximo ahora se ha truncado al valor dado
+        resolucion = valor * 255; // Se actualiza la resolucion de la imagen
+        break;
+    
+    default:
+        break;
     }
 }
 
 ImagenPPM ImagenPPM::equalization(){
     float maxCalculado = 0.0;
-    try {
-        switch (espacioColor){
-        case formatoRGB: //RGB
-            // Para cada pixel, hago un corte con el valor parametro y reajusto el nuevo maximo de la imagen
-            for(auto pixel : arrayPixeles){
-                RGB* aux = dynamic_cast<RGB*>(pixel); 
-                RGB nuevoPixel = aux->equalization(valorMax, resolucion);
-                pixel = new RGB(nuevoPixel.getR(), nuevoPixel.getG(), nuevoPixel.getB());
-                maxCalculado = max(maxCalculado, max(nuevoPixel.getR(), max(nuevoPixel.getG(),nuevoPixel.getB())));
-                delete aux;
-            }
-            valorMax = maxCalculado;
-            resolucion = maxCalculado;
-            break;
-        
-        default:
-            break;
+    switch (espacioColor){
+    case formatoRGB: //RGB
+        // Para cada pixel, hago un corte con el valor parametro y reajusto el nuevo maximo de la imagen
+        for(auto pixel : arrayPixeles){
+            RGB* aux = dynamic_cast<RGB*>(pixel); 
+            RGB nuevoPixel = aux->equalization(valorMax, resolucion);
+            pixel = new RGB(nuevoPixel.getR(), nuevoPixel.getG(), nuevoPixel.getB());
+            maxCalculado = max(maxCalculado, max(nuevoPixel.getR(), max(nuevoPixel.getG(),nuevoPixel.getB())));
+            delete aux;
         }
-    }
-    catch(const ValorNoValido& e) {
-        std::cerr << e.what() << '\n';
+        valorMax = maxCalculado;
+        resolucion = maxCalculado;
+        break;
+    
+    default:
+        break;
     }
 }
 
 ImagenPPM ImagenPPM::equalizationClamping(float valor){
     float maxCalculado = 0.0;
-    try {
-        switch (espacioColor){
-        case formatoRGB: //RGB
-            // Para cada pixel, hago un corte con el valor parametro y reajusto el nuevo maximo de la imagen
-            for(auto pixel : arrayPixeles){
-                RGB* aux = dynamic_cast<RGB*>(pixel); 
-                RGB nuevoPixel = aux->equalizationClamping(valorMax, resolucion, valor);
-                pixel = new RGB(nuevoPixel.getR(), nuevoPixel.getG(), nuevoPixel.getB());
-                maxCalculado = max(maxCalculado, max(nuevoPixel.getR(), max(nuevoPixel.getG(),nuevoPixel.getB())));
-                delete aux;
-            }
-            if (maxCalculado > valor){
-                valorMax = valor;
-            }
-            else {
-                valorMax = maxCalculado;
-                resolucion = maxCalculado;
-            }
-            break;
-        
-        default:
-            break;
+    switch (espacioColor){
+    case formatoRGB: //RGB
+        // Para cada pixel, hago un corte con el valor parametro y reajusto el nuevo maximo de la imagen
+        for(auto pixel : arrayPixeles){
+            RGB* aux = dynamic_cast<RGB*>(pixel); 
+            RGB nuevoPixel = aux->equalizationClamping(valorMax, resolucion, valor);
+            pixel = new RGB(nuevoPixel.getR(), nuevoPixel.getG(), nuevoPixel.getB());
+            maxCalculado = max(maxCalculado, max(nuevoPixel.getR(), max(nuevoPixel.getG(),nuevoPixel.getB())));
+            delete aux;
         }
-    }
-    catch(const ValorNoValido& e) {
-        std::cerr << e.what() << '\n';
+        if (maxCalculado > valor){
+            valorMax = valor;
+        }
+        else {
+            valorMax = maxCalculado;
+            resolucion = maxCalculado;
+        }
+        break;
+    
+    default:
+        break;
     }
 }
