@@ -43,6 +43,19 @@ ImagenPPM::ImagenPPM(ImagenPPM imagen, tipoEspacioColor tipoEspacio){
     }
 }
 
+ImagenPPM::ImagenPPM(string f, float vmax, string c = "", int b, int a, float res, tipoEspacioColor espacio = formatoRGB, vector<RGB> pixeles){
+    formato = f;
+    valorMax = vmax;
+    comentario = c;
+    base = b;
+    altura = a;
+    resolucion = res;
+    espacioColor = espacio;
+    for(auto p : pixeles){
+        arrayPixeles.push_back(&p);
+    }
+}
+
 void ImagenPPM::imagenDesdeFichero(string ficheroPPM){
     ifstream fichero(ficheroPPM);
     string lineaAux;

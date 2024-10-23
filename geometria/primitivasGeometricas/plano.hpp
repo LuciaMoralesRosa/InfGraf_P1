@@ -27,6 +27,8 @@ class Plano : public Primitiva {
          */
         Plano(Punto3D _p, Direccion _n, RGB _color);
 
+        Plano(Direccion normal, float distancia, RGB color);
+
         /**
          * @brief Calcula la intersección de un rayo con un plano.
          *
