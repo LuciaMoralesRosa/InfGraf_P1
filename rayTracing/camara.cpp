@@ -49,7 +49,7 @@ vector<Pixel> Camara::generarPuntos() {
 
 // Print
 ostream& operator<<(ostream& os, const Camara& c) {
-    os << "Camara: (Origen: " << c.origen << ", Up: " << c.u << ", Left: " << c.l << ", Forward: " << c.f << ", Tamanyo: " << c.tamanyo[0] << "x" << c.tamanyo[1] << ")";
+    os << "Camara: (Origen: "/* << c.origen << ", Up: " << c.u << ", Left: " << c.l << ", Forward: " << c.f << ", Tamanyo: " << c.tamanyo[0] << "x" << c.tamanyo[1]*/ << ")";
     return os;
 }
 

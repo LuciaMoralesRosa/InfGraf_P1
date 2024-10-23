@@ -2,6 +2,7 @@
 #define ESFERA_HPP
 
 #define _USE_MATH_DEFINES
+#define M_PI           3.14159265358979323846  /* pi */
 
 #include <iostream>
 #include <math.h>

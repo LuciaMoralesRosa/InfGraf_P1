@@ -1,5 +1,6 @@
 #ifndef DIRECCION_HPP
 #define DIRECCION_HPP
+#define M_PI           3.14159265358979323846  /* pi */
 
 #include <iostream>
 #include <math.h>

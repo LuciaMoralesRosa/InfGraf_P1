@@ -3,13 +3,33 @@
         {
             "type": "cppbuild",
             "label": "C/C++: gcc.exe build active file",
-            "command": "C:\\MinGW\\bin\\gcc.exe",
+            //"command": "C:\\MinGW\\bin\\gcc.exe",
+            "command": "g++",
             "args": [
+                "-std=c++11",
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                "${workspaceFolder}/tests/camaratest.cpp",  // El archivo principal a compilar
+                "${workspaceFolder}/geometria/primitivasGeometricas/esfera.cpp",           // Agrega tus archivos .cpp
+                "${workspaceFolder}/geometria/primitivasGeometricas/plano.cpp",
+                "${workspaceFolder}/geometria/primitivasGeometricas/triangulo.cpp",
+                //"${workspaceFolder}/geometria/angulos.cpp",
+                //"${workspaceFolder}/geometria/coordenada.cpp",
+                "${workspaceFolder}/geometria/direccion.cpp",
+                "${workspaceFolder}/geometria/matriz4x4.cpp",
+                "${workspaceFolder}/geometria/punto3d.cpp",
+                //"${workspaceFolder}/geometria/transformaciones.cpp",
+                "${workspaceFolder}/imagen/espacioColor/rgb.cpp",
+                "${workspaceFolder}/rayTracing/camara.cpp",
+                "${workspaceFolder}/rayTracing/pixel.cpp",
+                "${workspaceFolder}/rayTracing/rayo.cpp",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "${workspaceFolder}/bin/camaratest",        // Ruta de salida del ejecutable
+                "-I", "${workspaceFolder}/geometria",
+                "-I", "${workspaceFolder}/geometria/primitivasGeometricas",
+                "-I", "${workspaceFolder}/imagen",
+                "-I", "${workspaceFolder}/rayTracing",
+                "-lstdc++"
             ],
             "options": {
                 "cwd": "${fileDirname}"
