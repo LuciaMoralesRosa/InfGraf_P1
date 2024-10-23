@@ -10,14 +10,14 @@ using namespace std;
 
 int main() {
 
-    Plano planoizq(Punto3D(1, 0, 0), Direccion(1, 0, 0), Color(1,0,0));
-    Plano planoder(Punto3D(-1, 0, 0), Direccion(-1, 0, 0), Color(0,1,0));
-    Plano planosuelo(Punto3D(0, 1, 0), Direccion(0, 1, 0), Color(1,1,1));
-    Plano planotecho(Punto3D(0, -1, 0), Direccion(0, -1, 0), Color(1,1,1));
-    Plano planoatras(Punto3D(0, 0, -1), Direccion(0, 0, -1), Color(1,1,1));
+    Plano planoizq(Punto3D(1, 0, 0), Direccion(1, 0, 0), RGB(1,0,0));
+    Plano planoder(Punto3D(-1, 0, 0), Direccion(-1, 0, 0), RGB(0,1,0));
+    Plano planosuelo(Punto3D(0, 1, 0), Direccion(0, 1, 0), RGB(1,1,1));
+    Plano planotecho(Punto3D(0, -1, 0), Direccion(0, -1, 0), RGB(1,1,1));
+    Plano planoatras(Punto3D(0, 0, -1), Direccion(0, 0, -1), RGB(1,1,1));
 
-    Esfera esfera1(Punto3D(-0.5, -0.7, 0.25), 0.3, Color(1,0.5,0.5));
-    Esfera esfera2(Punto3D(0.5, -0.7, -0.25), 0.3, Color(0.5,0.5,1));
+    Esfera esfera1(Punto3D(-0.5, -0.7, 0.25), 0.3, RGB(1,0.5,0.5));
+    Esfera esfera2(Punto3D(0.5, -0.7, -0.25), 0.3, RGB(0.5,0.5,1));
     
     int tamanyo[2];
     tamanyo[0] = 8;

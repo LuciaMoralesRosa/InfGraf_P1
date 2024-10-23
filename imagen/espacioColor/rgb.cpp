@@ -141,7 +141,7 @@ RGB RGB::equalization(float valorMax, float resolucion){
 }
 
 RGB RGB::equalizationClamping(float valorMax, float resolucion, float valor){
-    RGB equalizado = clamping(valorMax, resolucion);
+    RGB equalizado = clamping(valorMax);
     return equalizado.clamping(valor);
 }
 

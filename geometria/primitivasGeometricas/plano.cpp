@@ -1,7 +1,7 @@
 #include "plano.hpp"
 
 
-Plano::Plano(Punto3D _p, Direccion _n, Color _color) : Primitiva(_color) {
+Plano::Plano(Punto3D _p, Direccion _n, RGB _color) : Primitiva(_color) {
     punto = _p;
     normal = _n.normalize();
 }

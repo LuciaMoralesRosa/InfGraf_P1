@@ -2,7 +2,7 @@
 #define PIXEL_HPP
 
 #include <iostream>
-#include "color.hpp"
+#include "../imagen/espacioColor/rgb.hpp"
 #include "../geometria/punto3d.hpp"
 using namespace std;
 
@@ -10,7 +10,7 @@ class Pixel {
     private:
     Punto3D up_left;
     Punto3D down_right;
-    Color color;
+    RGB color;
     
     public:
 
@@ -21,7 +21,7 @@ class Pixel {
          * @param _down_right Esquina arriba a la izquierda del Pixel
          * @param _color Color del pixel
          */
-        Pixel(Punto3D _up_left, Punto3D _down_right, Color _color);
+        Pixel(Punto3D _up_left, Punto3D _down_right, RGB _color);
 
         /**
          * @brief Constructor de Pixel
