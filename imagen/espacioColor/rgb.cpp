@@ -148,6 +148,6 @@ RGB RGB::equalizationClamping(float valorMax, float resolucion, float valor){
 
 
 ostream& operator<<(ostream& os, const RGB& color) {
-    os << "RGB(" << color.r << ", " << color.g << ", " << color.b << ")";
+    os << "RGB(" << color.getR() << ", " << color.getG() << ", " << color.getB() << ")";
     return os;
 }

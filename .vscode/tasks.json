@@ -3,8 +3,8 @@
         {
             "type": "cppbuild",
             "label": "C/C++: gcc.exe build active file",
-            //"command": "C:\\MinGW\\bin\\gcc.exe",
-            "command": "g++",
+            "command": "C:\\MinGW\\bin\\gcc.exe",
+            //"command": "g++",
             "args": [
                 "-std=c++11",
                 "-fdiagnostics-color=always",
@@ -20,6 +20,8 @@
                 "${workspaceFolder}/geometria/punto3d.cpp",
                 //"${workspaceFolder}/geometria/transformaciones.cpp",
                 "${workspaceFolder}/imagen/espacioColor/rgb.cpp",
+                "${workspaceFolder}/imagen/espacioColor/hsv.cpp",
+                "${workspaceFolder}/imagen/espacioColor/hsl.cpp",
                 "${workspaceFolder}/rayTracing/camara.cpp",
                 "${workspaceFolder}/rayTracing/pixel.cpp",
                 "${workspaceFolder}/rayTracing/rayo.cpp",
