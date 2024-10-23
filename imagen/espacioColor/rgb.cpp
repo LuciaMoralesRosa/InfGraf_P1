@@ -3,10 +3,10 @@
 // Constructores
 RGB::RGB(float red, float green, float blue) : r(red), g(green), b(blue) {}
 
-RGB::RGB(HSV* color){
-    float h = color->getH();
-    float s = color->getS();
-    float v = color->getV();
+RGB::RGB(const HSV& color){
+    float h = color.getH();
+    float s = color.getS();
+    float v = color.getV();
 
     float red = 0, green = 0, blue = 0;
 
@@ -48,10 +48,10 @@ RGB::RGB(HSV* color){
     b = static_cast<int>((blue + m) * 255);
 }
 
-RGB::RGB(HSL* color){
-    float h = color->getH();
-    float s = color->getS();
-    float l = color->getL();
+RGB::RGB(const HSL& color){
+    float h = color.getH();
+    float s = color.getS();
+    float l = color.getL();
 
     float C = (1 - fabs(2 * l - 1)) * s;   // Chroma
     float X = C * (1 - fabs(fmod(h / 60.0, 2) - 1));
@@ -101,15 +101,15 @@ RGB RGB::normalizar(float maximoImagen){
     return RGB(r/maximoImagen, g/maximoImagen, b/maximoImagen);
 }
 
-float RGB::getR(){
+float RGB::getR() const {
     return r;
 }
 
-float RGB::getG(){
+float RGB::getG() const {
     return g;
 }
 
-float RGB::getB(){
+float RGB::getB() const {
     return b;
 }
 

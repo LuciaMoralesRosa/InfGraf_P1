@@ -3,10 +3,10 @@
 // Constructor
 HSV::HSV(float hue, float saturation, float value) : h(hue), s(saturation), v(value) {}
 
-HSV::HSV(RGB* color){
-    float r = color->getR();
-    float g = color->getG();
-    float b = color->getB();
+HSV::HSV(const RGB& color){
+    float r = color.getR();
+    float g = color.getG();
+    float b = color.getB();
 
     // Encuentra el valor máximo y mínimo
     float cmax = max(r, max(g, b));
@@ -37,11 +37,11 @@ HSV::HSV(RGB* color){
     }
 }
 
-HSV::HSV(HSL* color){
-    float s_hsl = color->getS();
-    float l = color->getL();
+HSV::HSV(const HSL& color){
+    float s_hsl = color.getS();
+    float l = color.getL();
+    h = color.getH();
 
-    h = color->getH();
     v = l + s_hsl * min(l, 1 - l);
     
     if(v == 0){
@@ -53,15 +53,15 @@ HSV::HSV(HSL* color){
 
 }
 
-float HSV::getH(){
+float HSV::getH() const{
     return h;
 }
 
-float HSV::getS(){
+float HSV::getS() const{
     return s;
 }
 
-float HSV::getV(){
+float HSV::getV() const{
     return v;
 }
 

@@ -10,6 +10,9 @@
 
 using namespace std;
 
+class RGB;  
+class HSV;  
+
 class HSL : public EspacioColor {
 private:
     float h, s, l; // Componentes del color HSL
@@ -17,12 +20,12 @@ private:
 public:
     HSL();
     HSL(float hue, float saturation, float lightness);
-    HSL(RGB* color);
-    HSL(HSV* color);
+    HSL(const RGB& color);
+    HSL(const HSV& color);
 
-    float getH();
-    float getS();
-    float getL();
+    float getH() const ;
+    float getS() const ;
+    float getL() const ;
 
     void mostrarColor() const override;
 

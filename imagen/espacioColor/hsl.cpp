@@ -3,10 +3,10 @@
 // Constructor
 HSL::HSL(float hue, float saturation, float lightness) : h(hue), s(saturation), l(lightness) {}
 
-HSL::HSL(RGB* color){
-    float r = color->getR();
-    float g = color->getG();
-    float b = color->getB();
+HSL::HSL(const RGB& color){
+    float r = color.getR();
+    float g = color.getG();
+    float b = color.getB();
 
     float cMax = max(r, max(g, b));
     float cMin = min(r, min(g, b));
@@ -50,11 +50,11 @@ HSL::HSL(RGB* color){
     }
 }
 
-HSL::HSL(HSV* color){
-    float s_hsv = color->getS();
-    float v = color->getV();
+HSL::HSL(const HSV& color){
+    float s_hsv = color.getS();
+    float v = color.getV();
 
-    h = color->getH();
+    h = color.getH();
     l = v * (1 - (s_hsv / 2));
     if(l == 0 || l == 1){
         s = 0;
@@ -65,15 +65,15 @@ HSL::HSL(HSV* color){
 
 }
 
-float HSL::getH(){
+float HSL::getH() const{
     return h;
 }
 
-float HSL::getS(){
+float HSL::getS() const{
     return s;
 }
 
-float HSL::getL(){
+float HSL::getL() const{
     return l;
 }
 
