@@ -9,7 +9,7 @@ Camara::Camara(Punto3D origen_val, Direccion u_val, Direccion l_val, Direccion f
     tamanyo[1] = tam_val[1];
 }
 
-vector<Pixel> Camara::generarPuntos() {
+vector<Pixel> Camara::generarPixeles() {
     // Tengo que añadir operaciones entre punto y dirección o utilizar coordenadas homogeneas
     // Si no esto queda larguisimo
     // Recorre de arriba a la izquierda a abajo a la derecha
@@ -46,6 +46,24 @@ vector<Pixel> Camara::generarPuntos() {
     }
     return pixeles;
 }
+
+ImagenPPM Camara::crearImagenPPM(){
+    float valorMax = 0;
+    float v;
+    vector<RGB> pixeles;
+    vector<Pixel> arrayPixeles = generarPixeles();
+    for(auto p : arrayPixeles){
+        v = p.getColor().maximo();
+        pixeles.push_back(p.getColor());
+        if(v > valorMax){
+            valorMax = v;
+        }
+    }
+    string formato = "P3";
+    string comentario = "";
+    ImagenPPM(formato, valorMax, comentario, tamanyo[0], tamanyo[1], 1, formatoRGB, pixeles);
+}
+
 
 // Print
 ostream& operator<<(ostream& os, const Camara& c) {

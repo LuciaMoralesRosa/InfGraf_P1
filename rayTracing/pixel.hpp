@@ -31,6 +31,8 @@ class Pixel {
          */
         Pixel(Punto3D _up_left, Punto3D _down_right);
 
+        RGB getColor();
+
 
         /**
          * @brief Sobrecarga del operador de inserción << para imprimir un objeto de tipo Rayo.

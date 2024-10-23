@@ -41,6 +41,7 @@ public:
     ImagenPPM(string fichero, tipoEspacioColor espacio = formatoRGB) :
         espacioColor(espacio) {} //Si no es RGB, hay que normalizar primero
 
+    ImagenPPM(string f, float vmax, string c = "", int b, int a, float res, tipoEspacioColor espacio = formatoRGB, vector<RGB> pixeles);
     
     // Conversiones de espacio de color
     void convertirHSL();

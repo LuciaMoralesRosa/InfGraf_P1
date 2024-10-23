@@ -101,6 +101,11 @@ RGB RGB::normalizar(float maximoImagen){
     return RGB(r/maximoImagen, g/maximoImagen, b/maximoImagen);
 }
 
+float RGB::maximo() const{
+    return max(r, max(b, g));
+}
+
+
 float RGB::getR() const {
     return r;
 }

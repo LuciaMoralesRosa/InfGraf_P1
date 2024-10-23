@@ -5,6 +5,8 @@
 #include <iostream>
 #include <memory.h>
 #include <math.h>
+#include <algorithm>  // Para std::max
+
 
 
 #include "espacioColor.hpp"
@@ -29,6 +31,7 @@ public:
     void mostrarColor() const override;
 
     RGB normalizar(float maximoImagen = 255);
+    float maximo() const;
 
     float getR() const ;
     float getG() const ;
