@@ -26,10 +26,7 @@ class Primitiva{
          * rayo y la primitiva geométrica.
          *
          * @param rayo El rayo que se utilizará para calcular la intersección.
-         * @return Un vector de flotantes que representa los puntos de 
-         *         intersección. El contenido y el tamaño del vector dependen 
-         *         de la implementación específica y pueden incluir múltiples 
-         *         puntos de intersección o estar vacío si no hay intersección.
+         * @return Una intersección
          */
         virtual Interseccion interseccionRayo(Rayo rayo) const = 0;
 

@@ -23,6 +23,14 @@ class Rayo {
          */
         Rayo(Punto3D origen_val, Direccion direccion_val);
 
+        /**
+         * @brief Constructor de Rayo
+         * 
+         * @param porigen_val Punto de origen del Rayo
+         * @param pdestino_val Punto hacia el que va el Rayo
+         */
+        Rayo(Punto3D porigen_val, Punto3D pdestino_val);
+
 
         /**
          * @brief Sobrecarga del operador de inserción << para imprimir un objeto de tipo Rayo.

@@ -2,14 +2,17 @@
 #define PIXEL_HPP
 
 #include <iostream>
+#include <vector>
 #include "../imagen/espacioColor/rgb.hpp"
 #include "../geometria/punto3d.hpp"
+#include "rayo.hpp"
 using namespace std;
 
 class Pixel {
     private:
     Punto3D up_left;
     Punto3D down_right;
+    vector<Rayo> rayos;
     RGB color;
     
     public:
@@ -30,6 +33,8 @@ class Pixel {
          * @param _down_right Esquina arriba a la izquierda del Pixel
          */
         Pixel(Punto3D _up_left, Punto3D _down_right);
+
+        Rayo generarRayoMitad(Punto3D porigen);
 
 
         /**
