@@ -3,7 +3,7 @@
 // Constructor
 HSL::HSL(float hue, float saturation, float lightness) : h(hue), s(saturation), l(lightness) {}
 
-HSL::HSL(const RGB& color){
+HSL::HSL(const RGB color){
     float r = color.getR();
     float g = color.getG();
     float b = color.getB();
@@ -50,7 +50,7 @@ HSL::HSL(const RGB& color){
     }
 }
 
-HSL::HSL(const HSV& color){
+HSL::HSL(const HSV color){
     float s_hsv = color.getS();
     float v = color.getV();
 

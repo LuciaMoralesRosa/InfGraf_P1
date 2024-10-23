@@ -23,8 +23,8 @@ private:
 public:
     RGB();
     RGB(float red, float green, float blue);
-    RGB(const HSV& color);
-    RGB(const HSL& color);
+    RGB(const HSV color);
+    RGB(const HSL color);
 
     void mostrarColor() const override;
 

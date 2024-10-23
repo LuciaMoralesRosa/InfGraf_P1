@@ -137,15 +137,15 @@ void ImagenPPM::convertirHSL(){
     switch(espacioColor){
         case formatoHSV:
             for(auto pixel : arrayPixeles){
-                EspacioColor* aux = pixel;
-                pixel = new HSL(dynamic_cast<HSV*>(aux));
+                HSV* aux = dynamic_cast<HSV*>(pixel); //Casteo el EspacioColor* a un tipo VSH*
+                pixel = new HSL(*aux);
                 delete aux;
             }
             break;
         case formatoRGB:
             for(auto pixel : arrayPixeles){
                 EspacioColor* aux = pixel;
-                pixel = new HSL(dynamic_cast<RGB*>(aux));
+                pixel = new HSL(*dynamic_cast<RGB*>(aux));
                 delete aux;
             }
             break;
@@ -161,14 +161,14 @@ void ImagenPPM::convertirHSV(){
         case formatoHSL:
             for(auto pixel : arrayPixeles){
                 EspacioColor* aux = pixel;
-                pixel = new HSV(dynamic_cast<HSL*>(aux));
+                pixel = new HSV(*dynamic_cast<HSL*>(aux));
                 delete aux;
             }
             break;
         case formatoRGB:
             for(auto pixel : arrayPixeles){
                 EspacioColor* aux = pixel;
-                pixel = new HSV(dynamic_cast<RGB*>(aux));
+                pixel = new HSV(*dynamic_cast<RGB*>(aux));
                 delete aux;
             }
             break;
@@ -183,14 +183,14 @@ void ImagenPPM::convertirRGB(){
         case formatoHSV:
             for(auto pixel : arrayPixeles){
                 EspacioColor* aux = pixel;
-                pixel = new RGB(dynamic_cast<HSV*>(aux));
+                pixel = new RGB(*dynamic_cast<HSV*>(aux));
                 delete aux;
             }
             break;
         case formatoHSL:
             for(auto pixel : arrayPixeles){
                 EspacioColor* aux = pixel;
-                pixel = new RGB(dynamic_cast<HSL*>(aux));
+                pixel = new RGB(*dynamic_cast<HSL*>(aux));
                 delete aux;
             }
             break;

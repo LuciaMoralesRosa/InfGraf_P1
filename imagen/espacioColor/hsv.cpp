@@ -3,7 +3,7 @@
 // Constructor
 HSV::HSV(float hue, float saturation, float value) : h(hue), s(saturation), v(value) {}
 
-HSV::HSV(const RGB& color){
+HSV::HSV(const RGB color){
     float r = color.getR();
     float g = color.getG();
     float b = color.getB();
@@ -37,7 +37,7 @@ HSV::HSV(const RGB& color){
     }
 }
 
-HSV::HSV(const HSL& color){
+HSV::HSV(const HSL color){
     float s_hsl = color.getS();
     float l = color.getL();
     h = color.getH();

@@ -20,8 +20,8 @@ private:
 public:
     HSV();
     HSV(float hue, float saturation, float value);
-    HSV(const RGB& color);
-    HSV(const HSL& color);
+    HSV(const RGB color);
+    HSV(const HSL color);
 
     float getH() const;
     float getS() const;

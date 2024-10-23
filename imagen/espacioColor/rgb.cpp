@@ -3,7 +3,7 @@
 // Constructores
 RGB::RGB(float red, float green, float blue) : r(red), g(green), b(blue) {}
 
-RGB::RGB(const HSV& color){
+RGB::RGB(const HSV color){
     float h = color.getH();
     float s = color.getS();
     float v = color.getV();
@@ -48,7 +48,7 @@ RGB::RGB(const HSV& color){
     b = static_cast<int>((blue + m) * 255);
 }
 
-RGB::RGB(const HSL& color){
+RGB::RGB(const HSL color){
     float h = color.getH();
     float s = color.getS();
     float l = color.getL();
