@@ -4,6 +4,7 @@ using namespace std;
 #include "../rayTracing/camara.hpp"
 #include "../geometria/primitivasGeometricas/esfera.hpp"
 #include "../geometria/primitivasGeometricas/plano.hpp"
+#include "../geometria/primitivasGeometricas/escena.hpp"
 #include <math.h>
 
 // g++ tests/camaratest.cpp rayTracing/camara.cpp rayTracing/color.cpp rayTracing/pixel.cpp geometria/punto3d.cpp geometria/direccion.cpp
@@ -24,11 +25,18 @@ int main() {
     tamanyo[1] = 8;
     Camara camara(Punto3D(0, 0, -3.5), Direccion(0, 1, 0), Direccion(-1, 0, 0), Direccion(0, 0, 3), tamanyo);
 
+    Escena escena;
+    escena.anyadirPrimitiva(&esfera1);
+    escena.anyadirPrimitiva(&esfera2);
+
     //cout << camara << endl;
-    vector<Pixel> pixs = camara.generarPuntos();
-    for(int i = 0; i < pixs.size(); i++) {
-        std::cout << pixs[i] << endl;
+    vector<Pixel> pixs = camara.generarPixeles();
+    for(auto pix : pixs) {
+        escena.intersectarPixel(pix);
     }
+    /*for(int i = 0; i < pixs.size(); i++) {
+        std::cout << pixs[i] << endl;
+    }*/
 
     return 0;
 }

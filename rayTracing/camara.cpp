@@ -41,13 +41,15 @@ vector<Pixel> Camara::generarPixeles() {
                         y_esquina - (tam_pixel_u_y*j*2) + (tam_pixel_u_y*2) - (tam_pixel_l_y*i*2) + (tam_pixel_l_y*2), 
                         z_esquina - (tam_pixel_u_z*j*2) + (tam_pixel_u_z*2) - (tam_pixel_l_z*i*2) + (tam_pixel_l_z*2));
             //cout << ": " << p << endl;
-            pixeles.push_back(Pixel(p,p2));
+            Pixel pix(p, p2);
+            pix.generarRayoMitad(origen);
+            pixeles.push_back(pix);
         }
     }
     return pixeles;
 }
 
-ImagenPPM Camara::crearImagenPPM(){
+/*ImagenPPM Camara::crearImagenPPM(){
     float valorMax = 0;
     float v;
     vector<RGB> pixeles;
@@ -62,7 +64,7 @@ ImagenPPM Camara::crearImagenPPM(){
     string formato = "P3";
     string comentario = "";
     ImagenPPM(formato, valorMax, comentario, tamanyo[0], tamanyo[1], 1, formatoRGB, pixeles);
-}
+}*/
 
 
 // Print

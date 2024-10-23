@@ -10,13 +10,12 @@
 
 class Escena {
     private:
-        vector<Primitiva> primitivas;
-        
+        vector<Primitiva*> primitivas;
 
     public:
 
         /**
-         * @brief Constructor que crea unam escena
+         * @brief Constructor que crea una escena
          */
         Escena();
 
@@ -25,7 +24,7 @@ class Escena {
          *
          * @param primitiva Primitiva que añadir a la escena.
          */
-        void anyadirPrimitiva(const Primitiva& primitiva);
+        void anyadirPrimitiva(Primitiva* primitiva);
 
         /**
          * @brief Intersecta un Pixel con la escena

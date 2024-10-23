@@ -6,7 +6,7 @@
 #include <vector>
 #include "../geometria/direccion.hpp"
 #include "../geometria/punto3d.hpp"
-#include "../imagen/imagenPPM.hpp"
+//#include "../imagen/imagenPPM.hpp"
 #include "pixel.hpp"
 using namespace std;
 
@@ -31,7 +31,7 @@ class Camara {
 
         vector<Pixel> generarPixeles();
 
-        ImagenPPM crearImagenPPM();
+        //ImagenPPM crearImagenPPM();
 
         /**
          * @brief Sobrecarga del operador de inserción << para imprimir un objeto de tipo Matriz.

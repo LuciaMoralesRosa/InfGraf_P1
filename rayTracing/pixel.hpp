@@ -12,10 +12,10 @@ class Pixel {
     private:
     Punto3D up_left;
     Punto3D down_right;
-    vector<Rayo> rayos;
     RGB color;
     
     public:
+    vector<Rayo> rayos;
 
         /**
          * @brief Constructor de Pixel
