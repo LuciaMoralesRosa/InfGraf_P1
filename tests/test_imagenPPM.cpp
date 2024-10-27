@@ -24,8 +24,9 @@ int main(){
 
     cout << "Escribiendo fichero..." << endl;
 
-    imagen.clamping(0.5); 
-    imagen.escrituraFichero("ficheroClamping_05.ppm"); //ok
+    //imagen.equalizationClamping(0.5); 
+    imagen.equalization();
+    imagen.escrituraFichero("ficheroEqualizationClamp.ppm"); //ok
 
 
 

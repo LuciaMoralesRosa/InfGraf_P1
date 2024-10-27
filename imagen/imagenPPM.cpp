@@ -276,16 +276,20 @@ ImagenPPM ImagenPPM::clamping(float valor){
 
 ImagenPPM ImagenPPM::equalization(){
     float maxCalculado = 0.0;
+    vector<EspacioColor*> nuevoArrayPixeles;
     switch (espacioColor){
     case formatoRGB: //RGB
         // Para cada pixel, hago un corte con el valor parametro y reajusto el nuevo maximo de la imagen
         for(auto pixel : arrayPixeles){
             RGB* aux = dynamic_cast<RGB*>(pixel); 
             RGB nuevoPixel = aux->equalization(valorMax, resolucion);
-            pixel = new RGB(nuevoPixel.getR(), nuevoPixel.getG(), nuevoPixel.getB());
+            EspacioColor* p = new RGB(nuevoPixel.getR(), nuevoPixel.getG(), nuevoPixel.getB());
+            nuevoArrayPixeles.push_back(p);
             maxCalculado = max(maxCalculado, max(nuevoPixel.getR(), max(nuevoPixel.getG(),nuevoPixel.getB())));
             delete aux;
         }
+        arrayPixeles = nuevoArrayPixeles;
+
         valorMax = maxCalculado;
         resolucion = maxCalculado;
         break;
@@ -297,13 +301,17 @@ ImagenPPM ImagenPPM::equalization(){
 
 ImagenPPM ImagenPPM::equalizationClamping(float valor){
     float maxCalculado = 0.0;
+    vector<EspacioColor*> nuevoArrayPixeles;
     switch (espacioColor){
     case formatoRGB: //RGB
         // Para cada pixel, hago un corte con el valor parametro y reajusto el nuevo maximo de la imagen
         for(auto pixel : arrayPixeles){
             RGB* aux = dynamic_cast<RGB*>(pixel); 
+            aux->mostrarColor();
             RGB nuevoPixel = aux->equalizationClamping(valorMax, resolucion, valor);
-            pixel = new RGB(nuevoPixel.getR(), nuevoPixel.getG(), nuevoPixel.getB());
+            EspacioColor* p = new RGB(nuevoPixel.getR(), nuevoPixel.getG(), nuevoPixel.getB());
+            p->mostrarColor();
+            nuevoArrayPixeles.push_back(p);
             maxCalculado = max(maxCalculado, max(nuevoPixel.getR(), max(nuevoPixel.getG(),nuevoPixel.getB())));
             delete aux;
         }
@@ -314,6 +322,7 @@ ImagenPPM ImagenPPM::equalizationClamping(float valor){
             valorMax = maxCalculado;
             resolucion = maxCalculado;
         }
+        arrayPixeles = nuevoArrayPixeles;
         break;
     
     default:

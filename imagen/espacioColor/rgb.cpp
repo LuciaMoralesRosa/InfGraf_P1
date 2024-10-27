@@ -142,11 +142,13 @@ RGB RGB::clamping(float valor) {
 }
 
 RGB RGB::equalization(float valorMax, float resolucion){
-    return RGB(r * resolucion / valorMax, g * resolucion / valorMax, b * resolucion / valorMax);
+    return RGB(r / valorMax, g / valorMax, b / valorMax);
 }
 
 RGB RGB::equalizationClamping(float valorMax, float resolucion, float valor){
-    RGB equalizado = clamping(valorMax);
+    RGB equalizado = equalization(valorMax, resolucion);
+    cout << "RGB equalizado: ";
+    equalizado.mostrarColor(); 
     return equalizado.clamping(valor);
 }
 
