@@ -4,9 +4,12 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
+#include <array>
+#include <random>
 #include "../geometria/direccion.hpp"
 #include "../geometria/punto3d.hpp"
-//#include "../imagen/imagenPPM.hpp"
+#include "../geometria/primitivasGeometricas/escena.hpp"
+#include "../imagen/imagenPPM.hpp"
 #include "pixel.hpp"
 using namespace std;
 
@@ -14,7 +17,11 @@ class Camara {
     private:
     Direccion u, l, f;
     Punto3D origen;
-    int tamanyo[2]; // Tamaño en píxeles del plano de visualización
+    int tamanyoPlano[2]; // Tamaño en píxeles del plano de visualización
+    vector<Pixel> listaPixeles;
+    ImagenPPM imagenEscena;
+    Escena escena;
+    //vector<Luz> luces;
     
     public:
 
@@ -25,13 +32,18 @@ class Camara {
          * @param u_val Dirección up
          * @param l_val Dirección left
          * @param f_val Dirección forward
-         * @param tam_val Tamaño en píxeles del plano
+         * @param tam_val Tamaño en píxeles de la camara //0->ancho 1->altura
          */
-        Camara(Punto3D origen_val, Direccion u_val, Direccion l_val, Direccion f_val, int tam_val[2]);
+        Camara(Punto3D origen_val, Direccion u_val, Direccion l_val, Direccion f_val, array<int, 2> tam_val = {256, 256});
 
         vector<Pixel> generarPixeles();
+        void anyadirPrimitiva(Primitiva* primitiva);
 
-        //ImagenPPM crearImagenPPM();
+        void generarImagen(int base, int altura);
+        void lanzarRayos(int rayosPorPixel);
+        Punto3D generarPuntoAleatorioEnPixel(Pixel pixel);
+
+        ImagenPPM crearImagenPPM();
 
         /**
          * @brief Sobrecarga del operador de inserción << para imprimir un objeto de tipo Matriz.

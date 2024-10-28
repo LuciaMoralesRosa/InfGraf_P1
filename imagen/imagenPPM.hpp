@@ -46,6 +46,9 @@ public:
     void convertirRGB();
     void convertirHSV();
 
+    int getBase();
+    int getAltura();
+
 
     ImagenPPM normalizarImagen(ImagenPPM imagen);
     ImagenPPM lecturaFichero(string fichero);

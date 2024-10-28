@@ -32,6 +32,7 @@ class Escena {
          * @param primitiva Primitiva que añadir a la escena.
          */
         void intersectarPixel(Pixel& pixel);
+        void intersectarRayo(Pixel& pixel, Rayo rayo);
 
 };
 

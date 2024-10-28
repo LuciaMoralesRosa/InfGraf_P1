@@ -20,6 +20,16 @@ void Pixel::setColor(RGB newcolor){
     color = newcolor;
 }
 
+Punto3D Pixel::getPuntoIzqSup(){
+    return up_left;
+}
+
+Punto3D Pixel::getPuntoDchInf(){
+    return down_right;
+}
+
+
+
 // Print
 ostream& operator<<(ostream& os, const Pixel& p) {
     os << p.getColor();

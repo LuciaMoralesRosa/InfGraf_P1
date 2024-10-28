@@ -38,6 +38,9 @@ class Pixel {
         RGB getColor() const;
         void setColor(RGB newcolor);
 
+        Punto3D getPuntoIzqSup();
+        Punto3D getPuntoDchInf();
+
 
         /**
          * @brief Sobrecarga del operador de inserción << para imprimir un objeto de tipo Rayo.

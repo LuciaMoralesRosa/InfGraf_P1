@@ -217,6 +217,13 @@ void ImagenPPM::convertirRGB(){
 ImagenPPM ImagenPPM::lecturaFichero(string fichero){
     espacioColor = formatoRGB;
     imagenDesdeFichero(fichero);
+    vector<RGB> pixeles;
+    for(auto p : arrayPixeles){
+        RGB* aux = dynamic_cast<RGB*>(p);
+        pixeles.push_back(*aux);
+        delete aux;
+    }
+    return ImagenPPM(formato, valorMax, comentario, base, altura, resolucion, espacioColor, pixeles);
 }
 
 void ImagenPPM::escrituraFichero(string ficheroPPM){
@@ -250,6 +257,14 @@ void ImagenPPM::escrituraFichero(string ficheroPPM){
 
 }
 
+int ImagenPPM::getBase(){
+    return base;
+}
+
+int ImagenPPM::getAltura(){
+    return altura;
+}
+
 
 // tonemapping
 ImagenPPM ImagenPPM::clamping(float valor){
@@ -272,6 +287,14 @@ ImagenPPM ImagenPPM::clamping(float valor){
     default:
         break;
     }
+
+    vector<RGB> pixeles;
+    for(auto p : arrayPixeles){
+        RGB* aux = dynamic_cast<RGB*>(p);
+        pixeles.push_back(*aux);
+        delete aux;
+    }
+    return ImagenPPM(formato, valorMax, comentario, base, altura, resolucion, espacioColor, pixeles);
 }
 
 ImagenPPM ImagenPPM::equalization(){
@@ -297,6 +320,13 @@ ImagenPPM ImagenPPM::equalization(){
     default:
         break;
     }
+    vector<RGB> pixeles;
+    for(auto p : arrayPixeles){
+        RGB* aux = dynamic_cast<RGB*>(p);
+        pixeles.push_back(*aux);
+        delete aux;
+    }
+    return ImagenPPM(formato, valorMax, comentario, base, altura, resolucion, espacioColor, pixeles);
 }
 
 ImagenPPM ImagenPPM::equalizationClamping(float valor){
@@ -328,4 +358,11 @@ ImagenPPM ImagenPPM::equalizationClamping(float valor){
     default:
         break;
     }
+    vector<RGB> pixeles;
+    for(auto p : arrayPixeles){
+        RGB* aux = dynamic_cast<RGB*>(p);
+        pixeles.push_back(*aux);
+        delete aux;
+    }
+    return ImagenPPM(formato, valorMax, comentario, base, altura, resolucion, espacioColor, pixeles);
 }
