@@ -19,14 +19,35 @@ Punto3D Camara::generarPuntoAleatorioEnPixel(Pixel pixel){
 
 
 void Camara::crearCuadriculaPixeles(){
-    Punto3D esquinaIzqSup = Punto3D(l.getx() + origen.getx(), u.gety() +
-                                origen.gety(), f.getz() + origen.getz());
+    Punto3D esquinaIzqSup = Punto3D(l.getx() + origen.getx(),
+                                    u.gety() + origen.gety(),
+                                    f.getz() + origen.getz());
     
-    Pixel pixelSupIzq = Pixel(Punto3D(esquinaIzqSup.getx(), esquinaIzqSup.gety(), esquinaIzqSup.getz()), 
-                              Punto3D(esquinaIzqSup.getx() + tamPixel[0], esquinaIzqSup.gety() - tamPixel[1], esquinaIzqSup.getz()));
+    // Recorremos la cuadrícula en función del tamaño de la imagen
+    for (int i = 0; i < tamPlanoImagen[1]; i++) {
+        for (int j = 0; j < tamPlanoImagen[0]; j++) {
+            // Calculamos la esquina superior izquierda del píxel actual
+            Punto3D esquinaSupIzqPixel = Punto3D(
+                esquinaIzqSup.getx() + j * tamPixel[0],
+                esquinaIzqSup.gety() - i * tamPixel[1],
+                esquinaIzqSup.getz()
+            );
 
-    cuadriculaPixeles.push_back(pixelSupIzq);
-    
+            // Calculamos la esquina inferior derecha del píxel actual
+            Punto3D esquinaInfDerPixel = Punto3D(
+                esquinaSupIzqPixel.getx() + tamPixel[0],
+                esquinaSupIzqPixel.gety() - tamPixel[1],
+                esquinaSupIzqPixel.getz()
+            );
+            
+            //cout << "Tamaño de pixel: " << tamPixel[0] << "x" << tamPixel[1] << endl;
+            //cout << "Puntos del pixel: " << esquinaSupIzqPixel << " - " << esquinaInfDerPixel << endl;
+            
+            // Creamos el objeto Pixel y lo agregamos a la cuadrícula
+            Pixel pixel = Pixel(esquinaSupIzqPixel, esquinaInfDerPixel);
+            cuadriculaPixeles.push_back(pixel);
+        }
+    }    
 }
 //------------------------------- FIN PRIVADAS -------------------------------//
 
@@ -40,9 +61,14 @@ Camara::Camara(Punto3D origen_val, Direccion u_val, Direccion l_val,
     tamPlanoImagen[0] = tam_val[0];
     tamPlanoImagen[1] = tam_val[1];
 
+    if (tam_val[0] == 0 || tam_val[1] == 0) {
+        throw std::invalid_argument("El tamaño del plano de imagen no puede ser cero");
+    }
+
     tamPixel[0] = l.modulus()*2 / tam_val[0];
     tamPixel[1] = u.modulus()*2 / tam_val[1];
 
+    cuadriculaPixeles.reserve(tamPlanoImagen[0] * tamPlanoImagen[1]);
     crearCuadriculaPixeles();
 }
 
@@ -52,15 +78,25 @@ void Camara::anyadirPrimitiva(Primitiva* primitiva){
     escena.anyadirPrimitiva(primitiva);
 }
 
+/*
 void Camara::generarImagen(int base, int altura){
     vector<RGB> pixeles;
     imagenEscena = ImagenPPM("P3", 255, "", base, altura, 255, formatoRGB, pixeles);
 }
+*/
 
 void Camara::lanzarRayos(int rayosPorPixel){
-
+    vector<Rayo> listaRayos;
+    if(!cuadriculaPixeles.empty()){
+        for(auto p : cuadriculaPixeles){
+            Punto3D puntoAleatorio = generarPuntoAleatorioEnPixel(p);
+            Rayo rayoAleatorio = Rayo(origen, puntoAleatorio);
+            //cout << "Color del pixel antes de intersectar: " << p.getColor() << endl;
+            escena.intersectarRayo(p, rayoAleatorio);
+            //cout << "Color del pixel despues de intersectar: " << p.getColor() << endl;
+        }
+    }
 }
-
 
 
 void Camara::lanzarRayos2(int rayosPorPixel){

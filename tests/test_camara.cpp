@@ -40,7 +40,7 @@ int main(){
     escena.anyadirPrimitiva(&planoatras);
 
     cout << "Generando imagen..." << endl;
-    camara.generarImagen(256,256);
+    //camara.generarImagen(256,256);
 
     cout << "Lanzando rayos..." << endl;
     camara.lanzarRayos(64);

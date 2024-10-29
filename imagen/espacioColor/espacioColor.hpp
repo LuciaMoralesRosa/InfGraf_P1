@@ -4,6 +4,7 @@
 class EspacioColor {
 public:
     virtual void mostrarColor() const = 0; // Método virtual puro
+    virtual ~EspacioColor() {}
 
 };
 

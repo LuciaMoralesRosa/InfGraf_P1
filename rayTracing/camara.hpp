@@ -18,9 +18,9 @@ class Camara {
     Direccion u, l, f;
     Punto3D origen;
     int tamPlanoImagen[2]; // Tamaño en píxeles del plano de visualización (b * a)
-    int tamPixel[2]; // Tamaño de los pixeles de la imagen (b * a)
+    float tamPixel[2]; // Tamaño de los pixeles de la imagen (b * a)
     vector<Pixel> cuadriculaPixeles;
-    ImagenPPM imagenEscena;
+    //ImagenPPM imagenEscena;
     Escena escena;
     //vector<Luz> luces;
 

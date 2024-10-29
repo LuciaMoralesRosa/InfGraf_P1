@@ -44,6 +44,8 @@
         "cstring": "cpp",
         "ctime": "cpp",
         "list": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "ios": "cpp",
+        "xstring": "cpp"
     }
 }
