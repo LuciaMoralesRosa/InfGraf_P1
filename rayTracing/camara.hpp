@@ -17,11 +17,16 @@ class Camara {
     private:
     Direccion u, l, f;
     Punto3D origen;
-    int tamanyoPlano[2]; // Tamaño en píxeles del plano de visualización
-    vector<Pixel> listaPixeles;
+    int tamPlanoImagen[2]; // Tamaño en píxeles del plano de visualización (b * a)
+    int tamPixel[2]; // Tamaño de los pixeles de la imagen (b * a)
+    vector<Pixel> cuadriculaPixeles;
     ImagenPPM imagenEscena;
     Escena escena;
     //vector<Luz> luces;
+
+    void crearCuadriculaPixeles();
+    Punto3D generarPuntoAleatorioEnPixel(Pixel pixel);
+
     
     public:
 
@@ -40,8 +45,9 @@ class Camara {
         void anyadirPrimitiva(Primitiva* primitiva);
 
         void generarImagen(int base, int altura);
+        void lanzarRayos2(int rayosPorPixel);
         void lanzarRayos(int rayosPorPixel);
-        Punto3D generarPuntoAleatorioEnPixel(Pixel pixel);
+
 
         ImagenPPM crearImagenPPM();
 

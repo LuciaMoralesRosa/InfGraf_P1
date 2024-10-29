@@ -23,9 +23,9 @@ public:
     HSL(const RGB color);
     HSL(const HSV color);
 
-    float getH() const ;
-    float getS() const ;
-    float getL() const ;
+    float getH() const;
+    float getS() const;
+    float getL() const;
 
     void mostrarColor() const override;
 

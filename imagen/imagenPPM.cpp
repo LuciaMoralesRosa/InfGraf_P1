@@ -366,3 +366,22 @@ ImagenPPM ImagenPPM::equalizationClamping(float valor){
     }
     return ImagenPPM(formato, valorMax, comentario, base, altura, resolucion, espacioColor, pixeles);
 }
+
+ostream& operator<<(ostream& os, const ImagenPPM& imagen){
+    string salida = "[" + imagen.formato + ", " + to_string(imagen.valorMax) + ", " + to_string(imagen.base)
+    + " x " + to_string(imagen.altura) + ", " + to_string(imagen.resolucion) + "]\n\n";
+
+    vector<EspacioColor*> pixeles = imagen.arrayPixeles;
+    for(int i = 0; i < imagen.altura; i++){
+        for(int j = 0; j < imagen.base; j++){
+            EspacioColor* pi = pixeles.back();
+            pixeles.pop_back();
+            RGB* aux = dynamic_cast<RGB*>(pi);
+            salida = salida + "[" + to_string(aux->getR()) + ", " + to_string(aux->getG()) + ", " + to_string(aux->getB()) + "]     ";
+        }
+        salida = salida + "\n";
+    }
+    os << salida;
+    return os;
+
+}
