@@ -100,6 +100,7 @@ void Camara::lanzarRayos(int rayosPorPixel){
 
 
 void Camara::lanzarRayos2(int rayosPorPixel){
+    /*
     float tamBasePixel = tamPlanoImagen[0] / imagenEscena.getBase();
     float tamAlturaPixel = tamPlanoImagen[1] / imagenEscena.getAltura();
     Punto3D esquinaIzqSup = Punto3D(l.getx(), u.gety(), f.getz());
@@ -126,6 +127,8 @@ void Camara::lanzarRayos2(int rayosPorPixel){
         }
     }
     cuadriculaPixeles = cuadriculaPixelesPlano;
+    */
+
 }
 
 
