@@ -1,12 +1,12 @@
 #include "plano.hpp"
 
 
-Plano::Plano(Punto3D _p, Direccion _n, RGB _color) : Primitiva(_color) {
+Plano::Plano(Punto3D _p, Direccion _n, RGB _color) : Primitiva(_color, "Plano") {
     punto = _p;
     normal = _n.normalize();
 }
 
-Plano::Plano(Direccion n, float distancia, RGB color) : Primitiva(color){
+Plano::Plano(Direccion n, float distancia, RGB color) : Primitiva(color, "Plano"){
     normal = n;
     Punto3D p(n.getx() * distancia, n.gety() * distancia, n.getz() * distancia);
     punto = p;

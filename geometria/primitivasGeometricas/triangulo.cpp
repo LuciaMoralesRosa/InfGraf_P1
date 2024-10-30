@@ -1,6 +1,6 @@
 #include "triangulo.hpp"
 
-Triangulo::Triangulo(Punto3D p1, Punto3D p2, Punto3D p3, RGB _color) : a(p1), b(p2), c(p3), Primitiva(_color) {
+Triangulo::Triangulo(Punto3D p1, Punto3D p2, Punto3D p3, RGB _color) : a(p1), b(p2), c(p3), Primitiva(_color, "Triangulo") {
     Direccion d1 = p2 - p1;
     Direccion d2 = p3 - p1;
     normal = d1.vector_product(d2).normalize();

@@ -14,8 +14,9 @@ class Primitiva{
         RGB color;
 
     public:
+        string tipo;
 
-        Primitiva(RGB color_val) : color(color_val) {};
+        Primitiva(RGB color_val, string _tipo) : color(color_val), tipo(_tipo) {};
 
         RGB getColor() {
             return color;
