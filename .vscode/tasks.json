@@ -9,7 +9,7 @@
                 "-std=c++11",
                 "-fdiagnostics-color=always",
                 "-g",
-                "${workspaceFolder}/tests/camaratest.cpp",  // El archivo principal a compilar
+                "${workspaceFolder}/tests/test_camara.cpp",  // El archivo principal a compilar
                 "${workspaceFolder}/geometria/primitivasGeometricas/esfera.cpp",           // Agrega tus archivos .cpp
                 "${workspaceFolder}/geometria/primitivasGeometricas/plano.cpp",
                 "${workspaceFolder}/geometria/primitivasGeometricas/triangulo.cpp",
@@ -23,6 +23,7 @@
                 "${workspaceFolder}/imagen/espacioColor/rgb.cpp",
                 "${workspaceFolder}/imagen/espacioColor/hsv.cpp",
                 "${workspaceFolder}/imagen/espacioColor/hsl.cpp",
+                "${workspaceFolder}/imagen/imagenPPM.cpp",
                 "${workspaceFolder}/rayTracing/camara.cpp",
                 "${workspaceFolder}/rayTracing/pixel.cpp",
                 "${workspaceFolder}/rayTracing/rayo.cpp",
