@@ -10,6 +10,8 @@
 #include "../geometria/punto3d.hpp"
 #include "../geometria/primitivasGeometricas/escena.hpp"
 #include "../imagen/imagenPPM.hpp"
+#include "../imagen/espacioColor/rgb.hpp"
+
 #include "pixel.hpp"
 using namespace std;
 

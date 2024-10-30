@@ -90,15 +90,28 @@ void Camara::generarImagen(int base, int altura){
 
 void Camara::lanzarRayos(int rayosPorPixel){
     vector<Rayo> listaRayos;
+
     if(!cuadriculaPixeles.empty()){
         vector<Pixel> nuevaCuadricula;
+        vector<float> red, green, blue;
+
         for(auto p : cuadriculaPixeles){
-            Punto3D puntoAleatorio = generarPuntoAleatorioEnPixel(p);
-            Rayo rayoAleatorio = Rayo(origen, puntoAleatorio);
-            //cout << "Color del pixel antes de intersectar: " << p.getColor() << endl;
-            escena.intersectarRayo(p, rayoAleatorio);
+            for(int i = 0; i < rayosPorPixel; i++){
+                Punto3D puntoAleatorio = generarPuntoAleatorioEnPixel(p);
+                Rayo rayoAleatorio = Rayo(origen, puntoAleatorio);
+                RGB colorObtenido = escena.intersectarRayo(p.getColor(), rayoAleatorio);
+                red.push_back(colorObtenido.getR());
+                green.push_back(colorObtenido.getG());
+                blue.push_back(colorObtenido.getB());
+            }
+            // Hacer media de cada componente y crear nuevo RGB
+            RGB rgb(calcularMedia(red), calcularMedia(green), calcularMedia(blue));
+            //cout << "color del pixel final: " << rgb << endl;
+            p.setColor(rgb);
             nuevaCuadricula.push_back(p);
-            //cout << "Color del pixel despues de intersectar: " << p.getColor() << endl;
+            red.clear();
+            green.clear();
+            blue.clear();
         }
         cuadriculaPixeles = nuevaCuadricula;
     }

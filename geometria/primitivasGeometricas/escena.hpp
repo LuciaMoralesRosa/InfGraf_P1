@@ -7,6 +7,7 @@
 #include "../direccion.hpp"
 #include "../../rayTracing/rayo.hpp"
 #include "../../rayTracing/pixel.hpp"
+#include "../../otros/metodosAuxiliares.hpp"
 
 class Escena {
     private:
@@ -32,7 +33,16 @@ class Escena {
          * @param primitiva Primitiva que añadir a la escena.
          */
         void intersectarPixel(Pixel& pixel);
-        void intersectarRayo(Pixel& pixel, Rayo rayo);
+        RGB intersectarRayo(RGB colorPixel, Rayo rayo);
+
+        //DEPURANDO
+        string getTiposPrimitiva(){
+            string ret = "";
+            for(auto p : primitivas){
+                ret = ret + ", " + p->tipo;
+            }
+            return ret;
+        };
 
 };
 

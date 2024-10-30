@@ -239,13 +239,6 @@ ImagenPPM ImagenPPM::lecturaFichero(string fichero){
 }
 
 void ImagenPPM::escrituraFichero(string ficheroPPM){
-    for(int i = 0; i < 3; i ++){
-        RGB* rgb = static_cast<RGB*>(arrayPixeles[i]);
-        RGB r = *rgb;
-        cout << "Color del pixel 0 de aarrayPixeles en escritura fichero: " << endl;
-        r.mostrarColor();
-    }
-
     if(espacioColor != formatoRGB){
         convertirRGB();
     }
