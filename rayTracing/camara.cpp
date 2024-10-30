@@ -102,7 +102,6 @@ void Camara::lanzarRayos(int rayosPorPixel){
             for(int i = 0; i < rayosPorPixel; i++){
                 mt19937 gen(rd());
                 Punto3D puntoAleatorio = generarPuntoAleatorioEnPixel(gen, p);
-                //cout << "generado punto: " << puntoAleatorio << endl;
                 Rayo rayoAleatorio = Rayo(origen, puntoAleatorio);
                 RGB colorObtenido = escena.intersectarRayo(p.getColor(), rayoAleatorio);
                 red.push_back(colorObtenido.getR());
@@ -111,13 +110,11 @@ void Camara::lanzarRayos(int rayosPorPixel){
             }
             // Hacer media de cada componente y crear nuevo RGB
             RGB rgb(calcularMedia(red), calcularMedia(green), calcularMedia(blue));
-            //cout << "color del pixel final: " << rgb << endl;
             p.setColor(rgb);
             nuevaCuadricula.push_back(p);
             red.clear();
             green.clear();
             blue.clear();
-            //cout << endl;
         }
         cuadriculaPixeles = nuevaCuadricula;
     }
@@ -163,7 +160,7 @@ ImagenPPM Camara::crearImagenPPM(){
     vector<RGB> pixeles;
     vector<Pixel> arrayPixeles = cuadriculaPixeles;
     for(auto p : arrayPixeles){
-        //cout << "Color del pixel de la cuadricula en crearImagen: " << p.getColor() << endl;
+        cout << "Color del pixel de la cuadricula en crearImagen: " << p.getColor() << endl;
         v = p.getColor().maximo();
         pixeles.push_back(p.getColor());
         if(v > valorMax){

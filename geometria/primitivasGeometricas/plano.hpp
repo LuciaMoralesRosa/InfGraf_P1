@@ -9,8 +9,8 @@
 
 class Plano : public Primitiva {
     private:
-        Punto3D punto;
         Direccion normal;
+        float distancia;
 
     public:
 
@@ -25,9 +25,9 @@ class Plano : public Primitiva {
          * @param _n La dirección que representa la normal del plano. Se asume que la 
          *          dirección está normalizada o se normalizará internamente.
          */
-        Plano(Punto3D _p, Direccion _n, RGB _color);
+        //Plano(Punto3D _p, Direccion _n, RGB _color);
 
-        Plano(Direccion normal, float distancia, RGB color);
+        Plano(Direccion normal, float dist, RGB color);
 
         /**
          * @brief Calcula la intersección de un rayo con un plano.

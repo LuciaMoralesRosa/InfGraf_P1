@@ -2,7 +2,7 @@
 
 Pixel::Pixel(Punto3D _up_left, Punto3D _down_right, RGB _color) : up_left(_up_left), down_right(_down_right), color(_color), rayos(vector<Rayo>()) {}
 
-Pixel::Pixel(Punto3D _up_left, Punto3D _down_right) : up_left(_up_left), down_right(_down_right), color(1,1,1), rayos(vector<Rayo>()) {}
+Pixel::Pixel(Punto3D _up_left, Punto3D _down_right) : up_left(_up_left), down_right(_down_right), color(0,0,0), rayos(vector<Rayo>()) {}
 
 
 Rayo Pixel::generarRayoMitad(Punto3D porigen) {

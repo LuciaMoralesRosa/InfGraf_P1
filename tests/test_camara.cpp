@@ -17,32 +17,33 @@
 int main(){
 
     cout << "Creacion de primitivas..." << endl;
-    Plano planoizq(Punto3D(1, 0, 0), 1, RGB(1,0,0)); //rojo
-    Plano planoder(Punto3D(-1, 0, 0), 1, RGB(1,1,0)); //amarillo
-    Plano planosuelo(Punto3D(0, 1, 0), 1, RGB(1,0,1)); //magenta
-    Plano planotecho(Punto3D(0, -1, 0), 1, RGB(0,1,1)); //cian
-    Plano planoatras(Punto3D(0, 0, -1), 1, RGB(0,1,0)); //
+    Plano planoizq(Direccion(1, 0, 0), 1, RGB(1,0,0)); //rojo
+    Plano planoder(Direccion(-1, 0, 0), 1, RGB(1,1,0)); //amarillo
+    Plano planosuelo(Direccion(0, 1, 0), 1, RGB(1,0,1)); //magenta
+    Plano planotecho(Direccion(0, -1, 0), 1, RGB(0,1,1)); //cian
+    Plano planoatras(Direccion(0, 0, -1), 1, RGB(0,1,0)); //verde
 
-    Esfera esfera1(Punto3D(-0.2, -0.7, 0.25), 0.3, RGB(1,0.5,0.5));
-    Esfera esfera2(Punto3D(0.0, -0.7, -0.25), 0.3, RGB(0.5,0.5,1));
+    Esfera esfera1(Punto3D(-0.5, -0.7, 0.25), 0.3, RGB(1,0.5,0.5));
+    Esfera esfera2(Punto3D(0.5, -0.7, -0.25), 0.3, RGB(0.5,0.5,1));
 
     cout << "Creacion de la camara..." << endl;
-    Camara camara(Punto3D(0,0,-3.5), Direccion(0,1,0), Direccion(-1,0,0), Direccion(0,0,3));
+    array<int, 2> tam_val = {8, 8};
+    Camara camara(Punto3D(0,0,-3.5), Direccion(0,1,0), Direccion(-1,0,0), Direccion(0,0,3), tam_val);
 
     cout << "Creacion de la escena..." << endl;
     Escena escena;
     escena.anyadirPrimitiva(&esfera1);
     escena.anyadirPrimitiva(&esfera2);
-    //escena.anyadirPrimitiva(&planoizq);
-    //escena.anyadirPrimitiva(&planoder);
-    //escena.anyadirPrimitiva(&planosuelo);
-    //escena.anyadirPrimitiva(&planotecho);
-    //escena.anyadirPrimitiva(&planoatras);
+    escena.anyadirPrimitiva(&planoizq);
+    escena.anyadirPrimitiva(&planoder);
+    escena.anyadirPrimitiva(&planosuelo);
+    escena.anyadirPrimitiva(&planotecho);
+    escena.anyadirPrimitiva(&planoatras);
     
     camara.asignarEscena(escena);
 
     cout << "Lanzando rayos..." << endl;
-    camara.lanzarRayos(64);
+    camara.lanzarRayos(1);
 
     cout << "Creando imagen..." << endl;
     ImagenPPM imagenGenerada = camara.crearImagenPPM();

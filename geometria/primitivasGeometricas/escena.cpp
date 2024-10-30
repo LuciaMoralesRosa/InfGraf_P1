@@ -12,7 +12,6 @@ void Escena::intersectarPixel(Pixel& pixel) {
         Interseccion inter = pri->interseccionRayo(pixel.rayos.back());
         if (inter.intersecta) {
             pixel.setColor(pri->getColor());
-            cout << "intersectado" << pixel.getColor() << endl;
         }
     }
 }
@@ -33,9 +32,6 @@ RGB Escena::intersectarRayo(RGB colorPixel, Rayo rayo){
     for(const auto& pri : primitivas){  
         Interseccion inter = pri->interseccionRayo(rayo);
         if(inter.intersecta){
-        // if(pri->tipo == "Esfera"){
-        //     cout << "Ha intersectado la primitiva de tipo esfera" << endl;
-        // }
             primitivasIntersectadas.push_back(pri);
             float min = calcularMIN(inter.distancia);
             distanciasPrimitivas.push_back(min);
