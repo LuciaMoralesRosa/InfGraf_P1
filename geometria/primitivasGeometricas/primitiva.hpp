@@ -8,10 +8,12 @@
 #include "..\..\rayTracing\interseccion.hpp"
 #include "../../rayTracing/rayo.hpp"
 
+
 class Primitiva{
 
     private:
         RGB color;
+        
 
     public:
         string tipo;
@@ -33,6 +35,8 @@ class Primitiva{
          * @return Una intersección
          */
         virtual Interseccion interseccionRayo(Rayo rayo) const = 0;
+
+        virtual Direccion getNormal(Punto3D punto) const = 0;
 
 };
 

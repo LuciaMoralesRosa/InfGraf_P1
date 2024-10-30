@@ -11,6 +11,11 @@ Punto3D Esfera::anyadirPunto(float azimut, float altitud){
     return  ciudad;
 }
 
+Direccion Esfera::getNormal(Punto3D punto) const {
+    return punto-c;
+}
+
+
 Interseccion Esfera::interseccionRayo(Rayo rayo) const {
     Punto3D ORayo = rayo.getOrigen();
     Direccion dir = rayo.getDireccion().normalize();

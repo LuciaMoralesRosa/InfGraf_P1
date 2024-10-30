@@ -11,6 +11,7 @@
 #include "primitiva.hpp"
 #include "../punto3d.hpp"
 #include "../../rayTracing/rayo.hpp"
+
 using namespace std;
 
 /**
@@ -61,6 +62,8 @@ class Esfera : public Primitiva {
          *         de intersección. Puede contener cero, uno o dos valores.
          */
         Interseccion interseccionRayo(Rayo rayo) const override;
+
+        Direccion getNormal(Punto3D punto) const override;
 
         /**
          * @brief Sobrecarga del operador de inserción << para imprimir un objeto de tipo Matriz.

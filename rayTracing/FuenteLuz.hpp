@@ -4,9 +4,13 @@
 #include "../imagen/espacioColor/rgb.hpp"
 
 class FuenteLuz{
-    Punto3D centro;
-    RGB potencia;
+    private:
+        Punto3D centro;
+        RGB potencia;
 
     public:
+        FuenteLuz(Punto3D c, RGB p) : centro(c), potencia(p) {};
         
-}
+        Punto3D getCentro();
+        RGB getPotencia();
+};

@@ -9,6 +9,12 @@
 #include "../../rayTracing/pixel.hpp"
 #include "../../otros/metodosAuxiliares.hpp"
 
+struct returnInterseccionRayo{
+    Primitiva* primitiva;
+    vector<Punto3D> puntoInterseccion;
+};
+
+
 class Escena {
     private:
         vector<Primitiva*> primitivas;
@@ -33,7 +39,7 @@ class Escena {
          * @param primitiva Primitiva que añadir a la escena.
          */
         void intersectarPixel(Pixel& pixel);
-        RGB intersectarRayo(RGB colorPixel, Rayo rayo);
+        returnInterseccionRayo intersectarRayo(Rayo rayo);
 
         //DEPURANDO
         string getTiposPrimitiva(){

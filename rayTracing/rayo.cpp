@@ -2,11 +2,11 @@
     
 //Constructor
 Rayo::Rayo(Punto3D origen_val, Direccion direccion_val) : origen(origen_val),
-    direccion(direccion_val), inverso(1/direccion_val.getx(), 1/direccion_val.gety(), 1/direccion_val.getz()) {}
+    direccion(direccion_val.normalize()), inverso(1/direccion_val.getx(), 1/direccion_val.gety(), 1/direccion_val.getz()) {}
 
 Rayo::Rayo(Punto3D porigen_val, Punto3D pdestino_val) {
     origen = porigen_val;
-    direccion = pdestino_val-porigen_val;
+    direccion = (pdestino_val-porigen_val).normalize();
 }
 
 Punto3D Rayo::getOrigen() const {

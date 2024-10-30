@@ -24,10 +24,12 @@ void Escena::intersectarPixel(Pixel& pixel) {
     //        pixel.setColor(pri->getColor());
     //    }
     //}
-RGB Escena::intersectarRayo(RGB colorPixel, Rayo rayo){
+returnInterseccionRayo Escena::intersectarRayo(Rayo rayo){
 
     vector<Primitiva*> primitivasIntersectadas;
     vector<float> distanciasPrimitivas;
+    vector<vector<Punto3D>> puntosInterseccion;
+    returnInterseccionRayo ret;
 
     //Recorro todas las primitivas de mi escena y si intersecta con el rayo, la guardo
     for(const auto& pri : primitivas){  
@@ -39,13 +41,16 @@ RGB Escena::intersectarRayo(RGB colorPixel, Rayo rayo){
             primitivasIntersectadas.push_back(pri);
             float min = calcularMIN(inter.distancia);
             distanciasPrimitivas.push_back(min);
+            puntosInterseccion.push_back(inter.puntoInterseccion);
         }
     }
 
     //Tengo una lista de primitivas intersectadas por el rayo
     // Hay que ver que primitiva esta por delante
     if(primitivasIntersectadas.empty()){
-        return colorPixel;
+        ret.primitiva = nullptr;
+        ret.puntoInterseccion.push_back(Punto3D(0,0,0));
+        return ret;
     }
 
     Primitiva* primitivaVisible;
@@ -56,11 +61,11 @@ RGB Escena::intersectarRayo(RGB colorPixel, Rayo rayo){
     for(int i = 0; i < primitivasIntersectadas.size(); i++){
         if(distanciasPrimitivas[i] == minimaDistancia){
             // Cuando la encuentro, la guardo
-            primitivaVisible = primitivasIntersectadas[i];
+            ret.primitiva = primitivasIntersectadas[i];
+            ret.puntoInterseccion = puntosInterseccion[i];
             break;
         }
     }
-    // Devulevo el color de la primitiva intersectada
-    RGB resultado(primitivaVisible->getColor().getR(), primitivaVisible->getColor().getG(), primitivaVisible->getColor().getB());
-    return resultado;
+    // Devuleve la primitiva intersectada
+    return ret;
 }

@@ -11,6 +11,7 @@
 #include "../geometria/primitivasGeometricas/escena.hpp"
 #include "../imagen/imagenPPM.hpp"
 #include "../imagen/espacioColor/rgb.hpp"
+#include "fuenteLuz.hpp"
 
 #include "pixel.hpp"
 using namespace std;
@@ -24,9 +25,10 @@ class Camara {
     vector<Pixel> cuadriculaPixeles;
     //ImagenPPM imagenEscena;
     Escena escena;
-    //vector<Luz> luces;
+    vector<FuenteLuz> listaLuces;
 
     void crearCuadriculaPixeles();
+    void calcularLuzDirecta(Rayo rayo, Pixel p, Punto3D x);
     Punto3D generarPuntoAleatorioEnPixel(mt19937 gen, Pixel pixel);
 
     
@@ -48,7 +50,6 @@ class Camara {
 
         void generarImagen(int base, int altura);
         void asignarEscena(Escena e);
-        void lanzarRayos2(int rayosPorPixel);
         void lanzarRayos(int rayosPorPixel);
 
 

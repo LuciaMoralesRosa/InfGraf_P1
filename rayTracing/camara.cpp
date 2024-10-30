@@ -51,6 +51,25 @@ void Camara::crearCuadriculaPixeles(){
         }
     }    
 }
+
+void Camara::calcularLuzDirecta(Rayo rayo, Pixel p, Punto3D x, Primitiva* primitiva, Direccion normal){
+    float valor = 0;
+    Punto3D c;
+    RGB potencia;
+    float pot;
+    float bsdf;
+    float cos;
+ 
+    for(FuenteLuz l : listaLuces){
+        c = l.getCentro();
+        potencia = l.getPotencia();
+        pot = potencia / pow((c-x).modulus(), 2);
+        cos = normal.dot_product(c-x / (c-x).modulus());
+        valor = valor + (pot*bsdf*abs(cos));
+
+    }
+}
+
 //------------------------------- FIN PRIVADAS -------------------------------//
 
 //------------------------------ CONSTRUCTORES -------------------------------//
@@ -76,6 +95,11 @@ Camara::Camara(Punto3D origen_val, Direccion u_val, Direccion l_val,
 
 //--------------------------------- PUBLICAS ---------------------------------//
 
+struct returnInterseccionRayo{
+    Primitiva* primitiva;
+    vector<Punto3D> puntoInterseccion;
+};
+
 void Camara::anyadirPrimitiva(Primitiva* primitiva){
     escena.anyadirPrimitiva(primitiva);
 }
@@ -83,12 +107,6 @@ void Camara::anyadirPrimitiva(Primitiva* primitiva){
 void Camara::asignarEscena(Escena e){
     escena = e;
 }
-/*
-void Camara::generarImagen(int base, int altura){
-    vector<RGB> pixeles;
-    imagenEscena = ImagenPPM("P3", 255, "", base, altura, 255, formatoRGB, pixeles);
-}
-*/
 
 void Camara::lanzarRayos(int rayosPorPixel){
     vector<Rayo> listaRayos;
@@ -104,7 +122,22 @@ void Camara::lanzarRayos(int rayosPorPixel){
                 Punto3D puntoAleatorio = generarPuntoAleatorioEnPixel(gen, p);
                 //cout << "generado punto: " << puntoAleatorio << endl;
                 Rayo rayoAleatorio = Rayo(origen, puntoAleatorio);
-                RGB colorObtenido = escena.intersectarRayo(p.getColor(), rayoAleatorio);
+                
+                returnInterseccionRayo inter = escena.intersectarRayo(rayoAleatorio);
+                RGB colorObtenido;
+                Direccion normalPrimitiva;
+                if(inter.primitiva == nullptr){
+                    colorObtenido = p.getColor();
+                }
+                else{
+                    colorObtenido = inter.primitiva->getColor();
+                    normalPrimitiva = inter.primitiva->getNormal(inter.puntoInterseccion[0]);
+                }
+                
+                calcularLuzDirecta(rayoAleatorio, p, puntoAleatorio, inter.primitiva, normalPrimitiva);
+                //Donde haya interseccion -> hay que buscar de donde viene la luz puntual
+                //Calcular luz directa en el punto
+
                 red.push_back(colorObtenido.getR());
                 green.push_back(colorObtenido.getG());
                 blue.push_back(colorObtenido.getB());
@@ -122,40 +155,6 @@ void Camara::lanzarRayos(int rayosPorPixel){
         cuadriculaPixeles = nuevaCuadricula;
     }
 }
-
-
-void Camara::lanzarRayos2(int rayosPorPixel){
-    /*
-    float tamBasePixel = tamPlanoImagen[0] / imagenEscena.getBase();
-    float tamAlturaPixel = tamPlanoImagen[1] / imagenEscena.getAltura();
-    Punto3D esquinaIzqSup = Punto3D(l.getx(), u.gety(), f.getz());
-
-    Pixel pixelInicial = Pixel(esquinaIzqSup, Punto3D(esquinaIzqSup.getx() + tamBasePixel, esquinaIzqSup.gety() - tamAlturaPixel, esquinaIzqSup.getz()));
-    vector<Pixel> cuadriculaPixelesPlano;
-    cuadriculaPixelesPlano.push_back(pixelInicial);
-    Pixel pixelCalculado = pixelInicial;
-    for(int a = tamAlturaPixel; a < imagenEscena.getAltura(); a = a + tamAlturaPixel){
-        for(int b = tamBasePixel; b < imagenEscena.getBase(); b = b + tamBasePixel){
-            Pixel aux = Pixel(Punto3D(pixelCalculado.getPuntoIzqSup().getx() + tamBasePixel, pixelCalculado.getPuntoIzqSup().gety(), pixelCalculado.getPuntoIzqSup().getz()), Punto3D(pixelCalculado.getPuntoDchInf().getx() + tamBasePixel, pixelCalculado.getPuntoDchInf().gety(), pixelCalculado.getPuntoDchInf().getz()));
-            cuadriculaPixelesPlano.push_back(aux);
-            pixelCalculado = aux;
-        }
-        pixelCalculado = Pixel(Punto3D(pixelInicial.getPuntoIzqSup().getx(), pixelInicial.getPuntoIzqSup().gety() - a, pixelInicial.getPuntoIzqSup().getz()), Punto3D(pixelInicial.getPuntoDchInf().getx(), pixelInicial.getPuntoDchInf().gety() - a, pixelInicial.getPuntoDchInf().getz()));
-    }
-    //Ahora tenemos todo un vector de pixeles donde lanzar rayos. Para cada pixel, lanzamos rayosPorPixel rayos y los guardamos todos para evaluarlos despues
-    vector<Rayo> listaRayosAleatorios;
-    for(auto p : cuadriculaPixelesPlano){
-        for(int i = 0; i < rayosPorPixel; i++){
-            Punto3D puntoAleatorio = generarPuntoAleatorioEnPixel(p);
-            Rayo rayoAleatorioEnPixel = Rayo(origen, puntoAleatorio);
-            escena.intersectarRayo(p, rayoAleatorioEnPixel);
-        }
-    }
-    cuadriculaPixeles = cuadriculaPixelesPlano;
-    */
-
-}
-
 
 ImagenPPM Camara::crearImagenPPM(){
     float valorMax = 0;
