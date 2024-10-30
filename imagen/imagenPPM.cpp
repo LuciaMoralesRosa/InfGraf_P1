@@ -45,6 +45,7 @@ ImagenPPM::ImagenPPM(ImagenPPM imagen, tipoEspacioColor tipoEspacio):
 }
 
 ImagenPPM::ImagenPPM(string f, float vmax, string c, int b, int a, float res, tipoEspacioColor espacio, vector<RGB> pixeles){
+    cout << endl;
     formato = f;
     valorMax = vmax;
     comentario = c;
@@ -52,8 +53,19 @@ ImagenPPM::ImagenPPM(string f, float vmax, string c, int b, int a, float res, ti
     altura = a;
     resolucion = res;
     espacioColor = espacio;
-    for(auto p : pixeles){
-        arrayPixeles.push_back(&p);
+    for(int i = 0; i < pixeles.size(); i++){
+        EspacioColor* nuevo = new RGB(pixeles[i]);
+        arrayPixeles.push_back(nuevo);
+        //RGB* rgb = static_cast<RGB*>(arrayPixeles[i]);
+        //RGB r = *rgb;
+        //cout << "Color del pixel 0 de aarrayPixeles en escritura fichero: " << endl;
+        //r.mostrarColor();
+    }
+}
+
+ImagenPPM::~ImagenPPM() {
+    for (int i = 0; i < arrayPixeles.size(); i++) {
+        delete arrayPixeles[i];  // Liberar cada objeto dinámico en arrayPixeles
     }
 }
 
@@ -227,6 +239,13 @@ ImagenPPM ImagenPPM::lecturaFichero(string fichero){
 }
 
 void ImagenPPM::escrituraFichero(string ficheroPPM){
+    for(int i = 0; i < 3; i ++){
+        RGB* rgb = static_cast<RGB*>(arrayPixeles[i]);
+        RGB r = *rgb;
+        cout << "Color del pixel 0 de aarrayPixeles en escritura fichero: " << endl;
+        r.mostrarColor();
+    }
+
     if(espacioColor != formatoRGB){
         convertirRGB();
     }
@@ -241,17 +260,23 @@ void ImagenPPM::escrituraFichero(string ficheroPPM){
     fichero << to_string(base) + " " + to_string(altura) << endl;
     fichero << fixed << setprecision(0) << resolucion << endl;
 
+    cout << "Estoy antes del bucle de escritura del fichero" << endl;
     int k = 0;
     for (int i = 0; i < altura; ++i) {
         for (int j = 0; j < base; ++j) {
-            RGB* pixel = static_cast<RGB*>(arrayPixeles[k]); 
+            RGB* pixel = static_cast<RGB*>(arrayPixeles[k]);
+            //cout << "Valor del pixel en escritura: (" << pixel->getR() << ", " << pixel->getG() << ", " << pixel->getB() << ")" << endl; 
             k++;
-            fichero << fixed << setprecision(0) << pixel->getR() * resolucion / valorMax << " "
-                                                << pixel->getG() * resolucion / valorMax << " "
-                                                << pixel->getB() * resolucion / valorMax << "     ";
+            //fichero << fixed << setprecision(0) << pixel->getR() * resolucion / valorMax << " "
+            //                                    << pixel->getG() * resolucion / valorMax << " "
+            //                                    << pixel->getB() * resolucion / valorMax << "     ";
+            fichero << fixed << setprecision(0) << pixel->getR() * resolucion << " "
+                                                << pixel->getG() * resolucion << " "
+                                                << pixel->getB() * resolucion << "     ";
         }
         fichero << endl;
     }
+    cout << "ha terminado el bucle" << endl;
     
     fichero << endl;
     fichero.close();

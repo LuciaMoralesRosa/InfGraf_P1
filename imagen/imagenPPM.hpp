@@ -62,6 +62,8 @@ public:
 
     friend ostream& operator<<(ostream& os, const ImagenPPM& imagen);
 
+    ~ImagenPPM();
+
 
 };
 

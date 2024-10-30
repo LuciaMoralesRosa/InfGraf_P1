@@ -91,13 +91,16 @@ void Camara::generarImagen(int base, int altura){
 void Camara::lanzarRayos(int rayosPorPixel){
     vector<Rayo> listaRayos;
     if(!cuadriculaPixeles.empty()){
+        vector<Pixel> nuevaCuadricula;
         for(auto p : cuadriculaPixeles){
             Punto3D puntoAleatorio = generarPuntoAleatorioEnPixel(p);
             Rayo rayoAleatorio = Rayo(origen, puntoAleatorio);
             //cout << "Color del pixel antes de intersectar: " << p.getColor() << endl;
             escena.intersectarRayo(p, rayoAleatorio);
+            nuevaCuadricula.push_back(p);
             //cout << "Color del pixel despues de intersectar: " << p.getColor() << endl;
         }
+        cuadriculaPixeles = nuevaCuadricula;
     }
 }
 
@@ -141,6 +144,7 @@ ImagenPPM Camara::crearImagenPPM(){
     vector<RGB> pixeles;
     vector<Pixel> arrayPixeles = cuadriculaPixeles;
     for(auto p : arrayPixeles){
+        //cout << "Color del pixel de la cuadricula en crearImagen: " << p.getColor() << endl;
         v = p.getColor().maximo();
         pixeles.push_back(p.getColor());
         if(v > valorMax){
@@ -149,7 +153,8 @@ ImagenPPM Camara::crearImagenPPM(){
     }
     string formato = "P3";
     string comentario = "";
-    return ImagenPPM(formato, valorMax, comentario, tamPlanoImagen[0], tamPlanoImagen[1], 255, formatoRGB, pixeles);
+    ImagenPPM imagen = ImagenPPM(formato, valorMax, comentario, tamPlanoImagen[0], tamPlanoImagen[1], 255, formatoRGB, pixeles);
+    return imagen;
 }
 
 

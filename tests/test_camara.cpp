@@ -18,10 +18,10 @@ int main(){
 
     cout << "Creacion de primitivas..." << endl;
     Plano planoizq(Punto3D(1, 0, 0), 1, RGB(1,0,0));
-    Plano planoder(Punto3D(-1, 0, 0), 1, RGB(0,1,0));
-    Plano planosuelo(Punto3D(0, 1, 0), 1, RGB(1,1,1));
-    Plano planotecho(Punto3D(0, -1, 0), 1, RGB(1,1,1));
-    Plano planoatras(Punto3D(0, 0, -1), 1, RGB(1,1,1));
+    Plano planoder(Punto3D(-1, 0, 0), 1, RGB(1,1,0));
+    Plano planosuelo(Punto3D(0, 1, 0), 1, RGB(1,0,1));
+    Plano planotecho(Punto3D(0, -1, 0), 1, RGB(1,0,1));
+    Plano planoatras(Punto3D(0, 0, -1), 1, RGB(1,0,1));
 
     Esfera esfera1(Punto3D(-0.5, -0.7, 0.25), 0.3, RGB(1,0.5,0.5));
     Esfera esfera2(Punto3D(0.5, -0.7, -0.25), 0.3, RGB(0.5,0.5,1));
@@ -38,18 +38,19 @@ int main(){
     escena.anyadirPrimitiva(&planosuelo);
     escena.anyadirPrimitiva(&planotecho);
     escena.anyadirPrimitiva(&planoatras);
-
+    
     camara.asignarEscena(escena);
 
     cout << "Generando imagen..." << endl;
     //camara.generarImagen(256,256);
 
     cout << "Lanzando rayos..." << endl;
-    camara.lanzarRayos(64);
+    camara.lanzarRayos(1);
 
     cout << "Creando imagen..." << endl;
     ImagenPPM imagenGenerada = camara.crearImagenPPM();
 
-    imagenGenerada.escrituraFichero("FicheroCamaraTest.ppm");
+    cout << "Escribiendo fichero..." << endl;
+    imagenGenerada.escrituraFichero("FicheroCamaraTest2.ppm");
     cout << " -- Terminacion correcta del test -- " << endl;
 }
