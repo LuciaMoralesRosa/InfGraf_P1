@@ -8,7 +8,6 @@
 #include "..\..\rayTracing\interseccion.hpp"
 #include "../../rayTracing/rayo.hpp"
 
-
 class Primitiva{
 
     private:

@@ -39,6 +39,8 @@ int main(){
     escena.anyadirPrimitiva(&planotecho);
     escena.anyadirPrimitiva(&planoatras);
 
+    camara.asignarEscena(escena);
+
     cout << "Generando imagen..." << endl;
     //camara.generarImagen(256,256);
 
@@ -47,7 +49,7 @@ int main(){
 
     cout << "Creando imagen..." << endl;
     ImagenPPM imagenGenerada = camara.crearImagenPPM();
-    cout << imagenGenerada;
-    //imagenGenerada.escrituraFichero("FicheroCamaraTest.ppm");
 
+    imagenGenerada.escrituraFichero("FicheroCamaraTest.ppm");
+    cout << " -- Terminacion correcta del test -- " << endl;
 }

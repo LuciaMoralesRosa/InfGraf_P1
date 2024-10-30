@@ -18,7 +18,7 @@ void Escena::intersectarPixel(Pixel& pixel) {
 }
 
 void Escena::intersectarRayo(Pixel& pixel, Rayo rayo){
-    for(const auto& pri : primitivas){
+    for(const auto& pri : primitivas){        
         Interseccion inter = pri->interseccionRayo(rayo);
         if (inter.intersecta) {
             pixel.setColor(pri->getColor());

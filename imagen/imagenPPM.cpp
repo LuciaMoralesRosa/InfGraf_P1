@@ -240,12 +240,11 @@ void ImagenPPM::escrituraFichero(string ficheroPPM){
     }
     fichero << to_string(base) + " " + to_string(altura) << endl;
     fichero << fixed << setprecision(0) << resolucion << endl;
-    cout << "estoy antes del error 4.5" << endl;
 
     int k = 0;
     for (int i = 0; i < altura; ++i) {
         for (int j = 0; j < base; ++j) {
-            RGB* pixel = dynamic_cast<RGB*>(arrayPixeles[k]); 
+            RGB* pixel = static_cast<RGB*>(arrayPixeles[k]); 
             k++;
             fichero << fixed << setprecision(0) << pixel->getR() * resolucion / valorMax << " "
                                                 << pixel->getG() * resolucion / valorMax << " "
@@ -253,39 +252,6 @@ void ImagenPPM::escrituraFichero(string ficheroPPM){
         }
         fichero << endl;
     }
-
-/*
-    vector<RGB> listaValoresRGB;  
-    for(auto p : arrayPixeles){
-        p->mostrarColor();
-        RGB* aux = dynamic_cast<RGB*>(p);
-        listaValoresRGB.push_back(*aux);
-        delete aux;
-    }
-    cout << "estoy antes del error 5" << endl;
-
-
-    for (int i = 0; i < altura; i++) {
-        for (int j = 0; j < base; j++) {
-            RGB pixel = listaValoresRGB[i*altura + j];
-            fichero << fixed << setprecision(0) << pixel.getR() * resolucion / valorMax << " "
-                                                << pixel.getG() * resolucion / valorMax << " "
-                                                << pixel.getB() * resolucion / valorMax << "     ";
-        }
-    }
-*/
-
-    /*
-    for (int i = 0; i < altura; i++) {
-        for (int j = 0; j < base; j++) {
-            cout << "I*altura + j = " << i*altura+j << endl;
-            EspacioColor* p = arrayPixeles[i*altura+j];
-
-            cout << "Antes del Dynamic cast" << endl;
-            RGB* pixel = dynamic_cast<RGB*>(p); 
-            cout << "Despues del Dynamic cast" << endl;
-
-*/
     
     fichero << endl;
     fichero.close();

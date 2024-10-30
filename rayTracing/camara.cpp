@@ -78,6 +78,9 @@ void Camara::anyadirPrimitiva(Primitiva* primitiva){
     escena.anyadirPrimitiva(primitiva);
 }
 
+void Camara::asignarEscena(Escena e){
+    escena = e;
+}
 /*
 void Camara::generarImagen(int base, int altura){
     vector<RGB> pixeles;

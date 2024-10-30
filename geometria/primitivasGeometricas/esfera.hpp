@@ -11,6 +11,7 @@
 #include "primitiva.hpp"
 #include "../punto3d.hpp"
 #include "../../rayTracing/rayo.hpp"
+#include "tipoPrimitiva.hpp"
 using namespace std;
 
 /**

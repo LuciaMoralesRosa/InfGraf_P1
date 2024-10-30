@@ -45,6 +45,7 @@ class Camara {
         void anyadirPrimitiva(Primitiva* primitiva);
 
         void generarImagen(int base, int altura);
+        void asignarEscena(Escena e);
         void lanzarRayos2(int rayosPorPixel);
         void lanzarRayos(int rayosPorPixel);
 
