@@ -27,7 +27,7 @@ class Camara {
     //vector<Luz> luces;
 
     void crearCuadriculaPixeles();
-    Punto3D generarPuntoAleatorioEnPixel(Pixel pixel);
+    Punto3D generarPuntoAleatorioEnPixel(mt19937 gen, Pixel pixel);
 
     
     public:

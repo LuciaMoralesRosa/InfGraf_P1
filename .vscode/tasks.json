@@ -27,12 +27,14 @@
                 "${workspaceFolder}/rayTracing/camara.cpp",
                 "${workspaceFolder}/rayTracing/pixel.cpp",
                 "${workspaceFolder}/rayTracing/rayo.cpp",
+                "${workspaceFolder}/otros/metodosAuxiliares.cpp",
                 "-o",
                 "${workspaceFolder}/bin/camaratest",        // Ruta de salida del ejecutable
                 "-I", "${workspaceFolder}/geometria",
                 "-I", "${workspaceFolder}/geometria/primitivasGeometricas",
                 "-I", "${workspaceFolder}/imagen",
                 "-I", "${workspaceFolder}/rayTracing",
+                "-I", "${workspaceFolder}/otros",
                 "-lstdc++"
             ],
             "options": {

@@ -42,7 +42,7 @@ int main(){
     camara.asignarEscena(escena);
 
     cout << "Lanzando rayos..." << endl;
-    camara.lanzarRayos(1);
+    camara.lanzarRayos(64);
 
     cout << "Creando imagen..." << endl;
     ImagenPPM imagenGenerada = camara.crearImagenPPM();

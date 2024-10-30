@@ -1,20 +1,22 @@
 #include "camara.hpp"
 
 //------------------------------- PRIVADAS -----------------------------------//
-Punto3D Camara::generarPuntoAleatorioEnPixel(Pixel pixel){
+Punto3D Camara::generarPuntoAleatorioEnPixel(mt19937 gen, Pixel pixel){
     // General altura y anchura aleatoria dentro del tamaño del pixel.
-    random_device rd;
-    mt19937 gen(rd());
+    //mt19937 gen(rd());
 
     uniform_real_distribution<float> distribucion_altura(pixel.getPuntoDchInf().gety(),
                                                          pixel.getPuntoIzqSup().gety());
     uniform_real_distribution<float> distribucion_anchura(pixel.getPuntoIzqSup().getx(),
-                                                         pixel.getPuntoDchInf().getx());
+                                                         pixel.getPuntoDchInf().getx());                 
+    uniform_real_distribution<float> distribucion_profundidad(pixel.getPuntoIzqSup().getz(),
+                                                         pixel.getPuntoDchInf().getz());
 
     float puntoAltura = distribucion_altura(gen);
     float puntoAnchura = distribucion_anchura(gen);
+    float puntoProfundidad = distribucion_profundidad(gen);
 
-    return Punto3D(puntoAnchura, puntoAltura, pixel.getPuntoDchInf().getz());
+    return Punto3D(puntoAnchura, puntoAltura, puntoProfundidad);
 }
 
 
@@ -95,9 +97,12 @@ void Camara::lanzarRayos(int rayosPorPixel){
         vector<Pixel> nuevaCuadricula;
         vector<float> red, green, blue;
 
+        random_device rd;
         for(auto p : cuadriculaPixeles){
             for(int i = 0; i < rayosPorPixel; i++){
-                Punto3D puntoAleatorio = generarPuntoAleatorioEnPixel(p);
+                mt19937 gen(rd());
+                Punto3D puntoAleatorio = generarPuntoAleatorioEnPixel(gen, p);
+                //cout << "generado punto: " << puntoAleatorio << endl;
                 Rayo rayoAleatorio = Rayo(origen, puntoAleatorio);
                 RGB colorObtenido = escena.intersectarRayo(p.getColor(), rayoAleatorio);
                 red.push_back(colorObtenido.getR());
@@ -112,6 +117,7 @@ void Camara::lanzarRayos(int rayosPorPixel){
             red.clear();
             green.clear();
             blue.clear();
+            //cout << endl;
         }
         cuadriculaPixeles = nuevaCuadricula;
     }
