@@ -13,4 +13,7 @@ class FuenteLuz{
         
         Punto3D getCentro();
         RGB getPotencia();
+
+        
+
 };

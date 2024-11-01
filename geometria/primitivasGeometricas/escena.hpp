@@ -39,9 +39,12 @@ class Escena {
          * @param primitiva Primitiva que añadir a la escena.
          */
         void intersectarPixel(Pixel& pixel);
+        
         returnInterseccionRayo intersectarRayo(Rayo rayo);
 
-        //DEPURANDO
+
+
+        //------------ Funciones de depuracion -------------------------------//
         string getTiposPrimitiva(){
             string ret = "";
             for(auto p : primitivas){

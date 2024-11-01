@@ -43,6 +43,11 @@ public:
     RGB equalizationClamping(float valorMax, float resolucion, float valor = 1);
 
     friend ostream& operator<<(ostream& os, const RGB& color);
+    RGB operator*(RGB& otro);
+    RGB operator+(RGB& otro);
+
+    RGB operator*(float& otro);
+
 
 };
 

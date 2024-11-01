@@ -11,4 +11,6 @@ struct Interseccion{
     vector<Punto3D> puntoInterseccion;
     // Normal de la intersección (normalized)
     Direccion normal;
+
+    Primitiva* primitiva;
 };

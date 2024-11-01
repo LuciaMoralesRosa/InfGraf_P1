@@ -46,6 +46,7 @@
         "list": "cpp",
         "iomanip": "cpp",
         "ios": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "xutility": "cpp"
     }
 }

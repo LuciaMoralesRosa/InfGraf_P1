@@ -152,7 +152,18 @@ RGB RGB::equalizationClamping(float valorMax, float resolucion, float valor){
     return equalizado.clamping(valor);
 }
 
+RGB RGB::operator*(RGB& otro){
+    return RGB(r*otro.r, g*otro.g, b*otro.b);
+}
 
+RGB RGB::operator+(RGB& otro){
+    return RGB(r+otro.r, g+otro.g, b+otro.b);
+}
+
+
+RGB RGB::operator*(float& otro){
+    return RGB(r*otro, g*otro, b*otro);
+}
 
 ostream& operator<<(ostream& os, const RGB& color) {
     os << "RGB(" << color.getR() << ", " << color.getG() << ", " << color.getB() << ")";
