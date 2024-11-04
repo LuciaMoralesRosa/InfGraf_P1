@@ -12,7 +12,7 @@ Plano::Plano(Direccion n, float dist, RGB color) : Primitiva(color, "Plano"){
 }
 
 
-tuple<Interseccion, const Primitiva*> Plano::interseccionRayo(Rayo rayo) const {
+Interseccion Plano::interseccionRayo(Rayo rayo) const {
     Interseccion resultado;
     resultado.intersecta = false;
 
@@ -33,8 +33,12 @@ tuple<Interseccion, const Primitiva*> Plano::interseccionRayo(Rayo rayo) const {
         resultado.puntoInterseccion.push_back(puntoInterseccion);
         resultado.normal = this->normal;
     }
+    else {
+        resultado.distancia.clear();
+        resultado.puntoInterseccion.clear();
+    }
 
-    return {resultado, this};
+    return resultado;
 }
 
 Direccion Plano::getNormal(Punto3D x) const {

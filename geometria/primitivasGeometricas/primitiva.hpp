@@ -36,7 +36,7 @@ class Primitiva{
          * @param rayo El rayo que se utilizará para calcular la intersección.
          * @return Una intersección
          */
-        virtual tuple<Interseccion, const Primitiva*> interseccionRayo(Rayo rayo) const = 0;
+        virtual Interseccion interseccionRayo(Rayo rayo) const = 0;
 
         virtual Direccion getNormal(Punto3D punto) const = 0;
 

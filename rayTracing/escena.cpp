@@ -2,21 +2,28 @@
 
 //------------------------------- PRIVADAS -----------------------------------//
 InterseccionPrimitiva Escena::intersectarRayo(Rayo rayo){
-
     vector<Primitiva*> primitivasIntersectadas;
     vector<float> distanciasPrimitivas;
-    Punto3D puntoInterseccion;
+    Punto3D puntoInter;
     InterseccionPrimitiva retorno;
 
     //Recorro todas las primitivas de mi escena y si intersecta con el rayo, la guardo
-    for(const auto& pri : primitivas){  
-        Interseccion inter = get<0>(pri->interseccionRayo(rayo));
+    for(const auto& pri : primitivas){
+        if(pri == nullptr){
+            throw runtime_error("El puntero 'pri' es nulo.");
+        }  
+        Interseccion inter = pri->interseccionRayo(rayo);
         if(inter.intersecta){
             primitivasIntersectadas.push_back(pri);
             float minDistancia = calcularMIN(inter.distancia);
+            
+            if (inter.distancia.size() != inter.puntoInterseccion.size()) {
+                throw runtime_error("Los vectores distancia y puntoInterseccion no tienen el mismo tamaño.");   
+            }
+            
             for(int i = 0; i < inter.distancia.size(); i++){
                 if(inter.distancia[i] == minDistancia){
-                    puntoInterseccion = inter.puntoInterseccion[i];
+                    puntoInter = inter.puntoInterseccion[i];
                 }
             }
             distanciasPrimitivas.push_back(minDistancia);
@@ -28,10 +35,10 @@ InterseccionPrimitiva Escena::intersectarRayo(Rayo rayo){
     if(primitivasIntersectadas.empty()){
         retorno.primitiva = nullptr;
         retorno.puntoInterseccion = Punto3D(0,0,0);
+        retorno.intersecta = false;
         return retorno;
     }
 
-    Primitiva* primitivaVisible;
     //Obtengo la distancia a la que se encuentra la primera primitiva (la visible)
     float minimaDistancia = calcularMIN(distanciasPrimitivas);
 
@@ -40,7 +47,7 @@ InterseccionPrimitiva Escena::intersectarRayo(Rayo rayo){
         if(distanciasPrimitivas[i] == minimaDistancia){
             // Cuando la encuentro, la guardo
             retorno.primitiva = primitivasIntersectadas[i];
-            retorno.puntoInterseccion = puntoInterseccion;
+            retorno.puntoInterseccion = puntoInter;
             break;
         }
     }
@@ -146,7 +153,10 @@ RGB Escena::trazadoDeCaminos(Rayo rayo, int reboteActual, int numeroDeRebotes){
     else { // Si no intersecta con nada, se omite el rayo
         return RGB();
     }
-    BSDF color = BSDF(interseccion.primitiva->getColor()); // MODIFICAR CUANDO PONGAMOS Ks y Kt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    if (interseccion.primitiva == nullptr) {
+        throw runtime_error("El puntero 'interseccion.primitiva' es nulo.");
+    }
+    BSDF color = BSDF(interseccion.primitiva->getColor());
     tuple<Direccion, RGB> muestreo = color.muestreo(interseccion.puntoInterseccion, rayo.getDireccion(), interseccion.normal);
     RGB colorObtenido = get<1>(muestreo);
     if(colorObtenido.esNegro()){
@@ -177,6 +187,9 @@ RGB Escena::estimacionSiguienteEvento(InterseccionPrimitiva interseccion){
             RGB contribucionDeLuz;
             // Seguramente aqui habra que comprobar si intersecta con una luz de area
             LuzDeArea* luzArea = static_cast<LuzDeArea*>(l);
+            if(luzArea == nullptr){
+                throw runtime_error("Error en luz de area");
+            }
             Rayo rayoInterseccionLuz = Rayo(interseccion.puntoInterseccion, l->getCentro());
             
             InterseccionPrimitiva inter = intersectarRayo(rayoInterseccionLuz);
