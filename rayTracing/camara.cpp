@@ -79,3 +79,7 @@ float Camara::getTamPixelAltura(){
 Punto3D Camara::getOrigen(){
     return origen;
 }
+
+void Camara::setCuadricutaPixeles(vector<Pixel> cuadricula){
+    cuadriculaPixeles = cuadricula;
+}

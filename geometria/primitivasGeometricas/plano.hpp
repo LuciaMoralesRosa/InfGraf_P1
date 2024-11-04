@@ -43,7 +43,7 @@ class Plano : public Primitiva {
          * @return La distancia desde el origen del rayo hasta la intersección con 
          *         el plano. Si no hay intersección, se devuelve un vector vacio.
          */
-        Interseccion interseccionRayo(Rayo rayo) const override;
+        tuple<Interseccion, const Primitiva*> interseccionRayo(Rayo rayo) const override;
 
         Direccion getNormal(Punto3D x) const override;
         float getDistancia();

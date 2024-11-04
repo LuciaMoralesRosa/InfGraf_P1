@@ -61,7 +61,7 @@ class Esfera : public Primitiva {
          * @return Un vector de flotantes que representa las distancias a los puntos 
          *         de intersección. Puede contener cero, uno o dos valores.
          */
-        Interseccion interseccionRayo(Rayo rayo) const override;
+        tuple<Interseccion, const Primitiva*> interseccionRayo(Rayo rayo) const override;
 
         Direccion getNormal(Punto3D punto) const override;
 

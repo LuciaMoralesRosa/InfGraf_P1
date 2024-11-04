@@ -12,7 +12,18 @@
 #include "luces/luzDeArea.hpp"
 #include "BSDF/BSDF.hpp"
 
-
+struct InterseccionPrimitiva {
+    // True si existe intersección
+    bool intersecta;
+    // Vector de distancia a través del rayo hasta la intersección
+    float distancia;
+    // Vector de puntos  de intersección
+    Punto3D puntoInterseccion;
+    // Normal de la intersección (normalized)
+    Direccion normal;
+    // Puntero a la primitiva intersectada
+    Primitiva* primitiva;
+};
 
 class Escena {
     private:
@@ -25,6 +36,7 @@ class Escena {
 
         InterseccionPrimitiva intersectarRayo(Rayo rayo);
         RGB estimacionSiguienteEvento(InterseccionPrimitiva interseccion);
+        RGB trazadoDeCaminos(Rayo rayo, int reboteActual, int numeroDeRebotes);
 
 
     public:
@@ -35,9 +47,10 @@ class Escena {
 
         // OTROS METODOS
         void anyadirPrimitiva(Primitiva* primitiva);
-        void lanzarRayosDesdeCamara(int rayosPorPixel);
+        void anyadirLuz(FuenteLuz* luz);
+
+        void lanzarRayosDesdeCamara(int nrayos);
         ImagenPPM crearImagenPPM();
-        void rayosDesdeCamara(int nrayos);
 
 
         // PRINT

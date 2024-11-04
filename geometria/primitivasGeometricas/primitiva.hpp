@@ -3,9 +3,10 @@
 //#ifndef PRIMITIVA_HPP
 //#define PRIMITIVA_HPP
 
+#include <tuple>
 #include "../punto3d.hpp"
 #include "../../imagen/espacioColor/rgb.hpp"
-#include "..\..\rayTracing\interseccion.hpp"
+#include "../../rayTracing/interseccion.hpp"
 #include "../../rayTracing/rayo.hpp"
 
 
@@ -19,6 +20,7 @@ class Primitiva{
         string tipo;
 
         Primitiva(RGB color_val, string _tipo) : color(color_val), tipo(_tipo) {};
+        Primitiva(Primitiva* p) : color(p->color), tipo(p->tipo) {};
 
         RGB getColor() {
             return color;
@@ -34,7 +36,7 @@ class Primitiva{
          * @param rayo El rayo que se utilizará para calcular la intersección.
          * @return Una intersección
          */
-        virtual Interseccion interseccionRayo(Rayo rayo) const = 0;
+        virtual tuple<Interseccion, const Primitiva*> interseccionRayo(Rayo rayo) const = 0;
 
         virtual Direccion getNormal(Punto3D punto) const = 0;
 

@@ -23,7 +23,7 @@ private:
     float r, g, b; // Componentes del color RGB
 
 public:
-    RGB();
+    RGB() : r(0), g(0), b(0) {};
     RGB(float red, float green, float blue);
     RGB(const HSV color);
     RGB(const HSL color);
@@ -43,10 +43,13 @@ public:
     RGB equalizationClamping(float valorMax, float resolucion, float valor = 1);
 
     friend ostream& operator<<(ostream& os, const RGB& color);
-    RGB operator*(RGB& otro);
-    RGB operator+(RGB& otro);
+    RGB operator*(const RGB& otro) const;
+    RGB operator+(const RGB& otro) const;
+    RGB operator/(const int& otro) const;
+    RGB operator*(const float& otro) const;
 
-    RGB operator*(float& otro);
+    bool esNegro();
+
 
 
 };

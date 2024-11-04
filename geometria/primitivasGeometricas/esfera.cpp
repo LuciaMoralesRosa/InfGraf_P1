@@ -16,7 +16,7 @@ Direccion Esfera::getNormal(Punto3D punto) const {
 }
 
 
-Interseccion Esfera::interseccionRayo(Rayo rayo) const {
+tuple<Interseccion, const Primitiva*> Esfera::interseccionRayo(Rayo rayo) const {
     Punto3D ORayo = rayo.getOrigen();
     Direccion dir = rayo.getDireccion().normalize();
 
@@ -38,8 +38,9 @@ Interseccion Esfera::interseccionRayo(Rayo rayo) const {
     if (discriminante < 0) {
         // No hay intersección
         resultado.intersecta = false;
-        return resultado;
-    } else {
+        return {resultado, nullptr};
+    }
+    else {
         // Hay una o dos intersecciones
         float sqrtDiscriminante = sqrt(discriminante);
         float t1 = (-B - sqrtDiscriminante) / (2 * A);
@@ -49,7 +50,7 @@ Interseccion Esfera::interseccionRayo(Rayo rayo) const {
         if (t1 != t2){
             resultado.distancia.push_back(t2); // Dos intersecciones
         }
-        return resultado;
+        return {resultado, this};
     }
 }
 

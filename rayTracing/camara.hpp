@@ -8,10 +8,9 @@
 #include <random>
 #include "../geometria/direccion.hpp"
 #include "../geometria/punto3d.hpp"
-#include "../geometria/primitivasGeometricas/escena.hpp"
 #include "../imagen/imagenPPM.hpp"
 #include "../imagen/espacioColor/rgb.hpp"
-#include "fuenteLuz.hpp"
+#include "luces/fuenteLuz.hpp"
 
 #include "pixel.hpp"
 using namespace std;
@@ -35,18 +34,20 @@ class Camara {
          * @param f_val Dirección forward
          * @param tam_val Tamaño en píxeles de la camara //0->ancho 1->altura
          */
-        Camara(Punto3D origen_val, Direccion u_val, Direccion l_val, Direccion f_val, array<int, 2> tam_val = {256, 256});
 
 
     public:
 
-    // GETTERS
-    vector<Pixel> getCuadriculaPixeles();
-    int getTamPlanoImagenBase();
-    int getTamPlanoImagenAltura();
-    float getTamPixelBase();
-    float getTamPixelAltura();
-    Punto3D getOrigen();
+        Camara(Punto3D origen_val, Direccion u_val, Direccion l_val, Direccion f_val, array<int, 2> tam_val = {256, 256});
+
+        // GETTERS
+        vector<Pixel> getCuadriculaPixeles();
+        int getTamPlanoImagenBase();
+        int getTamPlanoImagenAltura();
+        float getTamPixelBase();
+        float getTamPixelAltura();
+        Punto3D getOrigen();
+        void setCuadricutaPixeles(vector<Pixel> cuadricula);
 
 
 

@@ -1,46 +1,34 @@
 #include "escena.hpp"
 
-struct InterseccionPrimitiva {
-    // True si existe intersección
-    bool intersecta;
-    // Vector de distancia a través del rayo hasta la intersección
-    float distancia;
-    // Vector de puntos  de intersección
-    Punto3D puntoInterseccion;
-    // Normal de la intersección (normalized)
-    Direccion normal;
-    // Puntero a la primitiva intersectada
-    Primitiva* primitiva;
-};
-
 //------------------------------- PRIVADAS -----------------------------------//
 InterseccionPrimitiva Escena::intersectarRayo(Rayo rayo){
 
     vector<Primitiva*> primitivasIntersectadas;
     vector<float> distanciasPrimitivas;
-    vector<vector<Punto3D>> puntosInterseccion;
-    returnInterseccionRayo ret;
+    Punto3D puntoInterseccion;
+    InterseccionPrimitiva retorno;
 
     //Recorro todas las primitivas de mi escena y si intersecta con el rayo, la guardo
     for(const auto& pri : primitivas){  
-        Interseccion inter = pri->interseccionRayo(rayo);
+        Interseccion inter = get<0>(pri->interseccionRayo(rayo));
         if(inter.intersecta){
-        // if(pri->tipo == "Esfera"){
-        //     cout << "Ha intersectado la primitiva de tipo esfera" << endl;
-        // }
             primitivasIntersectadas.push_back(pri);
-            float min = calcularMIN(inter.distancia);
-            distanciasPrimitivas.push_back(min);
-            puntosInterseccion.push_back(inter.puntoInterseccion);
+            float minDistancia = calcularMIN(inter.distancia);
+            for(int i = 0; i < inter.distancia.size(); i++){
+                if(inter.distancia[i] == minDistancia){
+                    puntoInterseccion = inter.puntoInterseccion[i];
+                }
+            }
+            distanciasPrimitivas.push_back(minDistancia);
         }
     }
 
     //Tengo una lista de primitivas intersectadas por el rayo
     // Hay que ver que primitiva esta por delante
     if(primitivasIntersectadas.empty()){
-        ret.primitiva = nullptr;
-        ret.puntoInterseccion.push_back(Punto3D(0,0,0));
-        return ret;
+        retorno.primitiva = nullptr;
+        retorno.puntoInterseccion = Punto3D(0,0,0);
+        return retorno;
     }
 
     Primitiva* primitivaVisible;
@@ -51,16 +39,35 @@ InterseccionPrimitiva Escena::intersectarRayo(Rayo rayo){
     for(int i = 0; i < primitivasIntersectadas.size(); i++){
         if(distanciasPrimitivas[i] == minimaDistancia){
             // Cuando la encuentro, la guardo
-            ret.primitiva = primitivasIntersectadas[i];
-            ret.puntoInterseccion = puntosInterseccion[i];
+            retorno.primitiva = primitivasIntersectadas[i];
+            retorno.puntoInterseccion = puntoInterseccion;
             break;
         }
     }
     // Devuleve la primitiva intersectada
-    return ret;
+    return retorno;
+}
+
+Punto3D Escena::generarPuntoAleatorioEnPixel(mt19937 gen, Pixel pixel){
+    // General altura y anchura aleatoria dentro del tamaño del pixel.
+    //mt19937 gen(rd());
+
+    uniform_real_distribution<float> distribucion_altura(pixel.getPuntoDchInf().gety(),
+                                                         pixel.getPuntoIzqSup().gety());
+    uniform_real_distribution<float> distribucion_anchura(pixel.getPuntoIzqSup().getx(),
+                                                         pixel.getPuntoDchInf().getx());                 
+    uniform_real_distribution<float> distribucion_profundidad(pixel.getPuntoIzqSup().getz(),
+                                                         pixel.getPuntoDchInf().getz());
+
+    float puntoAltura = distribucion_altura(gen);
+    float puntoAnchura = distribucion_anchura(gen);
+    float puntoProfundidad = distribucion_profundidad(gen);
+
+    return Punto3D(puntoAnchura, puntoAltura, puntoProfundidad);
 }
 
 //------------------------------- FIN PRIVADAS -------------------------------//
+
 
 
 //--------------------------------- PUBLICAS ---------------------------------//
@@ -83,92 +90,87 @@ ImagenPPM Escena::crearImagenPPM(){
     return imagen;
 }
 
-/*
-void Escena::lanzarRayosDesdeCamara(int rayosPorPixel){
-    vector<Rayo> listaRayos;
-    vector<Pixel> cuadriculaPixeles = camara.getCuadriculaPixeles();
-
-    if(!cuadriculaPixeles.empty()){
-        vector<Pixel> nuevaCuadricula;
-        vector<float> red, green, blue;
-
-        random_device rd;
-        for(auto p : cuadriculaPixeles){
-            for(int i = 0; i < rayosPorPixel; i++){
-                mt19937 gen(rd());
-                Punto3D puntoAleatorio = generarPuntoAleatorioEnPixel(gen, p);
-                Rayo rayoAleatorio = Rayo(camara.getOrigen(), puntoAleatorio);
-                
-                intersectarRayo(rayoAleatorio);
-                RGB colorObtenido;
-                Direccion normalPrimitiva;
-                if(inter.primitiva == nullptr){
-                    colorObtenido = p.getColor();
-                }
-                else{
-                    colorObtenido = inter.primitiva->getColor();
-                    normalPrimitiva = inter.primitiva->getNormal(inter.puntoInterseccion[0]);
-                }
-                
-                calcularLuzDirecta(rayoAleatorio, p, puntoAleatorio, inter.primitiva, normalPrimitiva);
-                //Donde haya interseccion -> hay que buscar de donde viene la luz puntual
-                //Calcular luz directa en el punto
-
-                red.push_back(colorObtenido.getR());
-                green.push_back(colorObtenido.getG());
-                blue.push_back(colorObtenido.getB());
-            }
-            // Hacer media de cada componente y crear nuevo RGB
-            RGB rgb(calcularMedia(red), calcularMedia(green), calcularMedia(blue));
-            //cout << "color del pixel final: " << rgb << endl;
-            p.setColor(rgb);
-            nuevaCuadricula.push_back(p);
-            red.clear();
-            green.clear();
-            blue.clear();
-            //cout << endl;
-        }
-        cuadriculaPixeles = nuevaCuadricula;
-    }
+void Escena::anyadirPrimitiva(Primitiva* primitiva){
+    primitivas.push_back(primitiva);
 }
-*/
 
-void Escena::rayosDesdeCamara(int nrayos){
+void Escena::anyadirLuz(FuenteLuz* luz){
+    luces.push_back(luz);
+}
+
+
+
+void Escena::lanzarRayosDesdeCamara(int nrayos){
     vector<Rayo> listaRayos;
     vector<Pixel> cuadriculaPixeles = camara.getCuadriculaPixeles();
+    vector<Pixel> nuevaCuadricula;
+    int numeroDeRebotes = 10;
 
     if(cuadriculaPixeles.empty()){
         throw runtime_error("Error: La cuadrícula de píxeles está vacía.");
     }
     random_device rd;
-    vector<Pixel> nuevaCuadricula;
+    RGB valorPixel = RGB();
 
     for(Pixel p : cuadriculaPixeles){ //Para cada pixel -> lanzar x rayos
         for(int i = 0; i < nrayos; i++) {  // generar x rayos a puntos aleatorios
             mt19937 gen(rd());
             Punto3D puntoAleatorio = generarPuntoAleatorioEnPixel(gen, p);
             Rayo rayoCamaraPixel = Rayo(camara.getOrigen(), puntoAleatorio);
+            int reboteActual = 0;
 
-            // Comprobar si el rayo intersecta con primitiva
-            InterseccionPrimitiva interseccion = intersectarRayo(rayoCamaraPixel);
-
-
-            // Para cada rayo que intersecta - Lanzar rayos de sombra
-            // Es decir, trazar un rayo entre el punto de interseccion y cada
-            // una de las luces puntuales y ver si hay alguna primitiva entre
-            // ellos. Si lo hay -> el pixel esta en sombra, sino el pixel tiene color
-
-            RGB contribucionLuz = estimacionSiguienteEvento(interseccion);
+            valorPixel = valorPixel + trazadoDeCaminos(rayoCamaraPixel, reboteActual, numeroDeRebotes);
         }
+        nuevaCuadricula.push_back(Pixel(p.getPuntoIzqSup(), p.getPuntoDchInf(), valorPixel/nrayos));
+        valorPixel = RGB();
+    }
+    camara.setCuadricutaPixeles(nuevaCuadricula);
+}
 
+
+
+RGB Escena::trazadoDeCaminos(Rayo rayo, int reboteActual, int numeroDeRebotes){
+    RGB contribucionLuz;
+
+    // Condicion de terminacion
+    if(reboteActual > numeroDeRebotes){
+        return RGB();
+    }
+
+    // Comprobar si el rayo intersecta con primitiva y obtener la interseccion
+    // con la primitiva correspondiente
+    InterseccionPrimitiva interseccion = intersectarRayo(rayo);
+    if(interseccion.intersecta){
+        contribucionLuz = contribucionLuz + estimacionSiguienteEvento(interseccion);
+    }
+    else { // Si no intersecta con nada, se omite el rayo
+        return RGB();
+    }
+    BSDF color = BSDF(interseccion.primitiva->getColor()); // MODIFICAR CUANDO PONGAMOS Ks y Kt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    tuple<Direccion, RGB> muestreo = color.muestreo(interseccion.puntoInterseccion, rayo.getDireccion(), interseccion.normal);
+    RGB colorObtenido = get<1>(muestreo);
+    if(colorObtenido.esNegro()){
+        return RGB();
+    }
+    else{
+        contribucionLuz = contribucionLuz + colorObtenido +
+                          trazadoDeCaminos(Rayo(interseccion.puntoInterseccion,
+                          get<0>(muestreo)), reboteActual++, numeroDeRebotes);
+        return contribucionLuz;
     }
 
 
+    // Para cada rayo que intersecta - Lanzar rayos de sombra
+    // Es decir, trazar un rayo entre el punto de interseccion y cada
+    // una de las luces puntuales y ver si hay alguna primitiva entre
+    // ellos. Si lo hay -> el pixel esta en sombra, sino el pixel tiene color
 
 }
 
 
+
 RGB Escena::estimacionSiguienteEvento(InterseccionPrimitiva interseccion){
+    //Se puede usar la ruleta rusa aqui
     if(interseccion.intersecta){
         RGB contribucion;
         for(auto l : luces){
@@ -192,15 +194,15 @@ RGB Escena::estimacionSiguienteEvento(InterseccionPrimitiva interseccion){
 
                 if(luzArea != nullptr){ // Si estamos evaluando una luz de area
                     // Si metemos Efectos de Fresnel o texturas habra que cambiar esto:
-                    BSDF bsdf = BSDF(inter.primitiva->getColor(), 1);
+                    BSDF bsdf = BSDF(inter.primitiva->getColor());
                     RGB evaluacionEnMaterial = bsdf.evaluacion(); 
                     float porPlano = abs(inter.normal.dot_product(rayoInterseccionLuz.getDireccion().normalize())) *
                                         abs(luzArea->getNormal().dot_product(rayoInterseccionLuz.getDireccion().normalize()*(-1)));
-                    contribucionDeLuz = potInicialPorDistancia2 * evaluacionEnMaterial * porPlano;
+                    contribucionDeLuz = (potInicialPorDistancia2 * evaluacionEnMaterial) * porPlano;
                 }
                 else { // Si estamos evaluando una luz puntual
                     // Si metemos Efectos de Fresnel o texturas habra que cambiar esto:
-                    BSDF bsdf = BSDF(inter.primitiva->getColor(), 1);
+                    BSDF bsdf = BSDF(inter.primitiva->getColor());
                     RGB evaluacionEnMaterial = bsdf.evaluacion(); 
                     float porPunto = abs(inter.normal.dot_product(rayoInterseccionLuz.getDireccion().normalize()));
                     contribucionDeLuz = potInicialPorDistancia2 * evaluacionEnMaterial;
@@ -209,6 +211,10 @@ RGB Escena::estimacionSiguienteEvento(InterseccionPrimitiva interseccion){
             }
             contribucion = contribucion + contribucionDeLuz;
         }
+        return contribucion;
+    }
+    else {
+        return RGB();
     }
 
 }

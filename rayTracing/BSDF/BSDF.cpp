@@ -1,7 +1,7 @@
 #include "BSDF.hpp"
 
 RGB BSDF::getValor() const {
-    return valor;
+    return kd;
 }
 
 // Ley de Snell
@@ -42,23 +42,37 @@ Direccion BSDF::evaluacionRefraccion(Punto3D x, Direccion omega_o, Direccion nor
 }    
 
 RGB BSDF::evaluacion(){
-    return RGB(coeficienteDifusion / M_PI, coeficienteDifusion / M_PI, coeficienteDifusion / M_PI);
+    return RGB(kd.getR() / M_PI, kd.getG() / M_PI, kd.getB() / M_PI);
 }
 
 RGB BSDF::evaluacion(Punto3D x, Direccion omega_i, Direccion omega_o, Direccion normal, const float u, const float v){
     float r, g, b;
-    return RGB(coeficienteDifusion / M_PI, coeficienteDifusion / M_PI, coeficienteDifusion / M_PI);
+    return RGB(kd.getR() / M_PI, kd.getG() / M_PI, kd.getB() / M_PI);
 }
 
+RGB BSDF::evaluacionBRDF(const Punto3D x, const Direccion omega_i, const Direccion omega_o, const Direccion normal){    
+    float cosTheta = max(0.0f, normal.dot_product(omega_i.normalize())); 
+    return kd * ((1.0f / M_PI) * cosTheta); // (1/π) para la BRDF difusa
+}
+
+tuple<Direccion, RGB> BSDF::muestreo(const Punto3D x, const Direccion omega_o, const Direccion normal) {
+    // Muestreamos una dirección basada en la refracción
+    Direccion direccionRefraccion = evaluacionRefraccion(x, omega_o, normal);
+
+    // Calculamos la contribución de la luz en la dirección muestreada
+    RGB contribucion = evaluacionBRDF(x, direccionRefraccion, omega_o, normal);
+    // Retornamos la dirección y la contribución calculada
+    return {direccionRefraccion, contribucion};
+}
 
 RGB BSDF::operator*(const BSDF& otro) const {
-    return RGB(RGB(valor.getR()*otro.getValor().getR(),
-                valor.getG()*otro.getValor().getG(),
-                valor.getB()*otro.getValor().getB()));
+    return RGB(RGB(kd.getR()*otro.getValor().getR(),
+                kd.getG()*otro.getValor().getG(),
+                kd.getB()*otro.getValor().getB()));
 }
 
 RGB BSDF::operator*(const RGB& otro) const {
-    return RGB(valor.getR()*otro.getR(),
-               valor.getG()*otro.getG(),
-               valor.getB()*otro.getB());
+    return RGB(kd.getR()*otro.getR(),
+               kd.getG()*otro.getG(),
+               kd.getB()*otro.getB());
 }

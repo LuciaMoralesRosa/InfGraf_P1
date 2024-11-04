@@ -1,5 +1,6 @@
 #pragma once
-#include "..\geometria\punto3d.hpp"
+#include "../geometria/punto3d.hpp"
+#include "../geometria/primitivasGeometricas/primitiva.hpp"
 #include <vector>
 
 struct Interseccion{
@@ -12,5 +13,5 @@ struct Interseccion{
     // Normal de la intersección (normalized)
     Direccion normal;
 
-    Primitiva* primitiva;
+    //Primitiva* primitiva;
 };
