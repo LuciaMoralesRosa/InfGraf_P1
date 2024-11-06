@@ -10,10 +10,11 @@ class LuzDeArea : public FuenteLuz {
         Plano plano;
 
     public: 
-        LuzDeArea(Plano p, Punto3D c, RGB pot) : plano(p), FuenteLuz(c, pot){};
+        LuzDeArea(Plano p, Punto3D c, RGB pot) : plano(p), FuenteLuz(c, pot, AREA){};
 
         Direccion getNormal();
         float getDistancia();
-        RGB getPotencia();        
+
+        TipoLuz getTipo() const override;
         ~LuzDeArea();
 };

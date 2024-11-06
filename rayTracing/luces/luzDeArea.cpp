@@ -8,6 +8,6 @@ float LuzDeArea::getDistancia(){
     return plano.getDistancia();
 }
 
-RGB LuzDeArea::getPotencia(){
-    return plano.getColor();
+TipoLuz LuzDeArea::getTipo() const {
+    return AREA;
 }

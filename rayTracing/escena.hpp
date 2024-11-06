@@ -11,6 +11,8 @@
 #include "luces/fuenteLuz.hpp"
 #include "luces/luzDeArea.hpp"
 #include "BSDF/BSDF.hpp"
+#include "luces/tipoLuz.hpp"
+#include "luces/luzPuntual.hpp"
 
 struct InterseccionPrimitiva {
     // True si existe intersección

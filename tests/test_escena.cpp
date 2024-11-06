@@ -43,18 +43,19 @@ int main(){
     
     luces.push_back(&luz);
     primitivas.push_back(&esfera1);
-    primitivas.push_back(&esfera2);
-    primitivas.push_back(&planoizq);
-    primitivas.push_back(&planoder);
-    primitivas.push_back(&planosuelo);
-    primitivas.push_back(&planotecho);
-    primitivas.push_back(&planoatras);
+    //primitivas.push_back(&esfera2);
+    //primitivas.push_back(&planoizq);
+    //primitivas.push_back(&planoder);
+    //primitivas.push_back(&planosuelo);
+    //primitivas.push_back(&planotecho);
+    //primitivas.push_back(&planoatras);
     
     Escena escena = Escena(primitivas, camara, luces);
 
     cout << "Lanzando rayos..." << endl;
     escena.lanzarRayosDesdeCamara(1);
 
+    // Esto sabemos que funciona porque es igual que el que habia en la camara
     cout << "Creando imagen..." << endl;
     ImagenPPM imagenGenerada = escena.crearImagenPPM();
 
