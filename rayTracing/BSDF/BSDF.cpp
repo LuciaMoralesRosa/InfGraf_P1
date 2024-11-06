@@ -52,7 +52,11 @@ RGB BSDF::evaluacion(Punto3D x, Direccion omega_i, Direccion omega_o, Direccion 
 
 RGB BSDF::evaluacionBRDF(const Punto3D x, const Direccion omega_i, const Direccion omega_o, const Direccion normal){    
     float cosTheta = max(0.0f, normal.dot_product(omega_i.normalize())); 
-    return kd * ((1.0f / M_PI) * cosTheta); // (1/π) para la BRDF difusa
+    //return kd * ((1.0f / M_PI) * cosTheta); // (1/π) para la BRDF difusa
+    //cout << "Depurando en EvaluacionBRDF kd:" << kd << endl;
+    //cout << "Depurando en EvaluacionBRDF operacion: " << kd * ((1.0f / M_PI)) << endl;
+
+    return kd * ((1.0f / M_PI));
 }
 
 tuple<Direccion, RGB> BSDF::muestreo(const Punto3D x, const Direccion omega_o, const Direccion normal) {

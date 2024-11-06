@@ -1,5 +1,8 @@
 #include "luzPuntual.hpp"
 
-TipoLuz LuzPuntual::getTipo() const{
-    return PUNTUAL;
+
+
+
+int LuzPuntual::getTipo() const {
+    return 0;
 }

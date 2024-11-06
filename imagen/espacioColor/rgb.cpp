@@ -176,6 +176,6 @@ ostream& operator<<(ostream& os, const RGB& color) {
 }
 
 bool RGB::esNegro(){
-    return (r== 0 && g == 0 & b == 0);
+    return (r== 0.0f && g == 0.0f & b == 0.0f);
 }
 

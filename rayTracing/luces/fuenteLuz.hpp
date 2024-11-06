@@ -9,12 +9,12 @@ class FuenteLuz{
     private:
         Punto3D centro;
         RGB potencia;
-        TipoLuz tipo;
+        int tipo;
 
     public:
-        FuenteLuz(Punto3D c, RGB p, TipoLuz t) : centro(c), potencia(p), tipo(t) {};
+        FuenteLuz(Punto3D c, RGB p, int t) : centro(c), potencia(p), tipo(t) {};
         
         Punto3D getCentro();
         RGB getPotencia();
-        virtual TipoLuz getTipo() const  = 0;
+        virtual int getTipo() const  = 0;
 };
