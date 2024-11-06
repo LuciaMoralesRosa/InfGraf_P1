@@ -8,22 +8,21 @@
 #include "../../imagen/espacioColor/rgb.hpp"
 #include "../../rayTracing/interseccion.hpp"
 #include "../../rayTracing/rayo.hpp"
+#include "../../rayTracing/textura.hpp"
 
 
 class Primitiva{
 
     private:
-        RGB color;
+        Textura textura;
         
 
     public:
-        string tipo;
-
-        Primitiva(RGB color_val, string _tipo) : color(color_val), tipo(_tipo) {};
-        Primitiva(Primitiva* p) : color(p->color), tipo(p->tipo) {};
+        Primitiva(Textura textura_val) : textura(textura_val) {};
+        Primitiva(Primitiva* p) : textura(p->textura) {};
 
         RGB getColor() {
-            return color;
+            return textura.getColor();
         };
 
         /**

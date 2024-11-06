@@ -11,7 +11,7 @@ class Triangulo : public Primitiva {
         Direccion normal;
 
     public:
-        Triangulo(Punto3D p1, Punto3D p2, Punto3D p3, RGB _color);
+        Triangulo(Punto3D p1, Punto3D p2, Punto3D p3, Textura _textura);
 
         Punto3D getA();
         Punto3D getB(); 

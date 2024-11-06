@@ -6,7 +6,7 @@
     normal = _n.normalize();
 }*/
 
-Plano::Plano(Direccion n, float dist, RGB color) : Primitiva(color, "Plano"){
+Plano::Plano(Direccion n, float dist, Textura _textura) : Primitiva(_textura){
     normal = n;
     distancia = dist;
 }
