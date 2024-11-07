@@ -9,11 +9,11 @@
                 "-std=c++11",
                 "-fdiagnostics-color=always",
                 "-g",
-                "${workspaceFolder}/tests/test_camara.cpp",  // El archivo principal a compilar
+                "${workspaceFolder}/tests/test_escena.cpp",  // El archivo principal a compilar
                 "${workspaceFolder}/geometria/primitivasGeometricas/esfera.cpp",           // Agrega tus archivos .cpp
                 "${workspaceFolder}/geometria/primitivasGeometricas/plano.cpp",
                 "${workspaceFolder}/geometria/primitivasGeometricas/triangulo.cpp",
-                "${workspaceFolder}/geometria/primitivasGeometricas/escena.cpp",
+                "${workspaceFolder}/rayTracing/escena.cpp",
                 //"${workspaceFolder}/geometria/angulos.cpp",
                 //"${workspaceFolder}/geometria/coordenada.cpp",
                 "${workspaceFolder}/geometria/direccion.cpp",
@@ -27,6 +27,10 @@
                 "${workspaceFolder}/rayTracing/camara.cpp",
                 "${workspaceFolder}/rayTracing/pixel.cpp",
                 "${workspaceFolder}/rayTracing/rayo.cpp",
+                "${workspaceFolder}/rayTracing/BSDF/BSDF.cpp",
+                "${workspaceFolder}/rayTracing/luces/fuenteLuz.cpp",
+                "${workspaceFolder}/rayTracing/luces/luzDeArea.cpp",
+                "${workspaceFolder}/rayTracing/luces/luzPuntual.cpp",
                 "${workspaceFolder}/otros/metodosAuxiliares.cpp",
                 "-o",
                 "${workspaceFolder}/bin/camaratest",        // Ruta de salida del ejecutable
@@ -34,6 +38,9 @@
                 "-I", "${workspaceFolder}/geometria/primitivasGeometricas",
                 "-I", "${workspaceFolder}/imagen",
                 "-I", "${workspaceFolder}/rayTracing",
+                "-I", "${workspaceFolder}/rayTracing/luces",
+                "-I", "${workspaceFolder}/rayTracing/BVH",
+                "-I", "${workspaceFolder}/rayTracing/BSDF",
                 "-I", "${workspaceFolder}/otros",
                 "-lstdc++"
             ],

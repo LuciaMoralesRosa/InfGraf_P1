@@ -66,7 +66,7 @@ tuple<Direccion, RGB> BSDF::muestreo(const Punto3D x, const Direccion omega_o, c
     // Calculamos la contribución de la luz en la dirección muestreada
     RGB contribucion = evaluacionBRDF(x, direccionRefraccion, omega_o, normal);
     // Retornamos la dirección y la contribución calculada
-    return {direccionRefraccion, contribucion};
+    return make_tuple(direccionRefraccion, contribucion);
 }
 
 RGB BSDF::operator*(const BSDF& otro) const {
