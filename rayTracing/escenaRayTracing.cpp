@@ -15,6 +15,46 @@ Punto3D EscenaRayTracing::generarPuntoAleatorioEnPixel(mt19937 gen, Pixel pixel)
     return Punto3D(puntoAnchura, puntoAltura, puntoProfundidad);
 }
 
+RGB EscenaRayTracing::intersectarRayo(RGB colorPixel, Rayo rayo){
+    
+    vector<Interseccion> interseccionesPrimitivas;
+    vector<float> vectorDistancias;
+    vector<Primitiva*> primitivasIntersectadas;
+
+    for(const auto& pri : primitivas){
+        Interseccion i = pri->interseccionRayo(rayo);
+        if(i.intersecta){
+            interseccionesPrimitivas.push_back(i);
+            vectorDistancias.push_back(calcularMIN(i.distancia));
+            primitivasIntersectadas.push_back(pri);
+        }
+    }
+
+    if(interseccionesPrimitivas.empty()){
+        return colorPixel;
+    }
+
+    Primitiva* primitivaVisible;
+    Interseccion interseccion;
+    Punto3D puntoInterseccion;
+    float menorDistancia = calcularMIN(vectorDistancias);
+    
+    for(int i = 0; i < interseccionesPrimitivas.size(); i++){
+        for(int j = 0; j < interseccionesPrimitivas[i].distancia.size(); j++){
+            if(interseccionesPrimitivas[i].distancia[j] == menorDistancia) {
+                primitivaVisible = primitivasIntersectadas[i];
+                interseccion = interseccionesPrimitivas[i];
+                puntoInterseccion = interseccion.puntoInterseccion[j];
+            }
+        }
+    }
+
+    return primitivaVisible->getColor();
+}
+
+
+//------------------------------- PUBLICAS -----------------------------------//
+
 void EscenaRayTracing::lanzarRayos(int rayosPorPixel) {
     vector<Rayo> listaRayos;
 
@@ -46,43 +86,6 @@ void EscenaRayTracing::lanzarRayos(int rayosPorPixel) {
         cuadriculaPixeles = nuevaCuadricula;
         camara.setCuadricutaPixeles(cuadriculaPixeles);
     }
-}
-
-RGB EscenaRayTracing::intersectarRayo(RGB colorPixel, Rayo rayo){
-    vector<Primitiva*> primitivasIntersectadas;
-    vector<float> distanciasPrimitivas;
-
-    //Recorro todas las primitivas de mi escena y si intersecta con el rayo, la guardo
-    for(const auto& pri : primitivas){  
-        Interseccion inter = pri->interseccionRayo(rayo);
-        if(inter.intersecta){
-            primitivasIntersectadas.push_back(pri);
-            float min = calcularMIN(inter.distancia);
-            distanciasPrimitivas.push_back(min);
-        }
-    }
-
-    //Tengo una lista de primitivas intersectadas por el rayo
-    // Hay que ver que primitiva esta por delante
-    if(primitivasIntersectadas.empty()){
-        return colorPixel;
-    }
-
-    Primitiva* primitivaVisible;
-    //Obtengo la distancia a la que se encuentra la primera primitiva (la visible)
-    float minimaDistancia = calcularMIN(distanciasPrimitivas);
-
-    // Recorro todo el vector de primitivas hasta que encuentro la que tiene el valor de distancia minimo
-    for(int i = 0; i < primitivasIntersectadas.size(); i++){
-        if(distanciasPrimitivas[i] == minimaDistancia){
-            // Cuando la encuentro, la guardo
-            primitivaVisible = primitivasIntersectadas[i];
-            break;
-        }
-    }
-    // Devulevo el color de la primitiva intersectada
-    RGB resultado(primitivaVisible->getColor().getR(), primitivaVisible->getColor().getG(), primitivaVisible->getColor().getB());
-    return resultado;
 }
 
 ImagenPPM EscenaRayTracing::crearImagenPPM(){
