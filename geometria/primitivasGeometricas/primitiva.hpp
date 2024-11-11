@@ -21,7 +21,7 @@ class Primitiva{
         Primitiva(Textura textura_val) : textura(textura_val) {};
         Primitiva(Primitiva* p) : textura(p->textura) {};
 
-        RGB getColor() {
+        RGB getColor() const {
             return textura.getColor();
         };
 

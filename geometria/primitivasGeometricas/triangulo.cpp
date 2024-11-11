@@ -76,6 +76,7 @@ Interseccion Triangulo::interseccionRayo(Rayo rayo) const{
             rayo.getOrigen().getz() + rayo.getDireccion().getz() * tIntersect
         ));
         resultado.normal = this->normal;
+        resultado.colorPrimitiva = getColor();
     }
 
     return resultado;

@@ -50,6 +50,7 @@ Interseccion Esfera::interseccionRayo(Rayo rayo) const {
         resultado.intersecta = true;
         resultado.distancia.push_back(t1); // Una interseccion
         resultado.puntoInterseccion.push_back(Punto3D(ORayo, dir, t1));
+        resultado.colorPrimitiva = getColor();
         if (t1 != t2){
             resultado.distancia.push_back(t2); // Dos intersecciones
             resultado.puntoInterseccion.push_back(Punto3D(ORayo, dir, t2));

@@ -26,7 +26,7 @@ class Textura {
          * 
          * @return Color de la textura
          */
-        RGB getColor() {
+        RGB getColor() const {
             return color;
         };
 

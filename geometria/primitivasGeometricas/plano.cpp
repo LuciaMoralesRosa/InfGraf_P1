@@ -32,6 +32,7 @@ Interseccion Plano::interseccionRayo(Rayo rayo) const {
         Punto3D puntoInterseccion(o, d, dist);
         resultado.puntoInterseccion.push_back(puntoInterseccion);
         resultado.normal = this->normal;
+        resultado.colorPrimitiva = getColor();
     }
     else {
         resultado.distancia.clear();
