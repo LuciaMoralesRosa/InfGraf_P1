@@ -14,4 +14,5 @@ struct Interseccion{
     Direccion normal;
 
     //Primitiva* primitiva;
+    //RGB colorPrimitiva;
 };

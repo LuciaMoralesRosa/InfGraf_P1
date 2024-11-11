@@ -1,7 +1,7 @@
 #pragma once
 
 #include <tuple>
-#include "../imagen/espacioColor/rgb.hpp"
+#include "../../imagen/espacioColor/rgb.hpp"
 
 
 class Material {

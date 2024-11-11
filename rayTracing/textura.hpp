@@ -2,7 +2,7 @@
 
 #include <tuple>
 #include "../imagen/espacioColor/rgb.hpp"
-#include "material.hpp"
+#include "materiales/material.hpp"
 
 // Color y material de una primitiva
 class Textura {
