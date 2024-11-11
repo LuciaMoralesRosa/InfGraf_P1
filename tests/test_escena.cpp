@@ -45,10 +45,10 @@ int main(){
     Plano planoizq  (Direccion( 1,  0,  0), 1, Textura(rojo, difuso));
     Plano planoder  (Direccion(-1,  0,  0), 1, Textura(verde, difuso));
     Plano planosuelo(Direccion( 0,  1,  0), 1, Textura(blanco, difuso));
-    Plano planotecho(Direccion( 0, -1,  0), 1, Textura(blanco, difuso));
-    Plano planoatras(Direccion( 0,  0, -1), 1, Textura(blanco, difuso));
+    Plano planotecho(Direccion( 0, -1,  0), 1, Textura(magenta, difuso));
+    Plano planoatras(Direccion( 0,  0, -1), 1, Textura(cian, difuso));
 
-    LuzPuntual luz(Punto3D(0, 0.5, 0), RGB(1, 1, 1));
+    LuzPuntual luz(Punto3D(0, 0.5, 0), blanco);
 
     Esfera esfera1(Punto3D(-0.5, -0.7, 0.25), 0.3, Textura(rosa, difuso));
     Esfera esfera2(Punto3D(0.5, -0.7, -0.25), 0.3, Textura(azulado, difuso));
@@ -76,7 +76,7 @@ int main(){
 
     cout << "Lanzando rayos..." << endl;
     //escena.lanzarRayosDesdeCamara(1);
-    escenaRT.lanzarRayos(64);
+    escenaRT.lanzarRayos(1);
 
     // Esto sabemos que funciona porque es igual que el que habia en la camara
     cout << "Creando imagen..." << endl;

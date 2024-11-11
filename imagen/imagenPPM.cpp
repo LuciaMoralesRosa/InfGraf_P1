@@ -253,7 +253,6 @@ void ImagenPPM::escrituraFichero(string ficheroPPM){
     fichero << to_string(base) + " " + to_string(altura) << endl;
     fichero << fixed << setprecision(0) << resolucion << endl;
 
-    cout << "Estoy antes del bucle de escritura del fichero" << endl;
     int k = 0;
     for (int i = 0; i < altura; ++i) {
         for (int j = 0; j < base; ++j) {
@@ -268,9 +267,7 @@ void ImagenPPM::escrituraFichero(string ficheroPPM){
                                                 << pixel->getB() * resolucion << "     ";
         }
         fichero << endl;
-    }
-    cout << "ha terminado el bucle" << endl;
-    
+    }    
     fichero << endl;
     fichero.close();
 }

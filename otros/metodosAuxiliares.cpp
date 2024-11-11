@@ -27,3 +27,12 @@ float calcularMedia(vector<float> vector){
     }
     return suma/vector.size();
 }
+
+bool algunPuntoEsMenor(vector<float> vector, float distancia){
+    for(int distanciaPunto = 0; distanciaPunto < vector.size(); distanciaPunto++){
+        if(distanciaPunto <= distancia) {
+            return true;
+        }
+    }
+    return false;
+}

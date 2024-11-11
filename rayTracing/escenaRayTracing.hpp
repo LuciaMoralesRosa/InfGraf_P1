@@ -1,6 +1,8 @@
 #pragma once
 
 #include <vector>
+#include <cstdlib>
+
 #include "../geometria/primitivasGeometricas/primitiva.hpp"
 #include "../geometria/punto3d.hpp"
 #include "../geometria/direccion.hpp"
@@ -13,6 +15,8 @@
 #include "BSDF/BSDF.hpp"
 #include "luces/tipoLuz.hpp"
 #include "luces/luzPuntual.hpp"
+
+const float EPSILON = 1e-8;
 
 struct InterseccionPrimitiva {
     // True si existe intersección
@@ -34,7 +38,10 @@ class EscenaRayTracing {
         vector<FuenteLuz*> luces;
 
         Punto3D generarPuntoAleatorioEnPixel(mt19937 gen, Pixel pixel);
+        Punto3D puntoInterseccionDadaDistancia(Interseccion i, float minDistancia);
+        RGB esRayoDeSombra(Punto3D puntoInterseccion, Interseccion interseccion);
         RGB intersectarRayo(RGB colorPixel, Rayo rayo);
+        bool puntoEnSegmento(Punto3D A, Punto3D B, Punto3D X);
 
     public:
         EscenaRayTracing(Camara c, vector<Primitiva*> p, vector<FuenteLuz*> f) : 
