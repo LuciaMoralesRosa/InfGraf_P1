@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <cstdlib>
+#include <algorithm>
 
 #include "../geometria/primitivasGeometricas/primitiva.hpp"
 #include "../geometria/punto3d.hpp"
@@ -37,9 +38,15 @@ class EscenaRayTracing {
         vector<Primitiva*> primitivas;
         vector<FuenteLuz*> luces;
 
+        //Intentos shadowRays
+        bool intento1esRayoDeSombra(Punto3D puntoInterseccion, Primitiva* p);
+        RGB intento2esRayoDeSombra(Punto3D puntoInterseccion, Interseccion interseccion);
+        RGB intento3(Interseccion interseccion, Punto3D puntoInterseccion);
+        RGB intento4(Punto3D puntoEv);
+
         Punto3D generarPuntoAleatorioEnPixel(mt19937 gen, Pixel pixel);
         Punto3D puntoInterseccionDadaDistancia(Interseccion i, float minDistancia);
-        RGB esRayoDeSombra(Punto3D puntoInterseccion, Interseccion interseccion);
+        Direccion normalInterseccionDadaDistancia(Interseccion i, float minDistancia);
         RGB intersectarRayo(RGB colorPixel, Rayo rayo);
         bool puntoEnSegmento(Punto3D A, Punto3D B, Punto3D X);
 

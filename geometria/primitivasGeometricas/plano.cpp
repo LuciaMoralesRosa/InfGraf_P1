@@ -26,12 +26,12 @@ Interseccion Plano::interseccionRayo(Rayo rayo) const {
 
     if(dist > 0) {
         // Lo añade al vector si el plano se encuentra delante del origen del rayo
-        resultado.distancia.push_back(dist);
         resultado.intersecta = true;
+        resultado.distancia.push_back(dist);
         //cout << "intersecta con plano";
         Punto3D puntoInterseccion(o, d, dist);
         resultado.puntoInterseccion.push_back(puntoInterseccion);
-        resultado.normal = this->normal;
+        resultado.normal.push_back(this->normal.normalize());
         resultado.colorPrimitiva = getColor();
     }
     else {

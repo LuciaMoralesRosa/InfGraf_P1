@@ -11,7 +11,7 @@ struct Interseccion{
     // Vector de puntos  de intersección
     vector<Punto3D> puntoInterseccion;
     // Normal de la intersección (normalized)
-    Direccion normal;
+    vector<Direccion> normal;
     // Color de la primitiva
     RGB colorPrimitiva;
 };

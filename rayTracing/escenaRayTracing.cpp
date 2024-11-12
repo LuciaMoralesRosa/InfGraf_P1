@@ -16,9 +16,18 @@ Punto3D EscenaRayTracing::generarPuntoAleatorioEnPixel(mt19937 gen, Pixel pixel)
 }
 
 Punto3D EscenaRayTracing::puntoInterseccionDadaDistancia(Interseccion i, float d){
-    for(int j = 0; j < i.puntoInterseccion.size(); j++){
+    for(int j = 0; j < i.puntoInterseccion.size()-1; j++){
         if(i.distancia[j] == d) {
             return i.puntoInterseccion[j];
+        }
+    }
+    return -1;
+}
+
+Direccion EscenaRayTracing::normalInterseccionDadaDistancia(Interseccion i, float d){
+    for(int j = 0; j < i.puntoInterseccion.size()-1; j++){
+        if(i.distancia[j] == d) {
+            return i.normal[j];
         }
     }
     return -1;
@@ -51,10 +60,10 @@ bool puntoSobreRayo(const Punto3D& O, const Punto3D& L, const Punto3D& P) {
     return false; // P está fuera del rayo (más allá de L)
 }
 
-/*
-bool EscenaRayTracing::esRayoDeSombra(Punto3D puntoInterseccion, Primitiva* p) {
+//Falla
+bool EscenaRayTracing::intento1esRayoDeSombra(Punto3D puntoInterseccion, Primitiva* p) {
     for (const auto& l : luces) {
-        cout << "Depurando: Para la primitiva de color: " << p->getColor()<< endl;
+        //cout << "Depurando: Para la primitiva de color: " << p->getColor()<< endl;
         Rayo rayoDeSombra = Rayo(puntoInterseccion, l->getCentro());
         float dPuntoLuz = (puntoInterseccion - l->getCentro()).modulus();
         bool haIntersectado = false;
@@ -68,7 +77,7 @@ bool EscenaRayTracing::esRayoDeSombra(Punto3D puntoInterseccion, Primitiva* p) {
                     if(puntoInterseccion != i){
                         if(puntoSobreRayo(puntoInterseccion, l->getCentro(), inter.puntoInterseccion[i])) {
                             if(Depurando < 10){
-                                cout << "Depurando: Punto de choque con primitiva de color: " << inter.colorPrimitiva << endl;
+                                //cout << "Depurando: Punto de choque con primitiva de color: " << inter.colorPrimitiva << endl;
                             }
                             Depurando++;
                             // Si algun punto de interseccion esta sobre el rayo
@@ -93,10 +102,9 @@ bool EscenaRayTracing::esRayoDeSombra(Punto3D puntoInterseccion, Primitiva* p) {
     // Si todas las luces están bloqueadas, el punto está en sombra
     return true;
 }
-*/
 
-/*
-RGB EscenaRayTracing::esRayoDeSombra(Punto3D puntoInterseccion, Interseccion interseccion){
+// Falla
+RGB EscenaRayTracing::intento2esRayoDeSombra(Punto3D puntoInterseccion, Interseccion interseccion){
     for(auto l : luces){
         Direccion direccionRayo = l->getCentro() - puntoInterseccion;
         Rayo rayo = Rayo(puntoInterseccion, direccionRayo.normalize());
@@ -122,47 +130,9 @@ RGB EscenaRayTracing::esRayoDeSombra(Punto3D puntoInterseccion, Interseccion int
     }
     return RGB(0,0,0);
 }
-*/
 
-RGB EscenaRayTracing::intersectarRayo(RGB colorPixel, Rayo rayo){
-    
-    vector<Interseccion> interseccionesPrimitivas;
-    vector<float> vectorDistancias;
-    vector<Punto3D> vectorPuntosIntersectados;
-    vector<Primitiva*> primitivasIntersectadas;
-
-    for(const auto& pri : primitivas){
-        Interseccion i = pri->interseccionRayo(rayo);
-        if(i.intersecta){
-            interseccionesPrimitivas.push_back(i);
-            float minDistancia = calcularMIN(i.distancia);
-            vectorDistancias.push_back(minDistancia);
-            Punto3D p = puntoInterseccionDadaDistancia(i, minDistancia);
-            vectorPuntosIntersectados.push_back(p);
-            primitivasIntersectadas.push_back(pri);
-        }
-    }
-
-    if(interseccionesPrimitivas.empty()){
-        return colorPixel;
-    }
-
-    Primitiva* primitivaVisible;
-    Interseccion interseccion;
-    Punto3D puntoInterseccion;
-    float menorDistancia = calcularMIN(vectorDistancias);
-    
-    for(int i = 0; i < interseccionesPrimitivas.size(); i++){
-        for(int j = 0; j < interseccionesPrimitivas[i].distancia.size(); j++){
-            if(interseccionesPrimitivas[i].distancia[j] == menorDistancia) {
-                primitivaVisible = primitivasIntersectadas[i];
-                interseccion = interseccionesPrimitivas[i];
-                puntoInterseccion = vectorPuntosIntersectados[j];
-            }
-        }
-    }
-
-    // ShadowRays
+// Falla
+RGB EscenaRayTracing::intento3(Interseccion interseccion, Punto3D puntoInterseccion){
     bool puntoEnSombra = false;
 
     if(interseccion.intersecta){
@@ -209,8 +179,177 @@ RGB EscenaRayTracing::intersectarRayo(RGB colorPixel, Rayo rayo){
             return interseccion.colorPrimitiva;
         }
     }
+}
+
+RGB EscenaRayTracing::intento4(Punto3D puntoEv){
+    FuenteLuz* luz = luces[0];
+    
+    for(auto p : primitivas){
+
+    }
+
+
+}
+/*
+RGB EscenaRayTracing::intersectarRayo(RGB colorPixel, Rayo rayo){
+    
+    vector<tuple<float, Punto3D>> distancia_Punto; 
+    vector<Interseccion> interseccionesPrimitivas;
+    vector<float> vectorDistancias;
+    vector<Primitiva*> primitivasIntersectadas;
+
+    for(const auto& pri : primitivas){
+        Interseccion i = pri->interseccionRayo(rayo);
+        if(i.intersecta){ // Si el rayo intersecta con alguna primitiva
+            // Guardo la interseccion
+            interseccionesPrimitivas.push_back(i);
+            // Guardo la distancia minima
+            float minDistancia = calcularMIN(i.distancia);
+            vectorDistancias.push_back(minDistancia);
+            
+            Punto3D p = puntoInterseccionDadaDistancia(i, minDistancia);
+            tuple<float, Punto3D> tupla(minDistancia, p); 
+            distancia_Punto.push_back(tupla);
+
+
+
+            //vectorDistancias.push_back(minDistancia);
+            primitivasIntersectadas.push_back(pri);
+        }
+    }
+
+    if(interseccionesPrimitivas.empty()){
+        return colorPixel;
+    }
+
+    Primitiva* primitivaVisible;
+    Interseccion interseccion;
+    Punto3D puntoInterseccion;
+    float menorDistancia = calcularMIN(vectorDistancias);
+    
+    for(int i = 0; i < interseccionesPrimitivas.size(); i++){
+        for(int j = 0; j < interseccionesPrimitivas[i].distancia.size(); j++){
+            if(interseccionesPrimitivas[i].distancia[j] == menorDistancia) {
+                primitivaVisible = primitivasIntersectadas[i];
+                interseccion = interseccionesPrimitivas[i];
+                puntoInterseccion = interseccionesPrimitivas[i].puntoInterseccion[j];
+            }
+        }
+    }
+
+    // ShadowRays
+    if(interseccion.intersecta){
+        //return intento3(interseccion, puntoInterseccion);
+        return interseccion.colorPrimitiva;
+    }
     return colorPixel;
 }
+*/
+
+RGB EscenaRayTracing::intersectarRayo(RGB colorPixel, Rayo rayo) {
+    const float MAXIMA_DISTANCIA = 10000000.0F;
+    const float DESPLAZAMIENTO = 0.000001F;
+
+    vector<Interseccion> vectorIntersecciones;
+    float menorDistancia = MAXIMA_DISTANCIA;
+    int posInterseccion;
+    Punto3D puntoMenorDistancia;
+    Direccion normalMenorDistancia;
+    RGB colorPrimitiva;
+
+    for(int i = 0; i < primitivas.size(); i++){
+        Interseccion interseccionPrimitiva = primitivas[i]->interseccionRayo(rayo);
+        if(interseccionPrimitiva.intersecta) {
+            vectorIntersecciones.push_back(interseccionPrimitiva);
+            if(calcularMIN(interseccionPrimitiva.distancia) < menorDistancia){
+                menorDistancia = calcularMIN(interseccionPrimitiva.distancia);
+                puntoMenorDistancia = puntoInterseccionDadaDistancia(interseccionPrimitiva, menorDistancia);
+                normalMenorDistancia = normalInterseccionDadaDistancia(interseccionPrimitiva, menorDistancia);
+                posInterseccion = vectorIntersecciones.size()-1;
+                colorPrimitiva = interseccionPrimitiva.colorPrimitiva;
+            }
+        }
+    }
+
+    if(vectorIntersecciones.size() > 0) { //No vacio
+        for(int l = 0; l < luces.size(); l++){
+            bool enSombra = false;
+            Punto3D centroLuz = luces[l]->getCentro();
+            Punto3D origenRayoSombra = sumaPuntoDireccion(puntoMenorDistancia, (normalMenorDistancia.normalize()*DESPLAZAMIENTO));
+            
+            Rayo rayoSombra = Rayo(origenRayoSombra, centroLuz - origenRayoSombra);
+            float distanciaLuz = (centroLuz - puntoMenorDistancia).modulus();
+
+            if(rayoSombra.getDireccion().dot_product(normalMenorDistancia.normalize()) < 0) {
+                enSombra = true;
+            }
+
+            for(int m = 0; m < primitivas.size() && !enSombra; m++) {
+                Interseccion interseccionSombra = primitivas[m]->interseccionRayo(rayoSombra);
+                if(interseccionSombra.intersecta) {
+                    float distanciaSombraMin = calcularMIN(interseccionSombra.distancia);
+                    if(distanciaSombraMin < distanciaLuz) {
+                        enSombra = true;
+                    }
+                }
+            }
+
+            if(!enSombra) {
+                return colorPrimitiva;
+            }
+            else {
+                return RGB(0,0,0);
+            }
+        }
+    }
+    else {
+        return colorPixel;
+    }
+}
+
+
+/*
+distanciaMinima = 10000000.0F
+Desplazamiento = 0.00001F
+for(primitivas.size){
+    if(pri->interseccion(rayoCamara).intersecta){
+        vectorIntersecciones.push_back(interseccion)
+        if(interseccion.distancia < distanciaMinima) {
+            distanciaMinima = interseccion.distancia
+            posicionMinima = vectorIntersecciones.size()-1
+        }
+    }
+}
+
+if(!vectorIntersecciones.empty()) {
+    for(luces) {
+        rayoSombra = Rayo(vectorIntersecciones[posicionMinima].punto + (vectorIntersecciones[posMinima].normal.normalizar()*DESPLAZAMIENTO),
+                          luces[l].centro - (vectorIntersecciones[posMin].punto + (vectorIntersecciones[posMinima].normal.normalizar()* Desplazamiento)))
+        distanciaLuz = (luces[l].centro - vectorIntersecciones[posMin].punto).modulo()
+
+        bool sombra = false;
+
+        if(rayoSombra.direccion*vectorIntersecciones[posMin].normal < 0) {
+            sombra = true
+        }
+
+        for(m < primitivas.size && !sombra; m++){
+            if(primitivas[m]->interseccion(rayoSombra, interseccionConRayo)) {
+                if(interseccionConRayo.distancia < distanciaLuz) {
+                    sombra = true;
+                }    
+            }
+        }
+        if(!sombra) {
+            mediaColor[0] += (luces[l]->potencia[0]/pow(distanciaLuz, 2)) * (vectorIntersecciones[posMinima].color[0]/PI) * abs(vectorIntersecciones[posMin].normal*((luces[l]->centro-vectorIntersecciones[posMin].punto)/distanciaLuz));
+        }
+    }
+}
+
+//calcular media de los colores / nRayos
+Comprobar que ninguno supera el maximo de la imagen
+
+*/
 
 
 bool EscenaRayTracing::puntoEnSegmento(Punto3D A, Punto3D B, Punto3D X) {

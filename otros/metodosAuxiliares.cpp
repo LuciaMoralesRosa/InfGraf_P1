@@ -36,3 +36,12 @@ bool algunPuntoEsMenor(vector<float> vector, float distancia){
     }
     return false;
 }
+
+
+Punto3D sumaPuntoDireccion(Punto3D punto, Direccion direccion){
+    float x = punto.getx() + direccion.getx();
+    float y = punto.gety() + direccion.gety();
+    float z = punto.getz() + direccion.getz();
+
+    return Punto3D(x, y, z);    
+}

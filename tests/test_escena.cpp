@@ -21,7 +21,6 @@ g++ test_escena.cpp ../rayTracing/BSDF/BSDF.cpp ../rayTracing/luces/fuenteLuz.cp
 Compilacion para escenaRayTracing
 g++ test_escena.cpp ../rayTracing/BSDF/BSDF.cpp ../rayTracing/luces/fuenteLuz.cpp ../rayTracing/luces/luzPuntual.cpp  ../rayTracing/luces/luzDeArea.cpp ../geometria/punto3d.cpp ../geometria/direccion.cpp ../otros/metodosAuxiliares.cpp ../imagen/espacioColor/rgb.cpp ../geometria/primitivasGeometricas/plano.cpp ../geometria/primitivasGeometricas/esfera.cpp ../imagen/imagenPPM.cpp ../rayTracing/camara.cpp ../imagen/espacioColor/hsv.cpp ../imagen/espacioColor/hsl.cpp ../rayTracing/rayo.cpp ../rayTracing/pixel.cpp ../rayTracing/escenaRayTracing.cpp -o testEscena
 
-
 */
 
 
@@ -44,7 +43,7 @@ int main(){
     
     Plano planoizq  (Direccion( 1,  0,  0), 1, Textura(rojo, difuso));
     Plano planoder  (Direccion(-1,  0,  0), 1, Textura(verde, difuso));
-    Plano planosuelo(Direccion( 0,  1,  0), 1, Textura(blanco, difuso));
+    Plano planosuelo(Direccion( 0,  1,  0), 1, Textura(amarillo, difuso));
     Plano planotecho(Direccion( 0, -1,  0), 1, Textura(magenta, difuso));
     Plano planoatras(Direccion( 0,  0, -1), 1, Textura(cian, difuso));
 
