@@ -61,7 +61,7 @@ int main(){
     vector<Primitiva*> primitivas;
     vector<FuenteLuz*> luces;
     
-    luces.push_back(&luz);
+    luces.push_back(&luz); 
     primitivas.push_back(&esfera1);
     primitivas.push_back(&esfera2);
     primitivas.push_back(&planoizq);

@@ -2,7 +2,7 @@
 
 // NOTA: FALTA SACAR LA NORMAL
 
-Esfera::Esfera(Punto3D _c, float _r, Textura _textura) : c(_c), r(_r), Primitiva(_textura) { }
+Esfera::Esfera(Punto3D _c, float _r, Textura _textura) : c(_c), r(_r), Primitiva(_textura, "Esfera") { }
 
 Punto3D Esfera::anyadirPunto(float azimut, float altitud){
     ciudad = Punto3D(c.getx() + r * (float)sin(azimut * M_PI/180.0f),
@@ -51,11 +51,11 @@ Interseccion Esfera::interseccionRayo(Rayo rayo) const {
         resultado.distancia.push_back(t1); // Una interseccion
         resultado.puntoInterseccion.push_back(Punto3D(ORayo, dir, t1));
         resultado.colorPrimitiva = getColor();
-        resultado.normal.push_back(getNormal(Punto3D(ORayo, dir, t1)));
+        resultado.normal.push_back(getNormal(Punto3D(ORayo, dir, t1)).normalize());
         if (t1 != t2){
             resultado.distancia.push_back(t2); // Dos intersecciones
             resultado.puntoInterseccion.push_back(Punto3D(ORayo, dir, t2));
-            resultado.normal.push_back(getNormal(Punto3D(ORayo, dir, t2)));
+            resultado.normal.push_back(getNormal(Punto3D(ORayo, dir, t2)).normalize());
         }
         return resultado;
     }

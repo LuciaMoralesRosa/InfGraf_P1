@@ -16,6 +16,10 @@ Direccion Direccion::operator*(const int scalar) const {
     return Direccion(x*scalar, y*scalar, z*scalar);
 }
 
+Direccion Direccion::operator+(const int scalar) const {
+    return Direccion(x+scalar, y+scalar, z+scalar);
+}
+
 Direccion Direccion::operator/(const int scalar) const {
     return Direccion(x/scalar, y/scalar, z/scalar);
 }

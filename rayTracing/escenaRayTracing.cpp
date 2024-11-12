@@ -16,7 +16,7 @@ Punto3D EscenaRayTracing::generarPuntoAleatorioEnPixel(mt19937 gen, Pixel pixel)
 }
 
 Punto3D EscenaRayTracing::puntoInterseccionDadaDistancia(Interseccion i, float d){
-    for(int j = 0; j < i.puntoInterseccion.size()-1; j++){
+    for(int j = 0; j < i.puntoInterseccion.size(); j++){
         if(i.distancia[j] == d) {
             return i.puntoInterseccion[j];
         }
@@ -25,7 +25,7 @@ Punto3D EscenaRayTracing::puntoInterseccionDadaDistancia(Interseccion i, float d
 }
 
 Direccion EscenaRayTracing::normalInterseccionDadaDistancia(Interseccion i, float d){
-    for(int j = 0; j < i.puntoInterseccion.size()-1; j++){
+    for(int j = 0; j < i.normal.size(); j++){
         if(i.distancia[j] == d) {
             return i.normal[j];
         }
@@ -59,7 +59,7 @@ bool puntoSobreRayo(const Punto3D& O, const Punto3D& L, const Punto3D& P) {
 
     return false; // P está fuera del rayo (más allá de L)
 }
-
+/*
 //Falla
 bool EscenaRayTracing::intento1esRayoDeSombra(Punto3D puntoInterseccion, Primitiva* p) {
     for (const auto& l : luces) {
@@ -190,6 +190,7 @@ RGB EscenaRayTracing::intento4(Punto3D puntoEv){
 
 
 }
+*/
 /*
 RGB EscenaRayTracing::intersectarRayo(RGB colorPixel, Rayo rayo){
     
@@ -246,6 +247,7 @@ RGB EscenaRayTracing::intersectarRayo(RGB colorPixel, Rayo rayo){
 }
 */
 
+// Interseccion rayo + rayos de sombra
 RGB EscenaRayTracing::intersectarRayo(RGB colorPixel, Rayo rayo) {
     const float MAXIMA_DISTANCIA = 10000000.0F;
     const float DESPLAZAMIENTO = 0.000001F;
@@ -256,7 +258,9 @@ RGB EscenaRayTracing::intersectarRayo(RGB colorPixel, Rayo rayo) {
     Punto3D puntoMenorDistancia;
     Direccion normalMenorDistancia;
     RGB colorPrimitiva;
+    Primitiva* primitivaEvaluada;
 
+    // RayTracing -> Funciona bien
     for(int i = 0; i < primitivas.size(); i++){
         Interseccion interseccionPrimitiva = primitivas[i]->interseccionRayo(rayo);
         if(interseccionPrimitiva.intersecta) {
@@ -267,23 +271,50 @@ RGB EscenaRayTracing::intersectarRayo(RGB colorPixel, Rayo rayo) {
                 normalMenorDistancia = normalInterseccionDadaDistancia(interseccionPrimitiva, menorDistancia);
                 posInterseccion = vectorIntersecciones.size()-1;
                 colorPrimitiva = interseccionPrimitiva.colorPrimitiva;
+                primitivaEvaluada = primitivas[i];
             }
         }
     }
-
+ 
+    // PathTracing -> rayos de sombra
     if(vectorIntersecciones.size() > 0) { //No vacio
         for(int l = 0; l < luces.size(); l++){
             bool enSombra = false;
             Punto3D centroLuz = luces[l]->getCentro();
-            Punto3D origenRayoSombra = sumaPuntoDireccion(puntoMenorDistancia, (normalMenorDistancia.normalize()*DESPLAZAMIENTO));
-            
+            Punto3D origenRayoSombra = sumaPuntoDireccion(puntoMenorDistancia, (normalMenorDistancia.normalize()+DESPLAZAMIENTO));
+            //cout << "Depurando: punto origen rayo sombra: P" << origenRayoSombra << endl;
+            //cout << "Depurando: punto MenorDistanicia: P" << puntoMenorDistancia << endl;
+            //cout << "Depurando: normal MenorDistanicia: N" << normalMenorDistancia << endl;
+            //cout << "Depurando: normal.normalize() " << normalMenorDistancia.normalize() << endl;
+            //cout << "Depurando: normal MenorDistanicia n*d: N*D" << (normalMenorDistancia.normalize()+DESPLAZAMIENTO) << endl;
+
             Rayo rayoSombra = Rayo(origenRayoSombra, centroLuz - origenRayoSombra);
             float distanciaLuz = (centroLuz - puntoMenorDistancia).modulus();
+            //cout << "Depurando: Distancia luz " << distanciaLuz << endl;
+            //cout << "Depurando: punto centroLuz: P" << centroLuz << endl;
+            //cout << "Depurando: punto MenorDistanicia: P" << puntoMenorDistancia << endl;
+            //cout << "Depurando: ------------------------------------------------" << endl;
 
-            if(rayoSombra.getDireccion().dot_product(normalMenorDistancia.normalize()) < 0) {
-                enSombra = true;
+            //cout << "Depurando: Direccion rayo sombra luz: D" << rayoSombra.getDireccion() << endl;
+            //cout << "Depurando: NormalMenorDistancia: N " << rayoSombra.getDireccion() << endl;
+            //cout << "Depurando: producto punto: " << rayoSombra.getDireccion().dot_product(normalMenorDistancia) << endl;
+            
+
+            /*
+            // verificar si el rayo de sombra está orientado hacia el exterior de la superficie o hacia el interior
+            if(primitivaEvaluada->getTipo() == "Esfera") { 
+                // Parece que las normales estuvieran apuntando hacia dentro de ellas mismas??   
+                // Esta condicion esta MAL 
+                if(rayoSombra.getDireccion().dot_product(normalMenorDistancia) < 0) {
+                    enSombra = true;
+                }
             }
+            */
+            // Si no se pone la condicion de las esferas, los planos IZQ, DCHO, Fondo y Techo salen en negro porque la normal esta en direccion opuesta al rayo de sombra ¿?
+            // Cuando estan las dos condiciones descomentadas -> se ve el fondo completo pero no se ven las dos esferas (salen completamente en sombra)
 
+            
+            // Esto (que deberia generar las sombras bajo las esferas) crea una sombra extraña en la parte central superior del plano suelo
             for(int m = 0; m < primitivas.size() && !enSombra; m++) {
                 Interseccion interseccionSombra = primitivas[m]->interseccionRayo(rayoSombra);
                 if(interseccionSombra.intersecta) {
@@ -293,6 +324,7 @@ RGB EscenaRayTracing::intersectarRayo(RGB colorPixel, Rayo rayo) {
                     }
                 }
             }
+            
 
             if(!enSombra) {
                 return colorPrimitiva;
@@ -302,9 +334,7 @@ RGB EscenaRayTracing::intersectarRayo(RGB colorPixel, Rayo rayo) {
             }
         }
     }
-    else {
-        return colorPixel;
-    }
+    return colorPixel;
 }
 
 

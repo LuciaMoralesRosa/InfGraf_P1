@@ -4,25 +4,32 @@
 //#define PRIMITIVA_HPP
 
 #include <tuple>
+#include <string>
 #include "../punto3d.hpp"
 #include "../../imagen/espacioColor/rgb.hpp"
 #include "../../rayTracing/interseccion.hpp"
 #include "../../rayTracing/rayo.hpp"
 #include "../../rayTracing/textura.hpp"
 
+using namespace std;
 
 class Primitiva{
 
     private:
         Textura textura;
+        string tipo;
         
 
     public:
-        Primitiva(Textura textura_val) : textura(textura_val) {};
+        Primitiva(Textura textura_val, string t) : textura(textura_val), tipo(t) {};
         Primitiva(Primitiva* p) : textura(p->textura) {};
 
         RGB getColor() const {
             return textura.getColor();
+        };
+
+        string getTipo() const {
+            return tipo;
         };
 
         /**
