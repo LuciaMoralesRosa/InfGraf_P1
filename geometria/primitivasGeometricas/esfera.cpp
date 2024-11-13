@@ -12,54 +12,47 @@ Punto3D Esfera::anyadirPunto(float azimut, float altitud){
 }
 
 Direccion Esfera::getNormal(Punto3D punto) const {
-    return punto-c;
-    //return c-punto;
+    return (punto-c).normalize();
 }
 
 
-Interseccion Esfera::interseccionRayo(Rayo rayo) const {
-    Punto3D ORayo = rayo.getOrigen();
-    Direccion dir = rayo.getDireccion().normalize();
+bool Esfera::interseccionRayo(Rayo& rayo) const {
+    Punto3D oRayo = rayo.getOrigen();
+    Direccion dirRayo = rayo.getDireccion().normalize();
 
     Punto3D OEsfera = c;
-    float radio = r;
+    float radioEsfera = r;
     
 
-    Direccion L = ORayo - OEsfera; //vector desde el centro de la esfera al punto de origen del rayo.
+    Direccion L = oRayo - OEsfera; //vector desde el centro de la esfera al punto de origen del rayo.
     //t2(d⋅d) + 2t(d⋅L) + (L⋅L−r2)=0
 
-    float A = dir.dot_product(dir);         // A = d · d
-    float B = 2 * (dir.dot_product(L));     // B = 2 * (d · L)
-    float C = L.dot_product(L) - (r * r);   // C = L · L - r^2
+    float A = dirRayo.dot_product(dirRayo);         // A = d · d
+    float B = 2 * (dirRayo.dot_product(L));     // B = 2 * (d · L)
+    float C = L.dot_product(L) - (radioEsfera * radioEsfera);   // C = L · L - r^2
 
     float discriminante = B * B - 4 * A * C;
 
-    Interseccion resultado;
 
     if (discriminante < 0) {
         // No hay intersección
-        resultado.intersecta = false;
-        resultado.distancia.clear();
-        resultado.puntoInterseccion.clear();
-        return resultado;
+        cout << "No hay interseccion" << endl;
+        return false;
     }
     else {
         // Hay una o dos intersecciones
         float sqrtDiscriminante = sqrt(discriminante);
         float t1 = (-B - sqrtDiscriminante) / (2 * A);
         float t2 = (-B + sqrtDiscriminante) / (2 * A);
-        resultado.intersecta = true;
-        resultado.distancia.push_back(t1); // Una interseccion
-        resultado.puntoInterseccion.push_back(Punto3D(ORayo, dir, t1));
-        resultado.colorPrimitiva = getColor();
-        resultado.normal.push_back(getNormal(Punto3D(ORayo, dir, t1)).normalize());
-        
+        Punto3D puntoInterseccion = Punto3D(oRayo, dirRayo, t1);
+        Interseccion interseccion(t1, puntoInterseccion, getNormal(puntoInterseccion));
+        rayo.addInterseccion(interseccion);
         if (t1 != t2){
-            resultado.distancia.push_back(t2); // Dos intersecciones
-            resultado.puntoInterseccion.push_back(Punto3D(ORayo, dir, t2));
-            resultado.normal.push_back(getNormal(Punto3D(ORayo, dir, t2)).normalize());
+            puntoInterseccion = Punto3D(oRayo, dirRayo, t2);
+            interseccion = Interseccion(t2, puntoInterseccion, getNormal(puntoInterseccion));
+            rayo.addInterseccion(interseccion);
         }
-        return resultado;
+        return true;
     }
 }
 

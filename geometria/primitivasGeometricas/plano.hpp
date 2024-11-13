@@ -5,7 +5,7 @@
 #include "primitiva.hpp"
 #include "../punto3d.hpp"
 #include "../direccion.hpp"
-#include "../../rayTracing/rayo.hpp"
+#include "../../render/rayo.hpp"
 
 class Plano : public Primitiva {
     private:
@@ -40,10 +40,9 @@ class Plano : public Primitiva {
          * @param rayo El rayo con el que se calcula la intersección. Este objeto debe 
          *        tener métodos getOrigen() que devuelve un Punto3D y getDireccion() 
          *        que devuelve una Dirección.
-         * @return La distancia desde el origen del rayo hasta la intersección con 
-         *         el plano. Si no hay intersección, se devuelve un vector vacio.
+         * @return True si el rayo intersecta con el plano
          */
-        Interseccion interseccionRayo(Rayo rayo) const override;
+        bool interseccionRayo(Rayo &rayo) const override;
 
         Direccion getNormal(Punto3D x) const override;
         float getDistancia();

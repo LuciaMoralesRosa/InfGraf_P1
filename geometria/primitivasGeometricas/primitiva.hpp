@@ -1,15 +1,12 @@
 #pragma once 
 
-//#ifndef PRIMITIVA_HPP
-//#define PRIMITIVA_HPP
-
 #include <tuple>
 #include <string>
 #include "../punto3d.hpp"
 #include "../../imagen/espacioColor/rgb.hpp"
-#include "../../rayTracing/interseccion.hpp"
-#include "../../rayTracing/rayo.hpp"
-#include "../../rayTracing/textura.hpp"
+#include "../../render/interseccion.hpp"
+#include "../../render/rayo.hpp"
+#include "../../render/textura.hpp"
 
 using namespace std;
 
@@ -40,12 +37,10 @@ class Primitiva{
          * rayo y la primitiva geométrica.
          *
          * @param rayo El rayo que se utilizará para calcular la intersección.
-         * @return Una intersección
+         * @return Si el rayo ha intersectado con la primitiva
          */
-        virtual Interseccion interseccionRayo(Rayo rayo) const = 0;
+        virtual bool interseccionRayo(Rayo &rayo) const = 0;
 
         virtual Direccion getNormal(Punto3D punto) const = 0;
 
 };
-
-//#endif
