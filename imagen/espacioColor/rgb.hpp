@@ -7,8 +7,6 @@
 #include <math.h>
 #include <algorithm>  // Para std::max
 
-
-
 #include "espacioColor.hpp"
 #include "hsv.hpp"
 #include "hsl.hpp"
@@ -47,7 +45,9 @@ public:
     RGB operator+(const RGB& otro) const;
     RGB operator/(const int& otro) const;
     RGB operator*(const float& otro) const;
+    bool operator==(const RGB& otro) const;
 
+    bool esNulo();
     bool esNegro();
 
 

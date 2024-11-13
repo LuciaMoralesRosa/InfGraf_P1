@@ -160,7 +160,6 @@ RGB RGB::operator+(const RGB& otro) const {
     return RGB(r+otro.r, g+otro.g, b+otro.b);
 }
 
-
 RGB RGB::operator*(const float& otro) const {
     return RGB(r*otro, g*otro, b*otro);
 }
@@ -169,6 +168,9 @@ RGB RGB::operator/(const int& otro) const {
     return RGB(r/otro, g/otro, b/otro);
 }
 
+bool RGB::operator==(const RGB& otro) const {
+    return (r == otro.r && g == otro.g && b == otro.b);
+}
 
 ostream& operator<<(ostream& os, const RGB& color) {
     os << "RGB(" << color.getR() << ", " << color.getG() << ", " << color.getB() << ")";
@@ -176,6 +178,9 @@ ostream& operator<<(ostream& os, const RGB& color) {
 }
 
 bool RGB::esNegro(){
-    return (r== 0.0f && g == 0.0f & b == 0.0f);
+    return (r == 0.0f && g == 0.0f & b == 0.0f);
 }
 
+bool RGB::esNulo(){
+    return (r == -1 && g == -1 & b == -1);
+}
