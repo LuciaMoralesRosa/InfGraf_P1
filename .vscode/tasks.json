@@ -29,6 +29,7 @@
                 "${workspaceFolder}/render/camara.cpp",
                 "${workspaceFolder}/render/pixel.cpp",
                 "${workspaceFolder}/render/rayo.cpp",
+                "${workspaceFolder}/render/interseccion.cpp",
                 "${workspaceFolder}/render/BSDF/BSDF.cpp",
                 "${workspaceFolder}/render/luces/fuenteLuz.cpp",
                 "${workspaceFolder}/render/luces/luzDeArea.cpp",

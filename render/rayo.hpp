@@ -58,17 +58,20 @@ class Rayo {
          * @return Dirección del Rayo
          */
         Direccion getDireccion() const;
+
+        /**
+         * @brief Devuelve la interseccións del Rayo
+         * 
+         * @return Interseccion del Rayo
+         */
+        Interseccion getInterseccion() const;
+
         /**
          * @brief Añade una intersección al vector de intersecciones
          * 
          * @param interseccion Interseccion que añadir
          */
         void addInterseccion(Interseccion interseccion);
-
-        /**
-         * @brief Imprime información sobre las intersecciones del rayo
-         */
-        void printIntersecciones() const;
 
         /**
          * @brief Sobrecarga del operador de inserción << para imprimir un objeto de tipo Rayo.
@@ -80,7 +83,7 @@ class Rayo {
          * 
          * @param os Flujo de salida en el que se imprimirán los valores de Rayo.
          * @param r Referencia constante al objeto Rayo cuyos valores se desean imprimir.
-         * @return ostream& El flujo de salida modificado con los valores de la Dirección.
+         * @return ostream& El flujo de salida modificado con los valores del Rayo.
          */
         friend ostream& operator<<(ostream& os, const Rayo& r);
             

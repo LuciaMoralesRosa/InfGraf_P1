@@ -16,17 +16,14 @@ Direccion Rayo::getDireccion() const {
     return direccion;
 }
 
-void Rayo::addInterseccion(Interseccion _interseccion) {
-    if (interseccion.esNull() || interseccion.dis) {
-        interseccion = _interseccion;
-    }
+Interseccion Rayo::getInterseccion() const {
+    return interseccion;
 }
 
-void Rayo::printIntersecciones() const {
-        cout << "    Distancia: " << interseccion.distancia 
-            << ", Punto: " << interseccion.punto 
-            << ", Normal: " << interseccion.normal 
-            << ", Primitiva: " << /*(interseccion.primitiva ? interseccion.primitiva->getTipo() : "null") <<*/ endl;
+void Rayo::addInterseccion(Interseccion _interseccion) {
+    if (interseccion.esNull() || (_interseccion.getDistancia() < interseccion.getDistancia())) {
+        interseccion = _interseccion;
+    }
 }
 
 // Print

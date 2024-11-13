@@ -17,9 +17,11 @@ int main() {
     rayos.push_back(&rayo);
 
     Esfera esfera(Punto3D(0.5,0.5,0.5), (float)0.5, Textura(RGB(1,0,0), plastico));
-    vector<Rayo*> primitivas;
+    vector<Primitiva*> primitivas;
+    primitivas.push_back(&esfera);
     esfera.interseccionRayo(rayo);
-    rayo.printIntersecciones();
+    Interseccion i = rayo.getInterseccion();
+    cout << i << endl;
 
     return 0;
 }
