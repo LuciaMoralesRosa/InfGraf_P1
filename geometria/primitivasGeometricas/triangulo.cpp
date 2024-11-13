@@ -1,6 +1,6 @@
 #include "triangulo.hpp"
 
-Triangulo::Triangulo(Punto3D p1, Punto3D p2, Punto3D p3, Textura _textura) : a(p1), b(p2), c(p3), Primitiva(_textura) {
+Triangulo::Triangulo(Punto3D p1, Punto3D p2, Punto3D p3, Textura _textura) : a(p1), b(p2), c(p3), Primitiva(_textura, "Triangulo") {
     Direccion d1 = p2 - p1;
     Direccion d2 = p3 - p1;
     normal = d1.vector_product(d2).normalize();
@@ -75,7 +75,7 @@ Interseccion Triangulo::interseccionRayo(Rayo rayo) const{
             rayo.getOrigen().gety() + rayo.getDireccion().gety() * tIntersect,
             rayo.getOrigen().getz() + rayo.getDireccion().getz() * tIntersect
         ));
-        resultado.normal = this->normal;
+        //resultado.normal = this->normal;
         resultado.colorPrimitiva = getColor();
     }
 
