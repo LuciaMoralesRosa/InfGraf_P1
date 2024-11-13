@@ -29,16 +29,16 @@ tuple<Direccion, RGB> BSDF::muestreo(const Punto3D x, const Direccion omega_o, c
     if(aleatorio < pd){
         // Si es difusa
         rebote = muestreoDifuso(); // Implementado
-        color = evaluacionDifusa(); // Implementado
+        color = evaluacionDifusa() / pd; // Implementado
     }
     else if(aleatorio < pd + ps) {
         // Especular reflectancia
         rebote = muestreoEspecular(normal, omega_o); // Implementado (faltaria fresnel)
-        color = evaluacionEspecular(normal, omega_o); // Implementado
+        color = evaluacionEspecular(normal, omega_o) / ps; // Implementado
     }
     else if(aleatorio < pd + ps + pt) {
         rebote = muestreoRefraccion(normal, omega_o); // Implementado -> Ley de snell
-        color = evaluacionRefraccion(x, omega_o, rebote, normal); // Implementado ??
+        color = evaluacionRefraccion(x, omega_o, rebote, normal) / pt; // Implementado ??
     }
     else{
         // Ha caido en absorcion -> termina el recorrido

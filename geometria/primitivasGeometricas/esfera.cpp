@@ -13,6 +13,7 @@ Punto3D Esfera::anyadirPunto(float azimut, float altitud){
 
 Direccion Esfera::getNormal(Punto3D punto) const {
     return punto-c;
+    //return c-punto;
 }
 
 
@@ -52,6 +53,7 @@ Interseccion Esfera::interseccionRayo(Rayo rayo) const {
         resultado.puntoInterseccion.push_back(Punto3D(ORayo, dir, t1));
         resultado.colorPrimitiva = getColor();
         resultado.normal.push_back(getNormal(Punto3D(ORayo, dir, t1)).normalize());
+        
         if (t1 != t2){
             resultado.distancia.push_back(t2); // Dos intersecciones
             resultado.puntoInterseccion.push_back(Punto3D(ORayo, dir, t2));

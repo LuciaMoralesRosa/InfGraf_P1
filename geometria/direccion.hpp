@@ -31,6 +31,8 @@ class Direccion {
         Direccion operator*(const int scalar) const;
         Direccion operator/(const int scalar) const;
         Direccion operator+(const int scalar) const;
+        Direccion operator-() const;
+
 
         // Comparadores
         bool operator==(const Direccion& otro) const;    

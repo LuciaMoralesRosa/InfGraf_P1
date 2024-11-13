@@ -24,6 +24,10 @@ Direccion Direccion::operator/(const int scalar) const {
     return Direccion(x/scalar, y/scalar, z/scalar);
 }
 
+Direccion Direccion::operator-() const {
+    return Direccion(-x, -y, -z);
+}
+
 
 float Direccion::getx(){
     return x;
