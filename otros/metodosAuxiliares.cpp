@@ -45,10 +45,11 @@ Punto3D sumaPuntoDireccion(Punto3D punto, Direccion direccion){
 
     return Punto3D(x, y, z);    
 }
-
-float generacionNumeroAleatorio(){
-    mt19937 motor(static_cast<unsigned int>(time(nullptr)));
-    uniform_real_distribution<float> distribucion(0.0, 1.0);
-    float aleatorio = distribucion(motor);
-
+float generacionNumeroAleatorio() {
+    // Inicializa el motor y la distribución una sola vez, y los reutiliza en cada llamada.
+    static std::mt19937 motor(static_cast<unsigned int>(time(nullptr)));
+    static std::uniform_real_distribution<float> distribucion(0.0, 1.0);
+    
+    // Genera y retorna el número aleatorio.
+    return distribucion(motor);
 }

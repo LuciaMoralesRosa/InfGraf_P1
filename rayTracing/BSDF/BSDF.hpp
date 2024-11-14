@@ -25,7 +25,7 @@ class BSDF{
 
         //Direccion evaluacionDifusa(Punto3D x, Direccion omega_o, Direccion normal); 
         RGB evaluacionDifusa();  
-        RGB evaluacionRefraccion(Punto3D x, Direccion omega_o, Direccion omega_i, Direccion normal);
+        RGB evaluacionRefraccion();
         RGB evaluacionEspecular(Direccion normal, Direccion omega_o);
 
         Direccion muestreoEspecular(Direccion normal, Direccion omega_o);
@@ -64,7 +64,7 @@ class BSDF{
 
         // Metodos publicos deprecated
         RGB evaluacionBRDF(const Punto3D x, const Direccion omega_i, const Direccion omega_o, const Direccion normal);
-        RGB evaluacion(Punto3D x, Direccion omega_i, Direccion omega_o, Direccion normal, const float u, const float v);
+        RGB evaluacion(Direccion omega_o, Direccion normal);
 
         // OPERADORES
         //RGB operator*(const BSDF& otro) const;

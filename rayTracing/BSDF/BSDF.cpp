@@ -7,15 +7,48 @@ BSDF::BSDF(RGB _kd, RGB _ks, RGB _kt, RGB _ke) : kd(_kd), ks(_ks), kt(_kt), ke(_
     float prob_t = (kt.getB() + kt.getG() + kt.getR()) / 3.0f;  
     
     // Normalizacion de las probabilidades
-    float total = (prob_d + prob_s + prob_t) / 3;
+    float total = (prob_d + prob_s + prob_t);
     pd = prob_d / total;
     ps = prob_s / total;
     pt = prob_t / total;
 }
 
+RGB BSDF::evaluacion(Direccion omega_o, Direccion normal){
+    //cout << "Depurando: pd = " << pd << endl;
+    //cout << "Depurando: ps = " << ps << endl;
+    //cout << "Depurando: pt = " << pt << endl;
+
+    if(!ke.esNegro()) {
+        //cout << "Depurando: Es emisor" << endl;
+        // Si es elemento emisor (es decir, una luz) -> terminara el camino
+        return RGB_NULO;
+    }
+
+    // Decidir que tipo de material es:
+    float aleatorio = generacionNumeroAleatorio();
+    //cout << "Depurando: El numero aleatorio es: " << aleatorio << endl;
+
+    // Evaluacion
+    RGB color = RGB_NULO;
+    if(aleatorio < pd){
+        //cout << "Depurando: estoy en difuso" << endl;
+        color = evaluacionDifusa() / pd;
+    }
+    else if(aleatorio < pd + ps) {
+        // Especular reflectancia
+        cout << "Depurando: estoy en especular " << endl;
+        color = evaluacionEspecular(normal, omega_o) / ps; // Implementado
+    }
+    else if(aleatorio < pd + ps + pt) {
+        cout << "Depurando: estoy en Refraccion " << endl;
+        color = evaluacionRefraccion() / pt; // Implementado ??
+    }
+    return color;
+}
+
 
 tuple<Direccion, RGB> BSDF::muestreo(const Punto3D x, const Direccion omega_o, const Direccion normal){
-    if(ke == RGB(1,1,1)) {
+    if(!ke.esNegro()) {
         // Si es elemento emisor (es decir, una luz) -> terminara el camino
         return tuple<Direccion, RGB>(DIRECCION_NULA, RGB_NULO);
     }
@@ -38,7 +71,7 @@ tuple<Direccion, RGB> BSDF::muestreo(const Punto3D x, const Direccion omega_o, c
     }
     else if(aleatorio < pd + ps + pt) {
         rebote = muestreoRefraccion(normal, omega_o); // Implementado -> Ley de snell
-        color = evaluacionRefraccion(x, omega_o, rebote, normal) / pt; // Implementado ??
+        color = evaluacionRefraccion() / pt; // Implementado ??
     }
     else{
         // Ha caido en absorcion -> termina el recorrido
@@ -126,7 +159,7 @@ RGB BSDF::evaluacionEspecular(Direccion normal, Direccion omega_o) {
     return kd * F; // No estoy segura de si kd o ks (kd supuestamente es el color)
 }
 
-RGB BSDF::evaluacionRefraccion(Punto3D x, Direccion omega_o, Direccion omega_i, Direccion normal){
+RGB BSDF::evaluacionRefraccion(){
     return kt; // Atenua el color por el indice refractante    
 }
 
@@ -150,16 +183,6 @@ RGB BSDF::getKt() const {
 
 
 //Funciones deprecated ---------------------------------------------------------
-
-RGB BSDF::evaluacion(Punto3D x, Direccion omega_i, Direccion omega_o, Direccion normal){
-    
-}  
-
-RGB BSDF::evaluacion(Punto3D x, Direccion omega_i, Direccion omega_o, Direccion normal, const float u, const float v){
-    float r, g, b;
-    return RGB(kd.getR() / M_PI, kd.getG() / M_PI, kd.getB() / M_PI);
-}
-
 
 RGB BSDF::evaluacionBRDF(const Punto3D x, const Direccion omega_i, const Direccion omega_o, const Direccion normal){    
     float cosTheta = max(0.0f, normal.dot_product(omega_i.normalize())); 

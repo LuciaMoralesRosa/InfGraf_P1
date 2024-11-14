@@ -88,6 +88,10 @@ bool Direccion::operator<=(const Direccion& otro) const {
     return (x <= otro.x && y <= otro.y && z <= otro.z);
 }
 
+bool Direccion::esNula() const {
+    return x == -1 && y == -1 && z == -1;
+}
+
 bool Direccion::is_normalized() const {
     float length_squared = x*x + y*y + z*z;
     const float epsilon = 1e-6;

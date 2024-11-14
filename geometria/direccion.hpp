@@ -41,6 +41,7 @@ class Direccion {
         bool operator<(const Direccion& otro) const;
         bool operator>=(const Direccion& otro) const;
         bool operator<=(const Direccion& otro) const;
+        bool esNula() const;
 
         float getx();
         float gety();

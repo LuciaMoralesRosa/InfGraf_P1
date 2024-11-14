@@ -85,7 +85,16 @@ RGB EscenaRayTracing::lanzarRayosSombra(Interseccion inter) {
             }
         }
         if(!enSombra) {
-            return inter.colorPrimitiva;
+            
+            Direccion luzPunto = (centroLuz-inter.puntoInterseccion);
+            RGB potResultante = luces[l]->getPotencia() / pow(distanciaLuz,2);
+            float coseno = inter.normal.dot_product(luzPunto / luzPunto.modulus());
+            BSDF bsdf(inter.colorPrimitiva);
+            RGB fr = bsdf.evaluacion(luzPunto, inter.normal);
+
+            RGB colorFinal = potResultante * fr * abs(coseno); 
+            return colorFinal;
+            //return inter.colorPrimitiva;
         }
         else {
             return RGB(0,0,0);
@@ -93,9 +102,44 @@ RGB EscenaRayTracing::lanzarRayosSombra(Interseccion inter) {
     }
 }
 
+
+RGB EscenaRayTracing::pathTracer(Rayo rayoEntrada, int actual, int maxRebotes) {
+    if(actual == maxRebotes) {
+        return RGB_NULO;
+    }
+
+    Interseccion interseccion = intersectar(rayoEntrada);
+    if(!interseccion.intersecta){
+        return RGB_NULO; // se han cumplido los rebores -> termino
+    }
+
+    RGB iluminacionDirecta = siguienteEventoEstimado(rayoEntrada.getDireccion(), interseccion);
+    BSDF valoresPrimitiva(interseccion.colorPrimitiva);
+    tuple<Direccion, RGB> tupla = valoresPrimitiva.muestreo(interseccion.puntoInterseccion, rayoEntrada.getDireccion(), interseccion.normal);
+    Direccion dirRayoReflejado = get<0>(tupla);
+    RGB fr = get<1>(tupla);
+    if(fr.esNulo()) {
+        return RGB_NULO; // Si no hay contribucion directa -> termino (ej Luz)
+    }
+    if (dirRayoReflejado.esNula()){
+        return iluminacionDirecta; // Si no sale rayo reflejado -> termino (ej Abs)
+    }
+    Rayo rayoSalida(interseccion.puntoInterseccion, dirRayoReflejado);
+    RGB iluminacionIndirecta = fr + pathTracer(rayoSalida, actual+1, maxRebotes);
+    if(iluminacionIndirecta.esNulo()){
+        return iluminacionDirecta;
+    }
+
+    return iluminacionDirecta + iluminacionIndirecta;
+}
+
+RGB EscenaRayTracing::siguienteEventoEstimado(Direccion dirRayo, Interseccion interseccion) {
+    return lanzarRayosSombra(interseccion);
+}
+
 //------------------------------- PUBLICAS -----------------------------------//
 
-void EscenaRayTracing::lanzarRayos(int rayosPorPixel) {
+void EscenaRayTracing::lanzarRayos(int rayosPorPixel, int maxRebotes) {
     vector<Rayo> listaRayos;
 
     vector<Pixel> cuadriculaPixeles = camara.getCuadriculaPixeles();
@@ -110,7 +154,13 @@ void EscenaRayTracing::lanzarRayos(int rayosPorPixel) {
                 mt19937 gen(rd());
                 Punto3D puntoAleatorio = generarPuntoAleatorioEnPixel(gen, p);
                 Rayo rayoAleatorio = Rayo(camara.getOrigen(), puntoAleatorio);
-                RGB colorObtenido = intersectarRayo(p.getColor(), rayoAleatorio);
+
+                RGB colorObtenido = pathTracer(rayoAleatorio, 0, maxRebotes);
+                if(colorObtenido.esNulo()) {
+                    colorObtenido = RGB(0,0,0);
+                }
+
+                //RGB colorObtenido = intersectarRayo(p.getColor(), rayoAleatorio);
                 red.push_back(colorObtenido.getR());
                 green.push_back(colorObtenido.getG());
                 blue.push_back(colorObtenido.getB());

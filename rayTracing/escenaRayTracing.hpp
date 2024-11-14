@@ -41,6 +41,10 @@ class EscenaRayTracing {
         vector<Primitiva*> primitivas;
         vector<FuenteLuz*> luces;
 
+        RGB pathTracer(Rayo rayoEntrada, int actual, int maxRebotes);
+        RGB siguienteEventoEstimado(Direccion dirRayo, Interseccion interseccion);
+
+
         Interseccion intersectar(Rayo rayo);
         RGB lanzarRayosSombra(Interseccion inter);
 
@@ -52,5 +56,5 @@ class EscenaRayTracing {
             camara(c), primitivas(p), luces(f) {};
 
         ImagenPPM crearImagenPPM();
-        void lanzarRayos(int rayosPorPixel);
+        void lanzarRayos(int rayosPorPixel, int maxRebotes);
 };
