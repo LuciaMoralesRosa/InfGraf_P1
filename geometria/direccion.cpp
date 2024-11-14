@@ -12,15 +12,15 @@ Direccion Direccion::operator-(const Direccion& dir) const {
     return Direccion(x-dir.x, y-dir.y, z-dir.z);
 }
 
-Direccion Direccion::operator*(const int scalar) const {
+Direccion Direccion::operator*(const float scalar) const {
     return Direccion(x*scalar, y*scalar, z*scalar);
 }
 
-Direccion Direccion::operator+(const int scalar) const {
+Direccion Direccion::operator+(const float scalar) const {
     return Direccion(x+scalar, y+scalar, z+scalar);
 }
 
-Direccion Direccion::operator/(const int scalar) const {
+Direccion Direccion::operator/(const float scalar) const {
     return Direccion(x/scalar, y/scalar, z/scalar);
 }
 

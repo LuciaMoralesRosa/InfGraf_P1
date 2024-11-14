@@ -18,25 +18,18 @@ Interseccion Plano::interseccionRayo(Rayo rayo) const {
 
     Punto3D o = rayo.getOrigen();
     Direccion d = rayo.getDireccion().normalize();
-
-
     float dist = (-(distancia + normal.dot_product(o-Punto3D(0,0,0)))) / normal.dot_product(d);
-    //cout << normal << ", " << o-Punto3D(0,0,0) << ", " << ((-1) * normal.dot_product(o-Punto3D(0,0,0))) << ", ";
-    //cout << dist << endl;
 
     if(dist > 0) {
-        // Lo añade al vector si el plano se encuentra delante del origen del rayo
         resultado.intersecta = true;
-        resultado.distancia.push_back(dist);
-        //cout << "intersecta con plano";
-        Punto3D puntoInterseccion(o, d, dist);
-        resultado.puntoInterseccion.push_back(puntoInterseccion);
-        resultado.normal.push_back(this->normal.normalize());
+        resultado.distancia = dist;
+        resultado.puntoInterseccion = Punto3D(o, d, dist);
+        resultado.normal = this->normal.normalize();
         resultado.colorPrimitiva = getColor();
     }
     else {
-        resultado.distancia.clear();
-        resultado.puntoInterseccion.clear();
+        resultado.distancia = 0;
+        resultado.puntoInterseccion = Punto3D();
     }
 
     return resultado;

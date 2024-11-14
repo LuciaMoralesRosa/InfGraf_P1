@@ -7,7 +7,6 @@
 #include "../geometria/primitivasGeometricas/esfera.hpp"
 #include "../geometria/primitivasGeometricas/esfera.hpp"
 #include "../geometria/primitivasGeometricas/primitiva.hpp"
-//#include "../rayTracing/escena.hpp"
 #include "../rayTracing/escenaRayTracing.hpp"
 #include "../imagen/espacioColor/rgb.hpp"
 #include "../imagen/imagenPPM.hpp"
@@ -15,12 +14,8 @@
 #include "../rayTracing/luces/fuenteLuz.hpp"
 
 
-/* Compilacion para escena:
-g++ test_escena.cpp ../rayTracing/BSDF/BSDF.cpp ../rayTracing/luces/fuenteLuz.cpp ../rayTracing/luces/luzPuntual.cpp  ../rayTracing/luces/luzDeArea.cpp ../geometria/punto3d.cpp ../geometria/direccion.cpp ../otros/metodosAuxiliares.cpp ../imagen/espacioColor/rgb.cpp ../geometria/primitivasGeometricas/plano.cpp ../geometria/primitivasGeometricas/esfera.cpp ../imagen/imagenPPM.cpp ../rayTracing/camara.cpp ../imagen/espacioColor/hsv.cpp ../imagen/espacioColor/hsl.cpp ../rayTracing/rayo.cpp ../rayTracing/pixel.cpp ../rayTracing/escena.cpp -o testEscena
-
-Compilacion para escenaRayTracing
+/* Compilacion para escenaRayTracing
 g++ test_escena.cpp ../rayTracing/BSDF/BSDF.cpp ../rayTracing/luces/fuenteLuz.cpp ../rayTracing/luces/luzPuntual.cpp  ../rayTracing/luces/luzDeArea.cpp ../geometria/punto3d.cpp ../geometria/direccion.cpp ../otros/metodosAuxiliares.cpp ../imagen/espacioColor/rgb.cpp ../geometria/primitivasGeometricas/plano.cpp ../geometria/primitivasGeometricas/esfera.cpp ../imagen/imagenPPM.cpp ../rayTracing/camara.cpp ../imagen/espacioColor/hsv.cpp ../imagen/espacioColor/hsl.cpp ../rayTracing/rayo.cpp ../rayTracing/pixel.cpp ../rayTracing/escenaRayTracing.cpp -o testEscena
-
 */
 
 

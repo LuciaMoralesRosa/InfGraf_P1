@@ -28,9 +28,9 @@ class Direccion {
         //Operadores
         Direccion operator+(const Direccion& dir) const;
         Direccion operator-(const Direccion& dir) const;
-        Direccion operator*(const int scalar) const;
-        Direccion operator/(const int scalar) const;
-        Direccion operator+(const int scalar) const;
+        Direccion operator*(const float scalar) const;
+        Direccion operator/(const float scalar) const;
+        Direccion operator+(const float scalar) const;
         Direccion operator-() const;
 
 

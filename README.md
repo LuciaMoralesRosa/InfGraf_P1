@@ -25,9 +25,9 @@ HECHO - Implementacion de la funcion de evaluacion (difusa, especular y refracta
 FALTA - Calculo de la contribucion de la luz si no esta a la sombra -> FALLA (no implementado aunque es "facil")
         - tuplaDirRGB  dir, rgbEval = muestreo(...)
         - potPorDist = (luces[l]->potencia[0]/pow(distanciaLuz, 2))
-        - coseno(n_omegao) = abs(vectorIntersecciones[posMin].normal*
+        - coseno(n_omegao) = abs(vectorIntersecciones[posMin].normal.dot_product(
                             ((luces[l]->centro-vectorIntersecciones[posMin].punto
-                            /distanciaLuz)));
+                            /distanciaLuz))));
         - mediaColor[0] += porPorDist * rgb * coseno(n_omegao)
 
 - Sesion 7 -> FALTA
@@ -43,3 +43,25 @@ HECHO - Expansion de las funciones de evaluacion y de muestreo
 
 ## Temas a resolver
 1. Para materiales refractantes, ver como meter el medio de entrada y el medio de salida
+
+
+
+
+## COUTS depuradores
+
+//cout << "Depurando: punto origen rayo sombra: P" << origenRayoSombra << endl;
+//cout << "Depurando: punto MenorDistanicia: P" << puntoMenorDistancia << endl;
+//cout << "Depurando: normal MenorDistanicia: N" << normalMenorDistancia << endl;
+//cout << "Depurando: normal.normalize() " << normalMenorDistancia.normalize() << endl;
+//cout << "Depurando: normal MenorDistanicia n*d: N*D" << (normalMenorDistancia.normalize()+DESPLAZAMIENTO) << endl;
+
+
+
+//cout << "Depurando: Distancia luz " << distanciaLuz << endl;
+//cout << "Depurando: punto centroLuz: P" << centroLuz << endl;
+//cout << "Depurando: punto MenorDistanicia: P" << puntoMenorDistancia << endl;
+//cout << "Depurando: ------------------------------------------------" << endl;
+
+//cout << "Depurando: Direccion rayo sombra luz: D" << rayoSombra.getDireccion() << endl;
+//cout << "Depurando: NormalMenorDistancia: N " << rayoSombra.getDireccion() << endl;
+//cout << "Depurando: producto punto: " << rayoSombra.getDireccion().dot_product(normalMenorDistancia) << endl;

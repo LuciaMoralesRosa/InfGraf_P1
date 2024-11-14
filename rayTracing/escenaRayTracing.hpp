@@ -3,6 +3,7 @@
 #include <vector>
 #include <cstdlib>
 #include <algorithm>
+#include <tuple>
 
 #include "../geometria/primitivasGeometricas/primitiva.hpp"
 #include "../geometria/punto3d.hpp"
@@ -18,8 +19,9 @@
 #include "luces/luzPuntual.hpp"
 
 const float EPSILON = 1e-8;
+const float MAXIMA_DISTANCIA = 10000000.0F;
 
-struct InterseccionPrimitiva {
+struct InterseccionConcreta {
     // True si existe intersección
     bool intersecta;
     // Vector de distancia a través del rayo hasta la intersección
@@ -30,6 +32,7 @@ struct InterseccionPrimitiva {
     Direccion normal;
     // Puntero a la primitiva intersectada
     Primitiva* primitiva;
+    RGB colorPrimitiva;
 };
 
 class EscenaRayTracing {
@@ -38,18 +41,12 @@ class EscenaRayTracing {
         vector<Primitiva*> primitivas;
         vector<FuenteLuz*> luces;
 
-        //Intentos shadowRays
-        bool intento1esRayoDeSombra(Punto3D puntoInterseccion, Primitiva* p);
-        RGB intento2esRayoDeSombra(Punto3D puntoInterseccion, Interseccion interseccion);
-        RGB intento3(Interseccion interseccion, Punto3D puntoInterseccion);
-        RGB intento4(Punto3D puntoEv);
+        Interseccion intersectar(Rayo rayo);
+        RGB lanzarRayosSombra(Interseccion inter);
 
         Punto3D generarPuntoAleatorioEnPixel(mt19937 gen, Pixel pixel);
-        Punto3D puntoInterseccionDadaDistancia(Interseccion i, float minDistancia);
-        Direccion normalInterseccionDadaDistancia(Interseccion i, float minDistancia);
         RGB intersectarRayo(RGB colorPixel, Rayo rayo);
-        bool puntoEnSegmento(Punto3D A, Punto3D B, Punto3D X);
-
+        
     public:
         EscenaRayTracing(Camara c, vector<Primitiva*> p, vector<FuenteLuz*> f) : 
             camara(c), primitivas(p), luces(f) {};

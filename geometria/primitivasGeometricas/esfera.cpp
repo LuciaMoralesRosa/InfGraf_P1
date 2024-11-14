@@ -35,12 +35,12 @@ Interseccion Esfera::interseccionRayo(Rayo rayo) const {
     float discriminante = B * B - 4 * A * C;
 
     Interseccion resultado;
+    resultado.intersecta = false;
 
     if (discriminante < 0) {
         // No hay intersección
-        resultado.intersecta = false;
-        resultado.distancia.clear();
-        resultado.puntoInterseccion.clear();
+        resultado.distancia = 0;
+        resultado.puntoInterseccion = Punto3D();
         return resultado;
     }
     else {
@@ -48,17 +48,16 @@ Interseccion Esfera::interseccionRayo(Rayo rayo) const {
         float sqrtDiscriminante = sqrt(discriminante);
         float t1 = (-B - sqrtDiscriminante) / (2 * A);
         float t2 = (-B + sqrtDiscriminante) / (2 * A);
-        resultado.intersecta = true;
-        resultado.distancia.push_back(t1); // Una interseccion
-        resultado.puntoInterseccion.push_back(Punto3D(ORayo, dir, t1));
-        resultado.colorPrimitiva = getColor();
-        resultado.normal.push_back(getNormal(Punto3D(ORayo, dir, t1)).normalize());
         
-        if (t1 != t2){
-            resultado.distancia.push_back(t2); // Dos intersecciones
-            resultado.puntoInterseccion.push_back(Punto3D(ORayo, dir, t2));
-            resultado.normal.push_back(getNormal(Punto3D(ORayo, dir, t2)).normalize());
+        float t = min(t1, t2);
+        if (t>0){
+            resultado.intersecta = true;
+            resultado.distancia = t; // Una interseccion
+            resultado.puntoInterseccion = Punto3D(ORayo, dir, t);
+            resultado.colorPrimitiva = getColor();
+            resultado.normal = getNormal(Punto3D(ORayo, dir, t)).normalize();
         }
+        
         return resultado;
     }
 }
