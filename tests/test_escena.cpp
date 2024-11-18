@@ -31,6 +31,7 @@ int main(){
     RGB rosa(1,0.5,0.5);
     RGB azulado(0.5,0.5,1);
     RGB blanco(1, 1, 1);
+    RGB grisClaro(0.95, 0.95, 0.95);
     Material difuso(1,0,0);
     Material especular(0,1,0);
     Material refractor(0,0,1);
@@ -38,13 +39,13 @@ int main(){
     
     Plano planoizq  (Direccion( 1,  0,  0), 1, Textura(rojo, difuso));
     Plano planoder  (Direccion(-1,  0,  0), 1, Textura(verde, difuso));
-    Plano planosuelo(Direccion( 0,  1,  0), 1, Textura(amarillo, difuso));
-    Plano planotecho(Direccion( 0, -1,  0), 1, Textura(cian, difuso));
-    Plano planoatras(Direccion( 0,  0, -1), 1, Textura(magenta, difuso));
+    Plano planosuelo(Direccion( 0,  1,  0), 1, Textura(grisClaro, difuso));
+    Plano planotecho(Direccion( 0, -1,  0), 1, Textura(grisClaro, difuso));
+    Plano planoatras(Direccion( 0,  0, -1), 1, Textura(grisClaro, difuso));
 
     LuzPuntual luz(Punto3D(0, 0.5, 0), blanco);
 
-    Esfera esfera1(Punto3D(-0.5, -0.7, 0.25), 0.3, Textura(rosa, difuso));
+    Esfera esfera1(Punto3D(-0.5, -0.7, 0.25), 0.3, Textura(blanco, difuso));
     Esfera esfera2(Punto3D(0.5, -0.7, -0.25), 0.3, Textura(azulado, difuso));
     // Puede que los valores rgb se esten aproximando a 1 cuando estan en 0.x
 
@@ -70,7 +71,7 @@ int main(){
 
     cout << "Lanzando rayos..." << endl;
     //escena.lanzarRayosDesdeCamara(1);
-    escenaRT.lanzarRayos(1, 1);
+    escenaRT.lanzarRayos(64, 3);
 
     // Esto sabemos que funciona porque es igual que el que habia en la camara
     cout << "Creando imagen..." << endl;

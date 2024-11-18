@@ -121,7 +121,6 @@ RGB EscenaRayTracing::pathTracer(Rayo rayoEntrada, int actual, int maxRebotes) {
 
     RGB iluminacionDirecta = siguienteEventoEstimado(rayoEntrada.getDireccion(), interseccion);
     
-    /*
     BSDF valoresPrimitiva(interseccion.colorPrimitiva);
     tuple<Direccion, RGB> tupla = valoresPrimitiva.muestreo(interseccion.puntoInterseccion, rayoEntrada.getDireccion(), interseccion.normal);
     Direccion dirRayoReflejado = get<0>(tupla);
@@ -129,18 +128,23 @@ RGB EscenaRayTracing::pathTracer(Rayo rayoEntrada, int actual, int maxRebotes) {
     if(fr.esNulo()) {
         return RGB_NULO; // Si no hay contribucion directa -> termino (ej Luz)
     }
+    //cout << "Depurando: direccion del rayo = " << dirRayoReflejado << endl;
     if (dirRayoReflejado.esNula()){
         return iluminacionDirecta; // Si no sale rayo reflejado -> termino (ej Abs)
     }
     Rayo rayoSalida(interseccion.puntoInterseccion, dirRayoReflejado);
-    RGB iluminacionIndirecta = fr + pathTracer(rayoSalida, actual+1, maxRebotes);
+    RGB resPathTracer = pathTracer(rayoSalida, actual+1, maxRebotes);
+    //cout << "Depurando: valor del pathTracer = " << resPathTracer << endl;
+    if(resPathTracer.esNulo()) {
+        return iluminacionDirecta;
+    }
+    RGB iluminacionIndirecta = fr + resPathTracer;
     if(iluminacionIndirecta.esNulo()){
         return iluminacionDirecta;
     }
 
     return iluminacionDirecta + iluminacionIndirecta;
-    */
-   return iluminacionDirecta;
+   //return iluminacionDirecta;
 }
 
 RGB EscenaRayTracing::siguienteEventoEstimado(Direccion dirRayo, Interseccion interseccion) {
