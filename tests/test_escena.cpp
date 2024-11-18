@@ -32,6 +32,7 @@ int main(){
     RGB azulado(0.5,0.5,1);
     RGB blanco(1, 1, 1);
     RGB grisClaro(0.95, 0.95, 0.95);
+    RGB potencia(1, 1, 1);
     Material difuso(1,0,0);
     Material especular(0,1,0);
     Material refractor(0,0,1);
@@ -43,7 +44,7 @@ int main(){
     Plano planotecho(Direccion( 0, -1,  0), 1, Textura(grisClaro, difuso));
     Plano planoatras(Direccion( 0,  0, -1), 1, Textura(grisClaro, difuso));
 
-    LuzPuntual luz(Punto3D(0, 0.5, 0), blanco);
+    LuzPuntual luz(Punto3D(0, 0.5, 0), potencia);
 
     Esfera esfera1(Punto3D(-0.5, -0.7, 0.25), 0.3, Textura(blanco, difuso));
     Esfera esfera2(Punto3D(0.5, -0.7, -0.25), 0.3, Textura(azulado, difuso));
@@ -71,7 +72,7 @@ int main(){
 
     cout << "Lanzando rayos..." << endl;
     //escena.lanzarRayosDesdeCamara(1);
-    escenaRT.lanzarRayos(64, 3);
+    escenaRT.lanzarRayos(64, 6);
 
     // Esto sabemos que funciona porque es igual que el que habia en la camara
     cout << "Creando imagen..." << endl;
@@ -79,6 +80,6 @@ int main(){
     ImagenPPM imagenGenerada = escenaRT.crearImagenPPM();
 
     cout << "Escribiendo fichero..." << endl;
-    imagenGenerada.escrituraFichero("EscenaTestRT.ppm");
+    imagenGenerada.escrituraFichero("EscenaTestRT2.ppm");
     cout << " -- Terminacion correcta del test -- " << endl;
 }

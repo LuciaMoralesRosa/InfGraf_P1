@@ -108,7 +108,7 @@ RGB EscenaRayTracing::lanzarRayosSombra(Interseccion inter) {
     return inter.colorPrimitiva;
 }
 
-
+/*
 RGB EscenaRayTracing::pathTracer(Rayo rayoEntrada, int actual, int maxRebotes) {
     if(actual == maxRebotes) {
         return RGB_NULO; // Terminacion
@@ -138,13 +138,49 @@ RGB EscenaRayTracing::pathTracer(Rayo rayoEntrada, int actual, int maxRebotes) {
     if(resPathTracer.esNulo()) {
         return iluminacionDirecta;
     }
-    RGB iluminacionIndirecta = fr + resPathTracer;
-    if(iluminacionIndirecta.esNulo()){
+    //RGB iluminacionIndirecta = iluminacionDirecta + resPathTracer;
+    //if(iluminacionIndirecta.esNulo()){
+    //    return iluminacionDirecta;
+    //}
+
+    if(resPathTracer.esNulo()){
         return iluminacionDirecta;
     }
-
-    return iluminacionDirecta + iluminacionIndirecta;
+ 
+    //return iluminacionDirecta + iluminacionIndirecta;
+    return resPathTracer + iluminacionDirecta;
    //return iluminacionDirecta;
+}
+*/
+
+RGB EscenaRayTracing::pathTracer(Rayo rayoEntrada, int actual, int maxRebotes) {
+    if(actual == maxRebotes) {
+        return RGB_NULO; // Terminacion
+    }
+
+    Interseccion interseccion = intersectar(rayoEntrada);
+    if(!interseccion.intersecta){
+        return RGB_NULO; // se han cumplido los rebores -> termino
+    }
+
+    RGB contribucion = siguienteEventoEstimado(rayoEntrada.getDireccion(), interseccion);
+    BSDF bf(interseccion.colorPrimitiva);
+    tuple<Direccion, RGB> tupla = bf.muestreo(interseccion.puntoInterseccion, rayoEntrada.getDireccion(), interseccion.normal);
+    Direccion dirRayo = get<0>(tupla);
+    RGB color = get<1>(tupla);
+
+    if(color.esNegro() || color.esNulo()) {
+        return RGB_NULO;
+    }
+
+    Rayo rayoSalida(interseccion.puntoInterseccion, dirRayo);
+    RGB path = pathTracer(rayoSalida, actual+1, maxRebotes);
+    if(path.esNulo()){
+        return contribucion;
+    }
+    cout << "Depurando: estoy devolviendo contribucion" << endl;
+    contribucion = contribucion + color*path;
+    return contribucion;
 }
 
 RGB EscenaRayTracing::siguienteEventoEstimado(Direccion dirRayo, Interseccion interseccion) {
