@@ -85,27 +85,26 @@ RGB EscenaRayTracing::lanzarRayosSombra(Interseccion inter) {
             }
         }
         if(!enSombra) {
-            
             Direccion luzPunto = (centroLuz-inter.puntoInterseccion);
-            RGB potResultante = luces[l]->getPotencia() / pow(distanciaLuz,2);
+            RGB potResultante = luces[l]->getPotencia() / pow(distanciaLuz, 2);
             float coseno = inter.normal.dot_product(luzPunto / luzPunto.modulus());
             BSDF bsdf(inter.colorPrimitiva);
             RGB fr = bsdf.evaluacion(luzPunto, inter.normal);
-
             RGB colorFinal = potResultante * fr * abs(coseno); 
             return colorFinal;
-            //return inter.colorPrimitiva;
         }
         else {
             return RGB(0,0,0);
         }
     }
+    cout << "Depurando: Se esta devolviendo el color de la primitiva" << endl;
+    return inter.colorPrimitiva;
 }
 
 
 RGB EscenaRayTracing::pathTracer(Rayo rayoEntrada, int actual, int maxRebotes) {
     if(actual == maxRebotes) {
-        return RGB_NULO;
+        return RGB_NULO; // Terminacion
     }
 
     Interseccion interseccion = intersectar(rayoEntrada);
@@ -114,6 +113,8 @@ RGB EscenaRayTracing::pathTracer(Rayo rayoEntrada, int actual, int maxRebotes) {
     }
 
     RGB iluminacionDirecta = siguienteEventoEstimado(rayoEntrada.getDireccion(), interseccion);
+    
+    /*
     BSDF valoresPrimitiva(interseccion.colorPrimitiva);
     tuple<Direccion, RGB> tupla = valoresPrimitiva.muestreo(interseccion.puntoInterseccion, rayoEntrada.getDireccion(), interseccion.normal);
     Direccion dirRayoReflejado = get<0>(tupla);
@@ -131,6 +132,8 @@ RGB EscenaRayTracing::pathTracer(Rayo rayoEntrada, int actual, int maxRebotes) {
     }
 
     return iluminacionDirecta + iluminacionIndirecta;
+    */
+   return iluminacionDirecta;
 }
 
 RGB EscenaRayTracing::siguienteEventoEstimado(Direccion dirRayo, Interseccion interseccion) {
@@ -155,6 +158,7 @@ void EscenaRayTracing::lanzarRayos(int rayosPorPixel, int maxRebotes) {
                 Punto3D puntoAleatorio = generarPuntoAleatorioEnPixel(gen, p);
                 Rayo rayoAleatorio = Rayo(camara.getOrigen(), puntoAleatorio);
 
+                // Pathtracer
                 RGB colorObtenido = pathTracer(rayoAleatorio, 0, maxRebotes);
                 if(colorObtenido.esNulo()) {
                     colorObtenido = RGB(0,0,0);

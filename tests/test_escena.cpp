@@ -39,8 +39,8 @@ int main(){
     Plano planoizq  (Direccion( 1,  0,  0), 1, Textura(rojo, difuso));
     Plano planoder  (Direccion(-1,  0,  0), 1, Textura(verde, difuso));
     Plano planosuelo(Direccion( 0,  1,  0), 1, Textura(amarillo, difuso));
-    Plano planotecho(Direccion( 0, -1,  0), 1, Textura(magenta, difuso));
-    Plano planoatras(Direccion( 0,  0, -1), 1, Textura(cian, difuso));
+    Plano planotecho(Direccion( 0, -1,  0), 1, Textura(cian, difuso));
+    Plano planoatras(Direccion( 0,  0, -1), 1, Textura(magenta, difuso));
 
     LuzPuntual luz(Punto3D(0, 0.5, 0), blanco);
 
