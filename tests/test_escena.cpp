@@ -70,7 +70,7 @@ int main(){
 
     cout << "Lanzando rayos..." << endl;
     //escena.lanzarRayosDesdeCamara(1);
-    escenaRT.lanzarRayos(64, 5);
+    escenaRT.lanzarRayos(1, 1);
 
     // Esto sabemos que funciona porque es igual que el que habia en la camara
     cout << "Creando imagen..." << endl;

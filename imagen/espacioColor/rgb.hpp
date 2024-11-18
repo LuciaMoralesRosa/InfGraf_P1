@@ -43,7 +43,7 @@ public:
     friend ostream& operator<<(ostream& os, const RGB& color);
     RGB operator*(const RGB& otro) const;
     RGB operator+(const RGB& otro) const;
-    RGB operator/(const int& otro) const;
+    RGB operator/(const float& otro) const;
     RGB operator*(const float& otro) const;
     bool operator==(const RGB& otro) const;
 

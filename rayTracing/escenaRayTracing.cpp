@@ -78,6 +78,9 @@ RGB EscenaRayTracing::lanzarRayosSombra(Interseccion inter) {
         }
 
         float distanciaLuz = (centroLuz - inter.puntoInterseccion).modulus();
+        if(distanciaLuz < 0.5) {
+            //cout << "Depurando: Es menor a 0-001" << endl;
+        }
         Interseccion interSombra = intersectar(rayoSombra);
         if(interSombra.intersecta) {
             if(interSombra.distancia < distanciaLuz){
@@ -85,11 +88,15 @@ RGB EscenaRayTracing::lanzarRayosSombra(Interseccion inter) {
             }
         }
         if(!enSombra) {
+            RGB potenciaLuz = luces[l]->getPotencia();
             Direccion luzPunto = (centroLuz-inter.puntoInterseccion);
-            RGB potResultante = luces[l]->getPotencia() / pow(distanciaLuz, 2);
+            RGB potResultante = potenciaLuz / powf(distanciaLuz, 2.0f);
+            //cout << "Depurando: Potencia resultante de la luz = " << potResultante << endl;
             float coseno = inter.normal.dot_product(luzPunto / luzPunto.modulus());
+            //cout << "Depurando: Coseno = " << coseno << endl;
             BSDF bsdf(inter.colorPrimitiva);
             RGB fr = bsdf.evaluacion(luzPunto, inter.normal);
+            //cout << "Depurando: fr = " << fr << endl;
             RGB colorFinal = potResultante * fr * abs(coseno); 
             return colorFinal;
         }

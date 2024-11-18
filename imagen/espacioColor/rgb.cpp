@@ -164,7 +164,7 @@ RGB RGB::operator*(const float& otro) const {
     return RGB(r*otro, g*otro, b*otro);
 }
 
-RGB RGB::operator/(const int& otro) const {
+RGB RGB::operator/(const float& otro) const {
     return RGB(r/otro, g/otro, b/otro);
 }
 
