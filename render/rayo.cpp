@@ -16,18 +16,21 @@ Direccion Rayo::getDireccion() const {
     return direccion;
 }
 
+/// @brief Devuelve la intersección del rayo
+/// @return Interseccion del rayo
 Interseccion Rayo::getInterseccion() const {
     return interseccion;
 }
 
 void Rayo::addInterseccion(Interseccion _interseccion) {
     if (interseccion.esNull() || (_interseccion.getDistancia() < interseccion.getDistancia())) {
+        //cout << "Actualizando: " << interseccion.esNull() << ", " << (_interseccion.getDistancia() < interseccion.getDistancia()) << endl;
         interseccion = _interseccion;
     }
 }
 
 // Print
 ostream& operator<<(ostream& os, const Rayo& r) {
-    os << "Origen: " << r.origen << ", Direccion: " << r.direccion;
+    os << "Origen: " << r.origen << ", Direccion: " << r.direccion << endl;
     return os;
 }
