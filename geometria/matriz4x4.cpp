@@ -209,6 +209,20 @@ Matriz4x4 Matriz4x4::operator*(const int scalar) const{
     return Matriz4x4(resultado);
 }
 
+Direccion Matriz4x4::operator*(Direccion d) const{
+    float resultado[3];
+    float dx = d.getx();
+    float dy = d.getx();
+    float dz = d.getx();
+
+    resultado[0] = dx * (matrix[0][0] + matrix[0][1] + matrix[0][2]);
+    resultado[1] = dy * (matrix[1][0] + matrix[1][1] + matrix[1][2]);
+    resultado[2] = dz * (matrix[2][0] + matrix[2][1] + matrix[2][2]);
+
+    return Direccion(resultado[0], resultado[1], resultado[2]);
+}
+
+
 Matriz4x4 Matriz4x4::operator/(const int scalar) const{
     float resultado[4][4];
     for(int i = 0; i < 4; i ++){

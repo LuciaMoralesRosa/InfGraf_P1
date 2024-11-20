@@ -45,11 +45,24 @@ Punto3D sumaPuntoDireccion(Punto3D punto, Direccion direccion){
 
     return Punto3D(x, y, z);    
 }
+
+/// @brief Genera un numero aleatorio entre 0 y 1
+/// @return float aleatorio entre 0 y 1
 float generacionNumeroAleatorio() {
     // Inicializa el motor y la distribución una sola vez, y los reutiliza en cada llamada.
     static std::mt19937 motor(static_cast<unsigned int>(time(nullptr)));
-    static std::uniform_real_distribution<float> distribucion(0.0, 1.0);
+    static std::uniform_real_distribution<float> distribucion(0.0f, 1.0f);
     
     // Genera y retorna el número aleatorio.
     return distribucion(motor);
 }
+
+/*
+Direccion muestreoCoseno(const Direccion& u, const Direccion& v, const Direccion& normal, const Punto3D& origen){
+    float theta = acos(sqrt(1.0f - generacionNumeroAleatorio()));
+    float phi = 2.0f * M_PI * generacionNumeroAleatorio();
+    Matriz4x4 T = matrizCambioBase(Coordenada(origen), Coordenada(u), Coordenada(v), Coordenada(normal));
+    Direccion wi = T * Direccion(sinf(theta) * cosf(phi), sinf(theta) * sinf(phi), cosf(theta));
+    return wi;
+}
+*/

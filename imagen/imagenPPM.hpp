@@ -59,6 +59,8 @@ public:
     ImagenPPM clamping(float corte = 1);
     ImagenPPM equalization();
     ImagenPPM equalizationClamping(float corte = 1);
+    ImagenPPM gamma(float valor);
+
 
     friend ostream& operator<<(ostream& os, const ImagenPPM& imagen);
 

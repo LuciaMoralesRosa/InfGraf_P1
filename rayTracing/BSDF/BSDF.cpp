@@ -144,6 +144,9 @@ Direccion BSDF::muestreoDifuso(){
     float x = r * cos(phi);
     float y = r* sin(phi);
 
+
+    //// Intento 2
+    //float theta = acos(sqrt(1.0f, ))
     return Direccion(x, y, z);
 }
 
