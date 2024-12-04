@@ -13,7 +13,6 @@
                 "${workspaceFolder}/geometria/primitivasGeometricas/esfera.cpp",           // Agrega tus archivos .cpp
                 "${workspaceFolder}/geometria/primitivasGeometricas/plano.cpp",
                 //"${workspaceFolder}/geometria/primitivasGeometricas/triangulo.cpp",
-                "${workspaceFolder}/rayTracing/escena.cpp",
                 "${workspaceFolder}/rayTracing/escenaRayTracing.cpp",
                 //"${workspaceFolder}/geometria/angulos.cpp",
                 //"${workspaceFolder}/geometria/coordenada.cpp",
