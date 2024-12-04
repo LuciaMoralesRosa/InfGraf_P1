@@ -11,6 +11,7 @@ using namespace std;
 
 // Crear matriz de desplazamiento
 Matriz4x4 matrizDesplamiento(float x, float y, float z);
+Matriz4x4 matrizCambioBase(const Coordenada& o, const Coordenada& u, const Coordenada& v, const Coordenada& w);
 
 /**
  * @brief Traslada la coordenada en un desplazamiento igual a sus parametros

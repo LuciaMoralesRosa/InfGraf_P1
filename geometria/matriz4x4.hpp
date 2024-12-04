@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <math.h>
+#include "direccion.hpp"
 using namespace std;
 
 /**
@@ -40,6 +41,7 @@ class Matriz4x4 {
         Matriz4x4 operator-(const Matriz4x4& m) const;
         Matriz4x4 operator*(const Matriz4x4& m) const;
         Matriz4x4 operator*(const int scalar) const;
+        Direccion operator*(Direccion d) const;
         Matriz4x4 operator/(const int scalar) const;
 
         /**

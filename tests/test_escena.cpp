@@ -72,14 +72,15 @@ int main(){
 
     cout << "Lanzando rayos..." << endl;
     //escena.lanzarRayosDesdeCamara(1);
-    escenaRT.lanzarRayos(64, 6);
+    escenaRT.lanzarRayos(64, 4);
 
     // Esto sabemos que funciona porque es igual que el que habia en la camara
     cout << "Creando imagen..." << endl;
     //ImagenPPM imagenGenerada = escena.crearImagenPPM();
     ImagenPPM imagenGenerada = escenaRT.crearImagenPPM();
+    //imagenGenerada.gamma(2.2);
 
     cout << "Escribiendo fichero..." << endl;
-    imagenGenerada.escrituraFichero("EscenaTestRT2.ppm");
+    imagenGenerada.escrituraFichero("EscenaTestRT1.ppm");
     cout << " -- Terminacion correcta del test -- " << endl;
 }

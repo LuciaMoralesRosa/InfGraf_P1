@@ -382,6 +382,45 @@ ImagenPPM ImagenPPM::equalizationClamping(float valor){
     return ImagenPPM(formato, valorMax, comentario, base, altura, resolucion, espacioColor, pixeles);
 }
 
+ImagenPPM ImagenPPM::gamma(float valor) {
+    vector<EspacioColor*> nuevoArrayPixeles;
+    float maxActual = valorMax;
+    float nuevoMax = 0.0;
+    switch (espacioColor){
+        case formatoRGB: //RGB
+            for(auto pixel : arrayPixeles){
+                RGB* aux = dynamic_cast<RGB*>(pixel); 
+                float nuevor = aux->getR();
+                float nuevog = aux->getG();
+                float nuevob = aux->getB();
+
+                if(aux->getR() > maxActual) {
+                    nuevor = maxActual;
+                } 
+                else {
+                    nuevor = pow(nuevor,1/valor)/pow(maxActual, 1/valor);
+                }
+                if(aux->getG() > maxActual) {
+                    nuevog = maxActual;
+                } 
+                else {
+                    nuevog = pow(nuevog,1/valor)/pow(maxActual, 1/valor);
+                }
+                if(aux->getB() > maxActual) {
+                    nuevob = maxActual;
+                } 
+                else {
+                    nuevob = pow(nuevob,1/valor)/pow(maxActual, 1/valor);
+                }
+                RGB nuevoPixel = RGB(nuevor, nuevog, nuevob);
+                EspacioColor* p = new RGB(nuevoPixel.getR(), nuevoPixel.getG(), nuevoPixel.getB());
+                nuevoArrayPixeles.push_back(p);
+                nuevoMax = max(nuevoMax, max(nuevor * 255, max(nuevog * 255, nuevob *255)));
+                delete aux;
+            }
+    }
+}
+
 ostream& operator<<(ostream& os, const ImagenPPM& imagen){
     string salida = "[" + imagen.formato + ", " + to_string(imagen.valorMax) + ", " + to_string(imagen.base)
     + " x " + to_string(imagen.altura) + ", " + to_string(imagen.resolucion) + "]\n\n";
@@ -400,3 +439,4 @@ ostream& operator<<(ostream& os, const ImagenPPM& imagen){
     return os;
 
 }
+

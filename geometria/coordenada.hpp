@@ -4,6 +4,7 @@
 #include <iostream>
 #include <math.h>
 #include "angulos.hpp"
+#include "punto3d.hpp"
 using namespace std;
 
 class Coordenada {
@@ -21,6 +22,8 @@ class Coordenada {
          * @param is_point_val 
          */
         Coordenada(float x_val = 0, float y_val = 0, float z_val = 0, float is_point_val = 0);
+        Coordenada(Punto3D p) : x(p.getx()), y(p.gety()), z(p.getz()), is_point(true) {}; 
+        Coordenada(Direccion d) : x(d.getx()), y(d.gety()), z(d.getz()), is_point(false) {}; 
 
         /**
          * @brief Constructor de coordenada con un vector
